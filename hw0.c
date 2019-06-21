@@ -7,27 +7,49 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h> //for assert
-#include <ctype.h> //for isdigit
 #include <math.h> // for min/max
+
+
+static int user_input; 
+static int num_of_ints; 
+static int smallest_int;
+static int largest_int; 
+static int i = 1;
+
 int main()
 {
-   static int user_input;
-   static int num_of_ints;
-   static int smallest_int;
-   static int largest_int;
 
         //prompt user for positve int
-    while((user_input = getchar()) != -1)
-    {
-            largest_int = fmax(user_input, largest_int);
-            smallest_int = fmin(user_input, smallest_int);
-            num_of_ints++;
+        while(i == 1)
+        {
 
-            printf("Largest: %i \n Smallest: %i \n Total: %i\n", largest_int, smallest_int, num_of_ints);
-    }
-     
-    printf("QED.\n");
+                printf("Enter a positive integer: ");
+                int prompt = scanf("%i", &user_input); 
+                if(prompt != 1)
+                {
 
-    return 0;
+                        printf("Error! Please enter only positive integers.\n");
+                        i = 0;
+                }
+                else if(user_input == -1)
+                {
+                        i = 0;
+                }
+                else
+                {
+                        largest_int = fmax(user_input, largest_int);
+                        // set smallest to first entered number otherwise it will
+                        // always be 0
+                        if(num_of_ints == 0)
+                        {
+                                smallest_int = user_input;
+                        }
+                        smallest_int = fmin(user_input, smallest_int);
+                        num_of_ints++;
+                }
+        }
+
+        printf("Largest: %i \nSmallest: %i \nTotal: %i\n", largest_int, smallest_int, num_of_ints);
+
+        return 0;
 }
