@@ -1,12 +1,40 @@
-//
-//  main.cpp
-//  gameset1
+/*
+ Game Project Week 1
+ main.cpp
+ Will Hoback
+ */
 
 #include <iostream>
 #include <cstdlib>
 #include <string>
 #include <ctime>
 
+// keep it neat and forward declare our functions
+int makeRandNum(int mod);
+void playFortuneTeller();
+int shellPrompt(int guess);
+int isWinner(int box, int guess);
+void playShellGame();
+void printShellStatus(int status);
+
+
+// the whole world
+int main(int argc, const char * argv[]) {
+    
+    // playFortuneTeller();
+    
+     playShellGame();
+    
+    return 0;
+}
+
+
+/**
+ Generates a random number and constrains to a range using modulo
+ 
+ @param mod the value of modulo to use or how many numbers are possible?
+ @return a random number % param value
+ */
 int makeRandNum(int mod)
 {
     std::srand(std::time(0)); //use current time as seed for random generator
@@ -14,6 +42,11 @@ int makeRandNum(int mod)
     
     return randNum;
 }
+
+/**
+ The game of Fortune Teller.
+ 
+ */
 void playFortuneTeller()
 {
     std::cout << "What is your burning question? > ";
@@ -51,7 +84,12 @@ void playFortuneTeller()
     
 }
 
-
+/**
+ Prompts player to guess where the shell is.
+ 
+ @param guess the game starts with this = 0 and we replace with input
+ @return the player's guess we assume it is 1 - 5
+ */
 
 int shellPrompt(int guess)
 {
@@ -59,6 +97,15 @@ int shellPrompt(int guess)
     std::cin >> guess;
     return guess;
 }
+
+/**
+ Checks to see if the user's guess matches the which box the shell is in.
+ Originally a bool but moved to int to support additional status messages.
+ 
+ @param box the value of the box with the shell
+ @param guess the value of the user's guess
+ @return 1 if winner 2 if not
+ */
 
 int isWinner(int box, int guess)
 {
@@ -72,6 +119,11 @@ int isWinner(int box, int guess)
     }
 }
 
+/**
+ Prints specific game messages based on a status.
+ 
+ @param status the status to print
+ */
 void printShellStatus(int status)
 {
     if (status == 1)
@@ -88,7 +140,9 @@ void printShellStatus(int status)
     }
 }
 
-
+/**
+ The Shell game.
+ */
 void playShellGame()
 {
     // create and store which box shell is in 1 - 5
@@ -96,7 +150,7 @@ void playShellGame()
     
     int userGuess = 0;
     int numberOfGuesses = 1;
-
+    
     while(numberOfGuesses < 3)
     {
         // prompt user where is the shell
@@ -126,11 +180,4 @@ void playShellGame()
             
         }
     }
-}
-
-int main(int argc, const char * argv[]) {
-    
-    //playFortuneTeller();
-    playShellGame();
-    return 0;
 }
