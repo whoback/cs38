@@ -37,7 +37,8 @@ int main(int argc, const char * argv[]) {
  */
 int makeRandNum(int mod)
 {
-    std::srand(std::time(0)); //use current time as seed for random generator
+    //use current time as seed for random generator
+    std::srand(static_cast<unsigned int>(std::time(0)));
     int randNum = std::rand() % mod;
     
     return randNum;
