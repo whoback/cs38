@@ -5,15 +5,21 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-
+int makeRandNum(int mod)
+{
+    std::srand(std::time(0)); //use current time as seed for random generator
+    int randNum = std::rand() % mod;
+    
+    return randNum;
+}
 
 void playFortuneTeller()
 {
     std::cout << "What is your burning question? > ";
     std::string placeholder;
     std::getline(std::cin, placeholder);
-    std::srand(std::time(0)); //use current time as seed for random generator
-    int answer = std::rand() % 6;
+    
+    int answer = makeRandNum(6);
     
     std::cout << "\nThe fortune teller has answered: ";
     switch (answer) {
