@@ -1,0 +1,9 @@
+1.  What was the most useful skill you gained this week?
+
+Being forced to deal with Xcode and getting used to how it works has been huge. 
+
+2. What was the most interesting "fact" you learned this week?
+
+Java started with the idea of iTV embedded devices before that was really a thing. 
+
+
