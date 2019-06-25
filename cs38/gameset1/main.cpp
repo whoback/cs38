@@ -5,6 +5,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <ctime>
+
 int makeRandNum(int mod)
 {
     std::srand(std::time(0)); //use current time as seed for random generator
@@ -12,7 +14,6 @@ int makeRandNum(int mod)
     
     return randNum;
 }
-
 void playFortuneTeller()
 {
     std::cout << "What is your burning question? > ";
@@ -50,9 +51,86 @@ void playFortuneTeller()
     
 }
 
+
+
+int shellPrompt(int guess)
+{
+    std::cout << "Where is the shell? Choose box 1-5 > ";
+    std::cin >> guess;
+    return guess;
+}
+
+int isWinner(int box, int guess)
+{
+    if(guess == box)
+    {
+        return 1;
+    }
+    else
+    {
+        return 2;
+    }
+}
+
+void printShellStatus(int status)
+{
+    if (status == 1)
+    {
+        std::cout << "Correct!" << std::endl;
+    }
+    if (status == 2)
+    {
+        std::cout << "That is incorrect." << std::endl;
+    }
+    if (status == 3)
+    {
+        std::cout << "You may try again." << std::endl;
+    }
+}
+
+
+void playShellGame()
+{
+    // create and store which box shell is in 1 - 5
+    int boxWithShell = makeRandNum(5);
+    
+    int userGuess = 0;
+    int numberOfGuesses = 1;
+
+    while(numberOfGuesses < 3)
+    {
+        // prompt user where is the shell
+        userGuess = shellPrompt(userGuess);
+        // check if we won
+        if(isWinner(boxWithShell, userGuess) == 1)
+        {
+            // if we won tell the user
+            printShellStatus(1);
+            break;
+        }
+        else
+        {
+            // if we didn't tell them
+            printShellStatus(2);
+            // can they guess again?
+            if(numberOfGuesses == 1)
+            {
+                printShellStatus(3);
+                numberOfGuesses++;
+            }
+            else
+            {
+                // if not game over.
+                break;
+            }
+            
+        }
+    }
+}
+
 int main(int argc, const char * argv[]) {
     
-    playFortuneTeller();
-    
+    //playFortuneTeller();
+    playShellGame();
     return 0;
 }
