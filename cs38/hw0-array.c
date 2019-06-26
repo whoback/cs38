@@ -2,13 +2,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-int arr[100];
-int i;
-enum dir {SMALL, LARGE, COUNT};
-
 int main()
 {
-    
+    int arr[100];
+    enum dir {SMALL, LARGE, COUNT};
     char line[256];
     int i;
     while(true)

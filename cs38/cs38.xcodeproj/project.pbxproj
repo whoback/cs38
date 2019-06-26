@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		D125B28722C1521B0074EEF3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D125B28622C1521B0074EEF3 /* main.cpp */; };
 		D125B29422C152460074EEF3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D125B29322C152460074EEF3 /* main.cpp */; };
-		D13970ED22C30AEE004D7F79 /* hw0-noarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D13970EB22C30AEE004D7F79 /* hw0-noarray.c */; };
 		D13970EE22C30AEE004D7F79 /* hw0-array.c in Sources */ = {isa = PBXBuildFile; fileRef = D13970EC22C30AEE004D7F79 /* hw0-array.c */; };
 		D181B4F322C1B8F700049A40 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D181B4F222C1B8F700049A40 /* main.cpp */; };
 /* End PBXBuildFile section */
@@ -288,7 +287,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D13970ED22C30AEE004D7F79 /* hw0-noarray.c in Sources */,
 				D13970EE22C30AEE004D7F79 /* hw0-array.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
