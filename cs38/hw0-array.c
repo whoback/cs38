@@ -4,10 +4,10 @@
 
 int main()
 {
-    int arr[100];
+    int arr[256];
     enum dir {SMALL, LARGE, COUNT};
     char line[256];
-    int i;
+    int i = 0;
     while(true)
     {
         printf("Please enter a positive integer: ");
@@ -29,18 +29,19 @@ int main()
                 if(arr[COUNT] == 0)
                 {
                     arr[SMALL] = i;
-                    arr[COUNT] += 1;
+                    
                 }
                 if(i > arr[LARGE])
                 {
                     arr[LARGE] = i;
-                    arr[COUNT] += 1;
+                    
                 }
                 if(i < arr[SMALL])
                 {
                     arr[SMALL] = i;
-                    arr[COUNT] += 1;
+                    
                 }
+                arr[COUNT]++;
             }
         }
     }
