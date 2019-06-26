@@ -1,12 +1,11 @@
-//
-//  main.cpp
-//  pset1
-//
+/*
+ Problem Set Week 1
+ main.cpp
+ Will Hoback
+ */
 #include <iostream>
 #include <string>
 #include <ctype.h>
-// tax rate for our food order program
-const float taxRate = 0.0625;
 
 // part 1 define vars
 int ageOfCat = 7;
@@ -14,6 +13,11 @@ float gradeAvgOfStudent = 92.5;
 int numOfJellyBeansInTub = 399;
 bool doEatPizza = true;
 int maxPeopleAllowed = 250;
+
+
+// tax rate for our food order program
+const float taxRate = 0.0625;
+
 
 // store person and address information
 // everything is a string for ease of use
@@ -29,7 +33,6 @@ struct nameAndAddress {
 };
 
 // store hotdog order information
-
 struct newOrder {
     
     const float hotdogCost = 3.50;
@@ -41,14 +44,46 @@ struct newOrder {
     const float sodaCost = 1.25;
     float sodaQuantity = 0;
     float tax = 0.0625;
-    // Display the order, the subtotal, the tax amount and the total.
     
     float subtotal = 0;
     float total = 0;
 };
 
+// keep it neat and forward declare our functions
 
-void populateNameAndAddress(nameAndAddress y)
+void populateNameAndAddress(struct nameAndAddress y);
+float calcItemSubtoal(float cost, float quant);
+float formatFloat(float num);
+float calcOrderSubtotal(struct newOrder x);
+void printOrder(struct newOrder a);
+void orderHotdog(struct newOrder x);
+
+
+// run the show
+
+int main(int argc, const char * argv[]) {
+    // initial structs
+    struct nameAndAddress userInfo;
+    struct newOrder order;
+    
+    populateNameAndAddress(userInfo);
+    orderHotdog(order);
+    
+    
+    
+    
+    return 0;
+}
+
+
+/**
+ Asks user for various information and stores it into a struct.
+ Proceeds to print it out in a 3 line format.
+ 
+ @param y a nameAndAddress struct for storing user input
+ 
+ */
+void populateNameAndAddress(struct nameAndAddress y)
 {
     
     std::cout << "Please enter your first name: " << std::endl;
@@ -77,15 +112,26 @@ void populateNameAndAddress(nameAndAddress y)
     std::cout << y.city << "," << " " << y.state << " " << y.zip << std::endl;
     
 }
+/**
+ Performs basic math to return subtotal of an item/quant pair
+ 
+ @param cost the cost of an item
+ @param quant the quantity of an item
+ @return the product of cost and quant params
+ */
 
 float calcItemSubtoal(float cost, float quant)
 {
-    // basic math to return subtitle of an item/quant pair
     return cost * quant;
 }
 
-// format output to be no more than .xy decimal places
 
+/**
+ Used to format output to be no more than .xy decimal places
+ 
+ @param num the number to format 123.4567
+ @return the formatted number 123.45
+ */
 float formatFloat(float num)
 {
     // conver to string
@@ -105,7 +151,12 @@ float formatFloat(float num)
     return std::stof(num_s, nullptr);
 }
 
-
+/**
+ Group and sum our order items into a subtotal
+ 
+ @param x a struct containing order data
+ @return sum the formatted 123.12 sum of individual items
+ */
 float calcOrderSubtotal(struct newOrder x)
 {
     // calc indiv item subtotals
@@ -117,10 +168,16 @@ float calcOrderSubtotal(struct newOrder x)
     float sum = dogs + fries + soda;
     
     // format and return
-    return formatFloat(sum);
+    
+    sum = formatFloat(sum);
+    return sum;
     
 }
-
+/**
+ Prints out order data formatted to spec
+ 
+ @param a struct containing order data
+ */
 void printOrder(struct newOrder a)
 {
     // print basic order info
@@ -134,7 +191,12 @@ void printOrder(struct newOrder a)
     std::cout << "Total Due: $" << a.total << std::endl;
 }
 
-
+/**
+ Prompts for input of a new order and saves data to a struct.
+ Calcs subtotal / tax / total and calls printOrder()
+ 
+ @param x a struct containing order data
+ */
 void orderHotdog(struct newOrder x)
 {
     // Hotdogs cost $3.50, fries cost $2.50 and soda costs $1.25.  You must also include a meals tax of 6.25%
@@ -162,18 +224,4 @@ void orderHotdog(struct newOrder x)
     // print order info back to user
     printOrder(x);
     
-}
-
-int main(int argc, const char * argv[]) {
-    // initial structs
-    struct nameAndAddress userInfo;
-    struct newOrder order;
-
-    populateNameAndAddress(userInfo);
-    orderHotdog(order);
-
-
-
-    
-    return 0;
 }
