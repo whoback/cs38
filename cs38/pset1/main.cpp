@@ -7,12 +7,16 @@
 #include <string>
 #include <ctype.h>
 
-// part 1 define vars
-int ageOfCat = 7;
-float gradeAvgOfStudent = 92.5;
-int numOfJellyBeansInTub = 399;
-bool doEatPizza = true;
-int maxPeopleAllowed = 250;
+// part 1 define vars keep them out of global namespace
+namespace PsetVariables {
+    
+    int ageOfCat = 7;
+    float gradeAvgOfStudent = 92.5;
+    int numOfJellyBeansInTub = 399;
+    bool doEatPizza = true;
+    int maxPeopleAllowed = 250;
+}
+
 
 
 // tax rate for our food order program
