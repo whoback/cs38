@@ -235,7 +235,7 @@ void orderHotdog(struct newOrder x)
         std::cout << "No items in this order!";
         return;
     }
-    
+    //TODO add in extra credit feature buy 3 get 1 free on Mondays
     
     // calc subtotal = sum of all items price * quant
     x.subtotal = calcOrderSubtotal(x);
