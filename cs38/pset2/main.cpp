@@ -7,6 +7,9 @@
 #include <string>
 #include <ctype.h>
 
+
+const float taxRate = 0.0625;
+
 struct newOrder {
     
     const float hotdogCost = 3.50;
@@ -29,12 +32,14 @@ float formatFloat(float num);
 float calcOrderSubtotal(struct newOrder x);
 void printOrder(struct newOrder a);
 void orderHotdog(struct newOrder x);
+void genFibSeq(int n);
 
 int main() {
     
     //opAndIfPractice();
-    struct newOrder order;
-    orderHotdog(order);
+    //struct newOrder order;
+    //orderHotdog(order);
+    genFibSeq(10);
     return 0;
 }
 
@@ -87,6 +92,23 @@ int opAndIfPractice()
     }
     return 0;
 }
+
+
+void genFibSeq(int n)
+{
+    int arr[30]= {0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,
+        610,987,1597,2584,4181,6765,10946,17711,28657,46368,
+        75025,121393,196418,317811,514229};
+    
+    int numToDisplay;
+    
+    std::cout << "How many numbers should I display: ";
+    std::cin >> numToDisplay;
+    for(int i = 0; i < numToDisplay; i++)
+    {
+        std::cout << arr[i] << std::endl;
+    }
+}
 /**
  Performs basic math to return subtotal of an item/quant pair
  
@@ -125,7 +147,18 @@ float formatFloat(float num)
     
     return std::stof(num_s, nullptr);
 }
-
+/**
+ Calculate a discount if our subtotal is >= $20.00
+ 
+ @param sum the calculated sum of our subtotal
+ @return either the sum + our discountAmount or just sum if < $20
+ */
+float calcDiscount(float sum)
+{
+    float discountAmount;
+    discountAmount = sum * .10;
+    return sum - discountAmount;
+}
 /**
  Group and sum our order items into a subtotal
  
@@ -141,6 +174,7 @@ float calcOrderSubtotal(struct newOrder x)
     
     // sum items together
     float sum = dogs + fries + soda;
+    
     
     // format and return
     
@@ -177,18 +211,28 @@ void orderHotdog(struct newOrder x)
     // Hotdogs cost $3.50, fries cost $2.50 and soda costs $1.25.  You must also include a meals tax of 6.25%
     // get basic order fino
     std::cout << "Welcome to Joe's" << std::endl;
-    std::cout << "How many hotdogs: " <<std::endl;
+    std::cout << "How many hotdogs: ";
     std::cin >> x.hotdogQuantity;
-    std::cout << "How many fries: " <<std::endl;
+    std::cout << "How many fries: " ;
     std::cin >> x.friesQuantity;
-    std::cout << "How many drinks: " <<std::endl;
+    std::cout << "How many drinks: ";
     std::cin >> x.sodaQuantity;
     
-    
+    // check if there are no items in the order, let the user know and end the program.
+    if(x.hotdogQuantity == 0 && x.friesQuantity == 0 && x.sodaQuantity ==0)
+    {
+        std::cout << "No items in this order!";
+        return;
+    }
     
     
     // calc subtotal = sum of all items price * quant
     x.subtotal = calcOrderSubtotal(x);
+    // check for discount and apply
+    if(x.subtotal > 20)
+    {
+        x.subtotal = calcDiscount(x.subtotal);
+    }
     // calc tax amount
     x.tax = x.subtotal * taxRate;
     x.tax = formatFloat(x.tax);
