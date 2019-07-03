@@ -5,6 +5,7 @@
  */
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <ctype.h>
 
 
@@ -101,9 +102,19 @@ void genFibSeq(int n)
         75025,121393,196418,317811,514229};
     
     int numToDisplay;
+    std::string input;
     
-    std::cout << "How many numbers should I display: ";
-    std::cin >> numToDisplay;
+    while((std::cout << "How many numbers should I display: ")
+          && std::getline(std::cin, input))
+    {
+        std::istringstream is {input};
+        if((is >> numToDisplay) && !(is >> input) && (numToDisplay <= 30) && (numToDisplay > 0))
+        {
+            break;
+        }
+        std::cerr << "Invalid input please try again." << std::endl;
+    }
+//    std::cin >> numToDisplay;
     for(int i = 0; i < numToDisplay; i++)
     {
         std::cout << arr[i] << std::endl;
