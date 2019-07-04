@@ -1,10 +1,8 @@
-//
-//  main.cpp
-//  gameset2
-//
-//  Created by Will Hoback on 7/3/19.
-//  Copyright © 2019 Will Hoback. All rights reserved.
-//
+/*
+ Game Project Week 2
+ main.cpp
+ Will Hoback
+ */
 
 #include <iostream>
 #include <string>
@@ -89,20 +87,51 @@ auto isWinner(std::vector<int> positions, std::string wordToGuess)
     }
     return 1;
 }
-int main(int argc, const char * argv[]) {
+
+void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::string> usedLetters)
+{
+    const char * wtext = R"(
+    __      __  _                                       _
+    \ \    / / (_)    _ _     _ _      ___      _ _    | |
+     \ \/\/ /  | |   | ' \   | ' \    / -_)    | '_|   |_|
+      \_/\_/  _|_|_  |_||_|  |_||_|   \___|   _|_|_   _(_)_
+    _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_| """ |
+    "`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
+    )";
+ 
+    std::cout << "\n\n\n\n\n\n\n\n\n";
+    std::cout << wtext << std::endl;
+    std::cout << "You took " << goodGuesses + badGuesses << " guesses to get it right!" << std::endl;
+    std::cout << goodGuesses << " of them were correct and " << badGuesses << " were incorrect!" << std::endl;
+    std::cout << "Look at all the letters you guessed!" << std::endl;
+    for(std::string x : usedLetters)
+    {
+        std::cout << x;
+    };
+}
+void initWordToGuessMessage(std::string underscore)
+{
+    std::cout << "Your word to guess is: " << std::endl;
     
-    // generate a word for the user and change it to ___s
-    std::string wordToGuess = randomAccessLibrary(lib);
-    std::string underscore = changeToUnderscores(wordToGuess);
+    std::cout << underscore << std::endl;
+}
+int main(int argc, const char * argv[]) {
+    // vars for gameplay
     int goodGuesses = 0;
     int badGuesses = 0;
     std::string input;
     std::string letterToGuess;
     std::vector<int> positions;
     std::vector<std::string> usedLetters;
-    std::cout << "Your word to guess is: " << std::endl;
-    std::cout << wordToGuess << std::endl;
-    std::cout << underscore << std::endl;
+    
+    
+    // generate a word for the user and change it to ___s
+    std::string wordToGuess = randomAccessLibrary(lib);
+    std::string underscore = changeToUnderscores(wordToGuess);
+    
+    // print the word as underscores for the user
+    initWordToGuessMessage(underscore);
+  
     while(true)
     {
         // get user input
@@ -111,6 +140,7 @@ int main(int argc, const char * argv[]) {
         // compare letter -> word
         if(isLetterInWord(wordToGuess, letterToGuess) != 1 && hasLetterBeenUsed(letterToGuess, usedLetters) != 0)
         {
+            
             usedLetters.push_back(letterToGuess);
             for(int i = 0; i < wordToGuess.length(); i++)
             {
@@ -121,21 +151,11 @@ int main(int argc, const char * argv[]) {
                 }
             }
             
-//            std::cout << "size of positions is: " << positions.size() << std::endl;
-//            std::cout << "size of actual word : " << wordToGuess.length()<<std::endl;
             // check if winner
             if(isWinner(positions, wordToGuess) == 0)
             {
                 goodGuesses++; // for the last count
-                std::cout << "\n\n\n\n\n";
-                std::cout << "Winner!" << std::endl;
-                std::cout << "You took " << goodGuesses + badGuesses << " guesses to get it right!" << std::endl;
-                std::cout << goodGuesses << " of them were correct and " << badGuesses << " were incorrect!" << std::endl;
-                std::cout << "Look at all the letters you guessed!" << std::endl;
-                for(std::string x : usedLetters)
-                {
-                        std::cout << x;
-                };
+                printWinningMessage(goodGuesses, badGuesses, usedLetters);
                 break;
             }
             goodGuesses++;
@@ -148,8 +168,8 @@ int main(int argc, const char * argv[]) {
             {
                     usedLetters.push_back(letterToGuess);
             };
-            std::cout << "Oops try another guess!" << std::endl;
             badGuesses++;
+            std::cout << "Oops try another guess!" << std::endl;
         }
     }
     
