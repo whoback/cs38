@@ -131,6 +131,11 @@ int main(int argc, const char * argv[]) {
                 std::cout << "Winner!" << std::endl;
                 std::cout << "You took " << goodGuesses + badGuesses << " guesses to get it right!" << std::endl;
                 std::cout << goodGuesses << " of them were correct and " << badGuesses << " were incorrect!" << std::endl;
+                std::cout << "Look at all the letters you guessed!" << std::endl;
+                for(std::string x : usedLetters)
+                {
+                        std::cout << x;
+                };
                 break;
             }
             goodGuesses++;
@@ -139,6 +144,10 @@ int main(int argc, const char * argv[]) {
         }
         else
         {
+            if(hasLetterBeenUsed(letterToGuess, usedLetters) != 0)
+            {
+                    usedLetters.push_back(letterToGuess);
+            };
             std::cout << "Oops try another guess!" << std::endl;
             badGuesses++;
         }
