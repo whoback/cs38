@@ -46,7 +46,7 @@ int main() {
 
 int opAndIfPractice()
 {
-//    Create three variables: x, y, z, all integers and a double called d.
+    //    Create three variables: x, y, z, all integers and a double called d.
     int x, y, z;
     double d;
     //Set x and y to 10
@@ -114,7 +114,7 @@ void genFibSeq(int n)
         }
         std::cerr << "Invalid input please try again." << std::endl;
     }
-//    std::cin >> numToDisplay;
+    //    std::cin >> numToDisplay;
     for(int i = 0; i < numToDisplay; i++)
     {
         std::cout << arr[i] << std::endl;
