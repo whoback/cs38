@@ -64,6 +64,8 @@ std::string getUserGuess(std::string input, std::string letterToGuess){
         std::cerr << "Invalid input please try again." << std::endl;
         
     }
+    // deal with upcased characters
+    letterToGuess = std::tolower(letterToGuess[0]);
     return letterToGuess;
 }
 
@@ -114,7 +116,7 @@ int main(int argc, const char * argv[]) {
             // check if winner
             if(isWinner(positions, wordToGuess) == 0)
             {
-                std::cout << "Winner" << std::endl;
+                std::cout << "Winner!" << std::endl;
                 break;
             }
         }
