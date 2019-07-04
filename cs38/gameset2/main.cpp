@@ -115,6 +115,31 @@ void initWordToGuessMessage(std::string underscore)
     
     std::cout << underscore << std::endl;
 }
+int guessWholeWord()
+{
+    std::cout << "Do you want to guess the whole word? Enter Y for yes: ";
+    std::string resp;
+    std::getline(std::cin, resp);
+    resp = std::tolower(resp[0]);
+    if(resp == "y")
+    {
+
+        return 0;
+    }
+    return 1;
+    
+}
+int checkWholeWordGuess(std::string wordToGuess)
+{
+    std::cout << "Enter your guess: ";
+    std::string guess;
+    std::getline(std::cin, guess);
+    if(guess == wordToGuess)
+    {
+        return 0;
+    }
+    return 1;
+}
 int main(int argc, const char * argv[]) {
     // vars for gameplay
     int goodGuesses = 0;
@@ -159,7 +184,15 @@ int main(int argc, const char * argv[]) {
                 break;
             }
             goodGuesses++;
-            
+            if(guessWholeWord() == 0)
+            {
+               if(checkWholeWordGuess(wordToGuess) == 0)
+               {
+                   printWinningMessage(goodGuesses, badGuesses, usedLetters);
+                   break;
+               }
+                
+            }
             std::cout << underscore << std::endl;
         }
         else
