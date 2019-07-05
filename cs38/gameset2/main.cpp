@@ -163,11 +163,7 @@ int main(int argc, const char * argv[]) {
         letterToGuess = getUserGuess(input, letterToGuess);
         
         // compare letter -> word
-        
-        /*
-         bad guesses are used letters or letters not in the word
-         */
-        
+
         if(isLetterInWord(wordToGuess, letterToGuess) != 1 && hasLetterBeenUsed(letterToGuess, usedLetters) != 0)
         {
             
@@ -189,6 +185,7 @@ int main(int argc, const char * argv[]) {
                 break;
             }
             goodGuesses++;
+            std::cout << underscore << std::endl;
             if(guessWholeWord() == 0)
             {
                if(checkWholeWordGuess(wordToGuess) == 0)
@@ -198,7 +195,7 @@ int main(int argc, const char * argv[]) {
                }
                 
             }
-            std::cout << underscore << std::endl;
+            
         }
         else
         {
