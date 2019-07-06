@@ -91,13 +91,18 @@ std::string getUserGuess(std::string input, std::string letterToGuess){
     return letterToGuess;
 }
 
-auto isWinner(std::vector<int> positions, std::string wordToGuess)
+bool hasUserGuessedAllLetters(std::vector<int> positions, std::string wordToGuess)
 {
     if(positions.size() == wordToGuess.length())
     {
-        return 0;
+        return true;
     }
-    return 1;
+    return false;
+}
+
+void endTheGame()
+{
+    
 }
 
 void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::string> usedLetters)
@@ -127,7 +132,7 @@ void initWordToGuessMessage(std::string underscore)
     
     std::cout << underscore << std::endl;
 }
-int guessWholeWord()
+bool doesUserWantToGuessWholeWord()
 {
     std::cout << "Do you want to guess the whole word? Enter Y for yes: ";
     std::string resp;
@@ -136,22 +141,20 @@ int guessWholeWord()
     if(resp == "y")
     {
 
-        return 0;
+        return true;
     }
-    return 1;
+    return false;
     
 }
-int checkWholeWordGuess(std::string wordToGuess)
+std::string getUserWholeWordGuess()
 {
     std::cout << "Enter your guess: ";
     std::string guess;
     std::getline(std::cin, guess);
-    if(guess == wordToGuess)
-    {
-        return 0;
-    }
-    return 1;
+    
+    return guess;
 }
+
 int main(int argc, const char * argv[]) {
     // vars for gameplay
     int goodGuesses = 0;
@@ -190,7 +193,7 @@ int main(int argc, const char * argv[]) {
             }
             
             // check if winner
-            if(isWinner(positions, wordToGuess) == 0)
+            if(hasUserGuessedAllLetters(positions, wordToGuess))
             {
                 goodGuesses++; // for the last count
                 printWinningMessage(goodGuesses, badGuesses, usedLetters);
@@ -198,10 +201,14 @@ int main(int argc, const char * argv[]) {
             }
             goodGuesses++;
             std::cout << underscore << std::endl;
-            if(guessWholeWord() == 0)
+            if(doesUserWantToGuessWholeWord())
             {
-               if(checkWholeWordGuess(wordToGuess) == 0)
+                
+                std::string userWholeWordGuess;
+                userWholeWordGuess = getUserWholeWordGuess();
+                if(userWholeWordGuess == wordToGuess)
                {
+                   goodGuesses++;
                    printWinningMessage(goodGuesses, badGuesses, usedLetters);
                    break;
                }
