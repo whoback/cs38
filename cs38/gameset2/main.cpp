@@ -114,6 +114,9 @@ bool doesUserWantToGuessWholeWord();
 std::string getUserWholeWordGuess();
 void printUsedLetters(std::vector<std::string> usedLetters);
 void printCurrentState(int badGuesses);
+static void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters);
+
+
 std::vector<std::string> lib = {
     "apple",
     "gnostic",
@@ -130,12 +133,6 @@ std::vector<std::string> lib = {
     "rainbow"
 };
 
-
-
-static void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters) {
-    std::cout << underscore << " || Already used letters: ";
-    printUsedLetters(usedLetters);
-}
 
 int main(int argc, const char * argv[]) {
     // vars for gameplay
@@ -184,14 +181,13 @@ int main(int argc, const char * argv[]) {
                 break;
             }
             // end of a round so increment guess counter, output updated underscores and used letters
-            // ask user if they want to guess the entire word
             goodGuesses++;
+            std::cout << "Good guess!" << std::endl;
             printRoundInfo(underscore, usedLetters);
-            
-            
+            // ask user if they want to guess the entire word
+
             if(doesUserWantToGuessWholeWord())
             {
-                
                 std::string userWholeWordGuess;
                 userWholeWordGuess = getUserWholeWordGuess();
                 if(userWholeWordGuess == wordToGuess)
@@ -202,10 +198,12 @@ int main(int argc, const char * argv[]) {
                }
                 else{
                     std::cout << "Sorry... wrong guess!" << std::endl;
+                    badGuesses++;
+                    printRoundInfo(underscore, usedLetters);
                 }
                 
             }
-        
+            
         }
         // we had a bad guess
         else
@@ -347,7 +345,7 @@ void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::strin
  */
 void initWordToGuessMessage(std::string underscore)
 {
-    std::cout << "Your word to guess is: " << std::endl;
+    std::cout << "Your word to guess looks like: " << std::endl;
     
     std::cout << underscore << std::endl;
     std::cout << std::endl;
@@ -360,7 +358,7 @@ void initWordToGuessMessage(std::string underscore)
  */
 bool doesUserWantToGuessWholeWord()
 {
-    std::cout << "Do you want to guess the whole word? Enter Y for yes: ";
+    std::cout << "Do you want to guess the whole word? Enter Y/N: ";
     std::string resp;
     std::getline(std::cin, resp);
     resp = std::tolower(resp[0]);
@@ -421,4 +419,9 @@ void printCurrentState(int badGuesses)
             break;
     }
     
+}
+static void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters) {
+    std::cout << "The word now looks like: " << std::endl;
+    std::cout << underscore << " || Already used letters: ";
+    printUsedLetters(usedLetters);
 }
