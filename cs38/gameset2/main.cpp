@@ -54,6 +54,14 @@ std::string changeToUnderscores(std::string str)
     return str.replace(str.begin(), str.end(), str.length(), '_');
 }
 
+
+/**
+ Returns true if the letter is found within the word
+
+ @param word word to search
+ @param letter letter to search for
+ @return bool
+ */
 bool letterIsInWord(std::string word, std::string letter)
 {
     if(word.find(letter))
@@ -63,6 +71,13 @@ bool letterIsInWord(std::string word, std::string letter)
     return false;
 }
 
+/**
+ Returns true if the letter has already been used
+
+ @param letterToGuess the letter entered by the user
+ @param usedLetters a vector of already entered letters
+ @return bool
+ */
 bool letterAlreadyUsed(std::string letterToGuess, std::vector<std::string> usedLetters)
 {
     std::vector<std::string>::iterator itr = std::find(usedLetters.begin(), usedLetters.end(), letterToGuess);
