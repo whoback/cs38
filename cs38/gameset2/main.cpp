@@ -27,6 +27,13 @@ std::vector<std::string> lib = {
     "zebra",
     "rainbow"
 };
+
+/**
+ Generate a random entry from our library of words
+
+ @param lib a vector of strings
+ @return a string that the user will end up guessing
+ */
 std::string randomAccessLibrary(std::vector<std::string> lib)
 {
     std::random_device rd;
@@ -36,6 +43,12 @@ std::string randomAccessLibrary(std::vector<std::string> lib)
     return lib.front();
 }
 
+/**
+ This takes our word and replaces every character with an underscore
+
+ @param str a string, this is the word that is being guessed by the user
+ @return a new string of all underscores
+ */
 std::string changeToUnderscores(std::string str)
 {
     return str.replace(str.begin(), str.end(), str.length(), '_');
