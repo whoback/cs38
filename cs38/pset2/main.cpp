@@ -5,7 +5,7 @@
  */
 #include <iostream>
 #include <string>
-#include <sstream>
+#include <vector>
 #include <ctype.h>
 
 
@@ -33,15 +33,22 @@ float formatFloat(float num);
 float calcOrderSubtotal(struct newOrder x);
 void printOrder(struct newOrder a);
 void orderHotdog(struct newOrder x);
-void genFibSeq(int n);
+int getNthFibonacciToGenerate();
+std::vector<int> generateFibonacciSequence(int N);
+void printFibonacciSequence(std::vector<int> sequence);
+
 
 int main() {
     
     //opAndIfPractice();
     //struct newOrder order;
     //orderHotdog(order);
-    genFibSeq(10);
-    return 0;
+    int myfib;
+    myfib = getNthFibonacciToGenerate();
+    std::vector<int> sequence = generateFibonacciSequence(myfib);
+    printFibonacciSequence(sequence);
+    
+    
 }
 
 int opAndIfPractice()
@@ -94,32 +101,42 @@ int opAndIfPractice()
     return 0;
 }
 
-
-void genFibSeq(int n)
+int getNthFibonacciToGenerate()
 {
-    int arr[30]= {0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,
-        610,987,1597,2584,4181,6765,10946,17711,28657,46368,
-        75025,121393,196418,317811,514229};
-    
     int numToDisplay;
-    std::string input;
-    
-    while((std::cout << "How many numbers should I display: ")
-          && std::getline(std::cin, input))
+    std::cout << "How many numbers should I display: ";
+    std::cin >> numToDisplay;
+    return numToDisplay;
+}
+
+std::vector<int> test()
+{
+    std::vector<int> r;
+    return r;
+}
+
+std::vector<int> generateFibonacciSequence(int N)
+{
+    std::vector<int> vec;
+    std::pair<int, int> x = { 0, 1 };
+    for (int i = 0; i < N; ++i)
     {
-        std::istringstream is {input};
-        if((is >> numToDisplay) && !(is >> input) && (numToDisplay <= 30) && (numToDisplay > 0))
-        {
-            break;
-        }
-        std::cerr << "Invalid input please try again." << std::endl;
+        x = { x.second, x.first + x.second };
+        int single = x.first;
+        vec.push_back(single);
     }
-    //    std::cin >> numToDisplay;
-    for(int i = 0; i < numToDisplay; i++)
+    return vec;
+}
+
+void printFibonacciSequence(std::vector<int> sequence)
+{
+    std::cout << "Your sequence is: ";
+    for(int i = 0; i < sequence.size(); i++)
     {
-        std::cout << arr[i] << std::endl;
+        std::cout << sequence[i] << ", ";
     }
 }
+
 /**
  Performs basic math to return subtotal of an item/quant pair
  
