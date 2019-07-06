@@ -106,7 +106,7 @@ std::string generateRandomWordFromLibrary(std::vector<std::string> lib);
 std::string changeToUnderscores(std::string str);
 bool letterIsInWord(std::string word, std::string letter);
 bool letterAlreadyUsed(std::string letterToGuess, std::vector<std::string> usedLetters);
-std::string getUserGuess(std::string input, std::string letterToGuess);
+std::string getUserGuess(std::string letterToGuess);
 bool hasUserGuessedAllLetters(std::vector<int> positions, std::string wordToGuess);
 void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::string> usedLetters);
 void initWordToGuessMessage(std::string underscore);
@@ -136,7 +136,7 @@ int main(int argc, const char * argv[]) {
     // vars for gameplay
     int goodGuesses = 0;
     int badGuesses = 0;
-    std::string input;
+    
     std::string letterToGuess;
     std::vector<int> positions;
     std::vector<std::string> usedLetters;
@@ -154,11 +154,12 @@ int main(int argc, const char * argv[]) {
     while(badGuesses < 7)
     {
         // get user input
-        letterToGuess = getUserGuess(input, letterToGuess);
+        letterToGuess = getUserGuess(letterToGuess);
         
         // compare letter -> word and it is in the word and hasn't already been used
 
-        if(letterIsInWord(wordToGuess, letterToGuess) && !letterAlreadyUsed(letterToGuess, usedLetters))
+        if(letterIsInWord(wordToGuess, letterToGuess))
+//           && !letterAlreadyUsed(letterToGuess, usedLetters))
         {
             
             usedLetters.push_back(letterToGuess);
@@ -206,6 +207,7 @@ int main(int argc, const char * argv[]) {
         // we had a bad guess
         else
         {
+            printf("baaad guesssss");
             if(!letterAlreadyUsed(letterToGuess, usedLetters))
             {
                 usedLetters.push_back(letterToGuess);
@@ -254,11 +256,11 @@ std::string changeToUnderscores(std::string str)
  */
 bool letterIsInWord(std::string word, std::string letter)
 {
-    if(word.find(letter))
+    if(word.find(letter) == std::string::npos)
     {
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
 
 /**
@@ -279,17 +281,18 @@ bool letterAlreadyUsed(std::string letterToGuess, std::vector<std::string> usedL
     // has not been used
     return false;
 }
-std::string getUserGuess(std::string input, std::string letterToGuess){
-    while((std::cout << "Guess a letter: ")
-          && std::getline(std::cin, input))
+std::string getUserGuess(std::string letterToGuess){
+    while(true)
     {
-        std::istringstream is {input};
-        if((is >> letterToGuess) && !(is >> input) && (letterToGuess.length() < 2))
+        std::cout << "Guess a letter: ";
+        std::getline(std::cin, letterToGuess);
+    
+        // only basic input checking assuming valid input per spec
+        if(letterToGuess.length() < 2)
         {
             break;
         }
         std::cerr << "Invalid input please try again." << std::endl;
-        
     }
     // deal with upcased characters
     letterToGuess = std::tolower(letterToGuess[0]);
