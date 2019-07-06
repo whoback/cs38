@@ -132,6 +132,11 @@ std::vector<std::string> lib = {
 
 
 
+static void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters) {
+    std::cout << underscore << " || Already used letters: ";
+    printUsedLetters(usedLetters);
+}
+
 int main(int argc, const char * argv[]) {
     // vars for gameplay
     int goodGuesses = 0;
@@ -151,15 +156,14 @@ int main(int argc, const char * argv[]) {
     // print the word as underscores for the user
     initWordToGuessMessage(underscore);
     // game logic
-    while(badGuesses < 7)
+    while(badGuesses < 6)
     {
         // get user input
         letterToGuess = getUserGuess(letterToGuess);
         
         // compare letter -> word and it is in the word and hasn't already been used
 
-        if(letterIsInWord(wordToGuess, letterToGuess))
-//           && !letterAlreadyUsed(letterToGuess, usedLetters))
+        if(letterIsInWord(wordToGuess, letterToGuess) && !letterAlreadyUsed(letterToGuess, usedLetters))
         {
             
             usedLetters.push_back(letterToGuess);
@@ -182,8 +186,7 @@ int main(int argc, const char * argv[]) {
             // end of a round so increment guess counter, output updated underscores and used letters
             // ask user if they want to guess the entire word
             goodGuesses++;
-            std::cout << underscore << " || Already used letters: ";
-            printUsedLetters(usedLetters);
+            printRoundInfo(underscore, usedLetters);
             
             
             if(doesUserWantToGuessWholeWord())
@@ -214,6 +217,7 @@ int main(int argc, const char * argv[]) {
             }
             badGuesses++;
             printCurrentState(badGuesses);
+            printRoundInfo(underscore, usedLetters);
         }
     }
     
