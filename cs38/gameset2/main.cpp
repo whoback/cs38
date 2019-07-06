@@ -12,6 +12,96 @@
 #include <iterator>
 #include <sstream>
 
+constexpr auto HANGMAN_STATE_INIT =
+R"(
+WELCOME TO HANGMAN
+IF YOU PICK THE WRONG LETTER 6 TIMES
+OUR FRIEND HERE DIES... GOOD LUCK!
+
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+
+)";
+
+constexpr auto HANGMAN_STATE_1 =
+R"(
+CAREFUL... ONLY 5 MORE TO GO...
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+
+)";
+constexpr auto HANGMAN_STATE_2 =
+R"(
+YOU REALLY SHOULD TRY HARDER! 4 LEFT.
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+
+)";
+constexpr auto HANGMAN_STATE_3 =
+R"(
+OK. STOP FOOLING AROUND. DOWN TO 3 AND LIVES ARE AT STAKE!
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========
+
+)";
+constexpr auto HANGMAN_STATE_4 =
+R"(
+2 TO GO AND EVEN I'M SWEATING NOW...
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+
+)";
+constexpr auto HANGMAN_STATE_5 =
+R"(
+ONLY 1 MORE CHANCE...THE END IS NEAR I REALLY HOPE YOU KNOW THE WORD!
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+
+)";
+constexpr auto HANGMAN_STATE_FINAL =
+R"(
+WELL...BETTER HIM THAN US RIGHT?
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+GAME OVER...
+
+)";
+
 std::string generateRandomWordFromLibrary(std::vector<std::string> lib);
 std::string changeToUnderscores(std::string str);
 bool letterIsInWord(std::string word, std::string letter);
@@ -22,7 +112,8 @@ void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::strin
 void initWordToGuessMessage(std::string underscore);
 bool doesUserWantToGuessWholeWord();
 std::string getUserWholeWordGuess();
-
+void printUsedLetters(std::vector<std::string> usedLetters);
+void printCurrentState(int badGuesses);
 std::vector<std::string> lib = {
     "apple",
     "gnostic",
@@ -40,6 +131,7 @@ std::vector<std::string> lib = {
 };
 
 
+
 int main(int argc, const char * argv[]) {
     // vars for gameplay
     int goodGuesses = 0;
@@ -54,15 +146,17 @@ int main(int argc, const char * argv[]) {
     std::string wordToGuess = generateRandomWordFromLibrary(lib);
     std::string underscore = changeToUnderscores(wordToGuess);
     
+    // print our hangman state
+    printCurrentState(badGuesses);
     // print the word as underscores for the user
     initWordToGuessMessage(underscore);
-  
-    while(true)
+    // game logic
+    while(badGuesses < 7)
     {
         // get user input
         letterToGuess = getUserGuess(input, letterToGuess);
         
-        // compare letter -> word
+        // compare letter -> word and it is in the word and hasn't already been used
 
         if(letterIsInWord(wordToGuess, letterToGuess) && !letterAlreadyUsed(letterToGuess, usedLetters))
         {
@@ -84,8 +178,13 @@ int main(int argc, const char * argv[]) {
                 printWinningMessage(goodGuesses, badGuesses, usedLetters);
                 break;
             }
+            // end of a round so increment guess counter, output updated underscores and used letters
+            // ask user if they want to guess the entire word
             goodGuesses++;
-            std::cout << underscore << std::endl;
+            std::cout << underscore << " || Already used letters: ";
+            printUsedLetters(usedLetters);
+            
+            
             if(doesUserWantToGuessWholeWord())
             {
                 
@@ -102,16 +201,17 @@ int main(int argc, const char * argv[]) {
                 }
                 
             }
-            
+        
         }
+        // we had a bad guess
         else
         {
-            if(letterAlreadyUsed(letterToGuess, usedLetters) != 0)
+            if(!letterAlreadyUsed(letterToGuess, usedLetters))
             {
                 usedLetters.push_back(letterToGuess);
             }
             badGuesses++;
-            std::cout << "Oops try another guess!" << std::endl;
+            printCurrentState(badGuesses);
         }
     }
     
@@ -218,8 +318,8 @@ void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::strin
     const char * wtext = R"(
     __      __  _                                       _
     \ \    / / (_)    _ _     _ _      ___      _ _    | |
-    \ \/\/ /  | |   | ' \   | ' \    / -_)    | '_|   |_|
-    \_/\_/  _|_|_  |_||_|  |_||_|   \___|   _|_|_   _(_)_
+     \ \/\/ /  | |   | ' \   | ' \    / -_)    | '_|   |_|
+      \_/\_/  _|_|_  |_||_|  |_||_|   \___|   _|_|_   _(_)_
     _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_| """ |
     "`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
     )";
@@ -229,10 +329,8 @@ void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::strin
     std::cout << "You took " << goodGuesses + badGuesses << " guesses to get it right!" << std::endl;
     std::cout << goodGuesses << " of them were correct and " << badGuesses << " were incorrect!" << std::endl;
     std::cout << "Look at all the letters you guessed!" << std::endl;
-    for(std::string x : usedLetters)
-    {
-        std::cout << x;
-    };
+    printUsedLetters(usedLetters);
+
 }
 
 /**
@@ -245,6 +343,7 @@ void initWordToGuessMessage(std::string underscore)
     std::cout << "Your word to guess is: " << std::endl;
     
     std::cout << underscore << std::endl;
+    std::cout << std::endl;
 }
 
 /**
@@ -281,4 +380,38 @@ std::string getUserWholeWordGuess()
     return guess;
 }
 
+void printUsedLetters(std::vector<std::string> usedLetters)
+{
+    for(std::string x : usedLetters)
+    {
+        std::cout << x << ',';
+    };
+    std::cout << std::endl;
+}
 
+void printCurrentState(int badGuesses)
+{
+    switch (badGuesses) {
+        case 0:
+            std::cout << HANGMAN_STATE_INIT;
+            break;
+        case 1:
+            std::cout << HANGMAN_STATE_1;
+            break;
+        case 2:
+            std::cout << HANGMAN_STATE_2;
+            break;
+        case 3:
+            std::cout << HANGMAN_STATE_3;
+            break;
+        case 4:
+            std::cout << HANGMAN_STATE_4;
+            break;
+        case 5:
+            std::cout << HANGMAN_STATE_5;
+            break;
+        default: std::cout << HANGMAN_STATE_FINAL;
+            break;
+    }
+    
+}
