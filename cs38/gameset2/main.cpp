@@ -34,7 +34,7 @@ std::vector<std::string> lib = {
  @param lib a vector of strings
  @return a string that the user will end up guessing
  */
-std::string randomAccessLibrary(std::vector<std::string> lib)
+std::string generateRandomWordFromLibrary(std::vector<std::string> lib)
 {
     std::random_device rd;
     std::mt19937 g(rd());
@@ -54,26 +54,25 @@ std::string changeToUnderscores(std::string str)
     return str.replace(str.begin(), str.end(), str.length(), '_');
 }
 
-auto isLetterInWord(std::string word, std::string letter)
+bool letterIsInWord(std::string word, std::string letter)
 {
-    
-    if(word.find(letter) == std::string::npos)
+    if(word.find(letter))
     {
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
-auto hasLetterBeenUsed(std::string letterToGuess, std::vector<std::string> usedLetters)
+bool letterAlreadyUsed(std::string letterToGuess, std::vector<std::string> usedLetters)
 {
     std::vector<std::string>::iterator itr = std::find(usedLetters.begin(), usedLetters.end(), letterToGuess);
     if(itr != usedLetters.end())
     {
         // has been used
-        return 0;
+        return true;
     }
     // has not been used
-    return 1;
+    return false;
 }
 std::string getUserGuess(std::string input, std::string letterToGuess){
     while((std::cout << "Guess a letter: ")
@@ -164,7 +163,7 @@ int main(int argc, const char * argv[]) {
     
     
     // generate a word for the user and change it to ___s
-    std::string wordToGuess = randomAccessLibrary(lib);
+    std::string wordToGuess = generateRandomWordFromLibrary(lib);
     std::string underscore = changeToUnderscores(wordToGuess);
     
     // print the word as underscores for the user
@@ -177,7 +176,7 @@ int main(int argc, const char * argv[]) {
         
         // compare letter -> word
 
-        if(isLetterInWord(wordToGuess, letterToGuess) != 1 && hasLetterBeenUsed(letterToGuess, usedLetters) != 0)
+        if(letterIsInWord(wordToGuess, letterToGuess) && !letterAlreadyUsed(letterToGuess, usedLetters))
         {
             
             usedLetters.push_back(letterToGuess);
@@ -212,7 +211,7 @@ int main(int argc, const char * argv[]) {
         }
         else
         {
-            if(hasLetterBeenUsed(letterToGuess, usedLetters) != 0)
+            if(letterAlreadyUsed(letterToGuess, usedLetters) != 0)
             {
                 usedLetters.push_back(letterToGuess);
             }
