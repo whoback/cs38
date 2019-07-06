@@ -100,11 +100,14 @@ bool hasUserGuessedAllLetters(std::vector<int> positions, std::string wordToGues
     return false;
 }
 
-void endTheGame()
-{
-    
-}
 
+/**
+ Prints a message if the user has won the game
+
+ @param goodGuesses numer of good guesses the user has currently
+ @param badGuesses number of bad guesses the user has currently
+ @param usedLetters vector of letters used in all guesses
+ */
 void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::string> usedLetters)
 {
     const char * wtext = R"(
@@ -126,12 +129,24 @@ void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::strin
         std::cout << x;
     };
 }
+
+/**
+ Prints out the word for the user to guess as underscores
+
+ @param underscore the word to guess replaced with underscores
+ */
 void initWordToGuessMessage(std::string underscore)
 {
     std::cout << "Your word to guess is: " << std::endl;
     
     std::cout << underscore << std::endl;
 }
+
+/**
+ Returns true if the user wants to guess the entire word and false if not.
+
+ @return bool
+ */
 bool doesUserWantToGuessWholeWord()
 {
     std::cout << "Do you want to guess the whole word? Enter Y for yes: ";
@@ -146,6 +161,12 @@ bool doesUserWantToGuessWholeWord()
     return false;
     
 }
+
+/**
+ This function gets the user's guess of the entire word.
+
+ @return a string containing the entered guess
+ */
 std::string getUserWholeWordGuess()
 {
     std::cout << "Enter your guess: ";
