@@ -13,7 +13,8 @@
 #include <cfenv>
 
 // can change this to test the day dependent feature
-const int DAY_OF_WEEK = 6;
+// 0 - Sunday 1 - Monday 2 - Tuesday 3 - Wednesday 4 - Thursday 5 - Friday 6 - Saturday
+const int DAY_OF_WEEK = 0;
 
 const float taxRate = 0.0625;
 
@@ -21,12 +22,13 @@ struct newOrder {
     
     const float hotdogCost = 3.50;
     float hotdogQuantity = 0;
-    
+    int hotdogFree = -1;
     const float friesCost = 2.50;
     float friesQuantity = 0;
-    
+    int friesFree = -1;
     const float sodaCost = 1.25;
     float sodaQuantity = 0;
+    int sodaFree = -1;
     float tax = 0.0625;
     
     float subtotal = 0;
@@ -229,9 +231,11 @@ void printOrder(struct newOrder a)
     // print basic order info
     std::cout << "Your order:" << std::endl;
     std::cout << a.hotdogQuantity << " hotdogs" << std::endl;
+    if(a.hotdogFree != -1) std::cout << a.hotdogFree << " FREE hotdogs!" << std::endl;
     std::cout << a.friesQuantity << " fries" << std::endl;
+    if(a.friesFree != -1) std::cout << a.friesFree << " FREE fries!" << std::endl;
     std::cout << a.sodaQuantity << " drinks" << std::endl;
-
+    if(a.sodaFree != -1) std::cout << a.sodaFree << " FREE soda!" << std::endl;
     
     std::cout << "Subtotal: $" << a.subtotal << std::endl;
     std::cout << "Meals Tax (6.25%): "<< a.tax << std::endl;
@@ -271,9 +275,9 @@ void orderHotdog(struct newOrder x)
         // then divide their items by 3 and add that number without charging them to their order
         
        
-        x.hotdogQuantity += addDiscountItems(x.hotdogQuantity);
-        x.friesQuantity += addDiscountItems(x.friesQuantity);
-        x.sodaQuantity += addDiscountItems(x.sodaQuantity);
+        x.hotdogFree = addDiscountItems(x.hotdogQuantity);
+        x.friesFree = addDiscountItems(x.friesQuantity);
+        x.sodaFree = addDiscountItems(x.sodaQuantity);
         
     }else
     {
