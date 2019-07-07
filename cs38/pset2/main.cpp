@@ -7,7 +7,13 @@
 #include <string>
 #include <vector>
 #include <ctype.h>
+#include <ctime>
+#include <cmath>
+#include <iomanip>
+#include <cfenv>
 
+// can change this to test the day dependent feature
+const int DAY_OF_WEEK = 6;
 
 const float taxRate = 0.0625;
 
@@ -36,17 +42,18 @@ void orderHotdog(struct newOrder x);
 int getNthFibonacciToGenerate();
 std::vector<int> generateFibonacciSequence(int N);
 void printFibonacciSequence(std::vector<int> sequence);
-
+bool applyDayOfWeekDiscount();
+float addDiscountItems(float item);
 
 int main() {
     
     //opAndIfPractice();
-    //struct newOrder order;
-    //orderHotdog(order);
-    int myfib;
-    myfib = getNthFibonacciToGenerate();
-    std::vector<int> sequence = generateFibonacciSequence(myfib);
-    printFibonacciSequence(sequence);
+    struct newOrder order;
+    orderHotdog(order);
+//    int myfib;
+//    myfib = getNthFibonacciToGenerate();
+//    std::vector<int> sequence = generateFibonacciSequence(myfib);
+//    printFibonacciSequence(sequence);
     
     
 }
@@ -147,6 +154,8 @@ void printFibonacciSequence(std::vector<int> sequence)
 
 float calcItemSubtoal(float cost, float quant)
 {
+
+    // if so
     return cost * quant;
 }
 
@@ -222,6 +231,10 @@ void printOrder(struct newOrder a)
     std::cout << a.hotdogQuantity << " hotdogs" << std::endl;
     std::cout << a.friesQuantity << " fries" << std::endl;
     std::cout << a.sodaQuantity << " drinks" << std::endl;
+    if(applyDayOfWeekDiscount())
+    {
+        std::cout << "Applied the Discount!"<< std::endl;
+    }
     
     std::cout << "Subtotal: $" << a.subtotal << std::endl;
     std::cout << "Meals Tax (6.25%): "<< a.tax << std::endl;
@@ -253,9 +266,25 @@ void orderHotdog(struct newOrder x)
         return;
     }
     //TODO add in extra credit feature buy 3 get 1 free on Mondays
+    if(applyDayOfWeekDiscount())
+    {
+        // if they get the day of the week discount clac their subtotal as normal
+        
+        x.subtotal = calcOrderSubtotal(x);
+        // then divide their items by 3 and add that number without charging them to their order
+        
+       
+        x.hotdogQuantity += addDiscountItems(x.hotdogQuantity);
+        x.friesQuantity += addDiscountItems(x.friesQuantity);
+        x.sodaQuantity += addDiscountItems(x.sodaQuantity);
+        
+    }else
+    {
+        // calc subtotal = sum of all items price * quant
+        x.subtotal = calcOrderSubtotal(x);
+    }
     
-    // calc subtotal = sum of all items price * quant
-    x.subtotal = calcOrderSubtotal(x);
+   
     // check for discount and apply
     if(x.subtotal > 20)
     {
@@ -271,4 +300,25 @@ void orderHotdog(struct newOrder x)
     // print order info back to user
     printOrder(x);
     
+}
+bool applyDayOfWeekDiscount()
+{
+    // buy 3 get 1 free Monday implementation
+    // is today monday?
+    std::time_t time = (std::time(nullptr));
+    std::tm localtime = *std::localtime(&time);
+    if(localtime.tm_wday == DAY_OF_WEEK)
+    {
+        return true;
+    }
+    return false;
+}
+float addDiscountItems(float item)
+{
+    
+    if(static_cast<int>(item) >= 3)
+    {
+        return static_cast<int>(item)/3;
+    }
+    return 0;
 }
