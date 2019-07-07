@@ -52,10 +52,10 @@ int main() {
     //opAndIfPractice();
     struct newOrder order;
     orderHotdog(order);
-//    int myfib;
-//    myfib = getNthFibonacciToGenerate();
-//    std::vector<int> sequence = generateFibonacciSequence(myfib);
-//    printFibonacciSequence(sequence);
+    int myfib;
+    myfib = getNthFibonacciToGenerate();
+    std::vector<int> sequence = generateFibonacciSequence(myfib);
+    printFibonacciSequence(sequence);
     
     
 }
@@ -118,11 +118,6 @@ int getNthFibonacciToGenerate()
     return numToDisplay;
 }
 
-std::vector<int> test()
-{
-    std::vector<int> r;
-    return r;
-}
 
 std::vector<int> generateFibonacciSequence(int N)
 {
