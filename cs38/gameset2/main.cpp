@@ -108,13 +108,14 @@ bool letterIsInWord(std::string word, std::string letter);
 bool letterAlreadyUsed(std::string letterToGuess, std::vector<std::string> usedLetters);
 std::string getUserGuess(std::string letterToGuess);
 bool hasUserGuessedAllLetters(std::vector<int> positions, std::string wordToGuess);
-void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::string> usedLetters);
+void printWinningMessage();
 void initWordToGuessMessage(std::string underscore);
 bool doesUserWantToGuessWholeWord();
 std::string getUserWholeWordGuess();
 void printUsedLetters(std::vector<std::string> usedLetters);
 void printCurrentState(int badGuesses);
 static void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters);
+static void printEndOfGameStats(int badGuesses, int goodGuesses, const std::vector<std::string> &usedLetters);
 
 
 std::vector<std::string> lib = {
@@ -165,10 +166,10 @@ int main(int argc, const char * argv[]) {
             usedLetters.push_back(letterToGuess);
             for(int i = 0; i < wordToGuess.length(); i++)
             {
-                if(wordToGuess[i] == letterToGuess.at(0))
+                if(wordToGuess.at(i) == letterToGuess.at(0))
                 {
                     positions.push_back(i);
-                    underscore.at(0) = letterToGuess.at(0);
+                    underscore.at(i) = letterToGuess.at(0);
                 }
             }
             
@@ -176,7 +177,8 @@ int main(int argc, const char * argv[]) {
             if(hasUserGuessedAllLetters(positions, wordToGuess))
             {
                 goodGuesses++; // for the last count
-                printWinningMessage(goodGuesses, badGuesses, usedLetters);
+                printWinningMessage();
+                printEndOfGameStats(badGuesses, goodGuesses, usedLetters);
                 break;
             }
             // end of a round so increment guess counter, output updated underscores and used letters
@@ -194,11 +196,12 @@ int main(int argc, const char * argv[]) {
                 if(userWholeWordGuess == wordToGuess)
                {
                    goodGuesses++;
-                   printWinningMessage(goodGuesses, badGuesses, usedLetters);
+                   printWinningMessage();
+                   printEndOfGameStats(badGuesses, goodGuesses, usedLetters);
                    break;
                }
                 else{
-                    std::cout << "Sorry... wrong guess!" << std::endl;
+                    std::cout << "\x1B[31mBaaaad Guessssg\033[0m\t\t" << std::endl;
                     badGuesses++;
                     printRoundInfo(underscore, usedLetters);
                 }
@@ -209,12 +212,17 @@ int main(int argc, const char * argv[]) {
         // we had a bad guess
         else
         {
-            printf("\x1B[31mBaaaad Guessssg\033[0m\t\t");
+            std::cout << "\x1B[31mBaaaad Guessssg\033[0m\t\t" << std::endl;
             if(!letterAlreadyUsed(letterToGuess, usedLetters))
             {
                 usedLetters.push_back(letterToGuess);
             }
             badGuesses++;
+            if (badGuesses == 6) {
+                printCurrentState(badGuesses);
+                printEndOfGameStats(badGuesses, goodGuesses, usedLetters);
+                break;
+            }
             printCurrentState(badGuesses);
             printRoundInfo(underscore, usedLetters);
         }
@@ -329,11 +337,8 @@ bool hasUserGuessedAllLetters(std::vector<int> positions, std::string wordToGues
 /**
  Prints a message if the user has won the game
  
- @param goodGuesses numer of good guesses the user has currently
- @param badGuesses number of bad guesses the user has currently
- @param usedLetters vector of letters used in all guesses
  */
-void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::string> usedLetters)
+void printWinningMessage()
 {
     const char * wtext = R"(
     __      __  _                                       _
@@ -344,12 +349,8 @@ void printWinningMessage(int goodGuesses, int badGuesses, std::vector<std::strin
     "`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
     )";
     
-    std::cout << "\n\n\n\n\n\n\n\n\n";
+    
     std::cout << wtext << std::endl;
-    std::cout << "You took " << goodGuesses + badGuesses << " guesses to get it right!" << std::endl;
-    std::cout << goodGuesses << " of them were correct and " << badGuesses << " were incorrect!" << std::endl;
-    std::cout << "Look at all the letters you guessed!" << std::endl;
-    printUsedLetters(usedLetters);
 
 }
 
@@ -455,5 +456,11 @@ void printCurrentState(int badGuesses)
 static void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters) {
     std::cout << "The word now looks like: " << std::endl;
     std::cout << underscore << " || Already used letters: ";
+    printUsedLetters(usedLetters);
+}
+static void printEndOfGameStats(int badGuesses, int goodGuesses, const std::vector<std::string> &usedLetters) {
+    std::cout << "You guessed " << goodGuesses + badGuesses << " guesses this game." << std::endl;
+    std::cout << goodGuesses << " of them were correct and " << badGuesses << " were incorrect." << std::endl;
+    std::cout << "Look at all the letters you guessed!" << std::endl;
     printUsedLetters(usedLetters);
 }
