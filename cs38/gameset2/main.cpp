@@ -201,7 +201,7 @@ int main(int argc, const char * argv[]) {
                    break;
                }
                 else{
-                    std::cout << "\x1B[31mBaaaad Guessssg\033[0m\t\t" << std::endl;
+                    std::cout << "\x1B[31mBaaaad Guessss\033[0m\t\t" << std::endl;
                     badGuesses++;
                     printRoundInfo(underscore, usedLetters);
                 }
@@ -212,7 +212,7 @@ int main(int argc, const char * argv[]) {
         // we had a bad guess
         else
         {
-            std::cout << "\x1B[31mBaaaad Guessssg\033[0m\t\t" << std::endl;
+            std::cout << "\x1B[31mBaaaad Guessss\033[0m\t\t" << std::endl;
             if(!letterAlreadyUsed(letterToGuess, usedLetters))
             {
                 usedLetters.push_back(letterToGuess);
@@ -458,6 +458,14 @@ static void printRoundInfo(const std::string &underscore, const std::vector<std:
     std::cout << underscore << " || Already used letters: ";
     printUsedLetters(usedLetters);
 }
+
+/**
+ Prints end of game statistics for the user
+
+ @param badGuesses number of incorrect guesses
+ @param goodGuesses number of correct guesses
+ @param usedLetters all the letters guessed
+ */
 static void printEndOfGameStats(int badGuesses, int goodGuesses, const std::vector<std::string> &usedLetters) {
     std::cout << "You guessed " << goodGuesses + badGuesses << " guesses this game." << std::endl;
     std::cout << goodGuesses << " of them were correct and " << badGuesses << " were incorrect." << std::endl;
