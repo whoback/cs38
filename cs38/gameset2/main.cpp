@@ -133,7 +133,6 @@ std::vector<std::string> lib = {
     "rainbow"
 };
 
-
 int main(int argc, const char * argv[]) {
     // vars for gameplay
     int goodGuesses = 0;
@@ -182,12 +181,14 @@ int main(int argc, const char * argv[]) {
             }
             // end of a round so increment guess counter, output updated underscores and used letters
             goodGuesses++;
-            std::cout << "Good guess!" << std::endl;
+            
+            std::cout << "\033[3;42;30mGood guess!\033[0m\t\t" << std::endl;
             printRoundInfo(underscore, usedLetters);
+            
             // ask user if they want to guess the entire word
-
             if(doesUserWantToGuessWholeWord())
             {
+                // if they do see if the word they enter matches
                 std::string userWholeWordGuess;
                 userWholeWordGuess = getUserWholeWordGuess();
                 if(userWholeWordGuess == wordToGuess)
@@ -208,7 +209,7 @@ int main(int argc, const char * argv[]) {
         // we had a bad guess
         else
         {
-            printf("baaad guesssss");
+            printf("\x1B[31mBaaaad Guessssg\033[0m\t\t");
             if(!letterAlreadyUsed(letterToGuess, usedLetters))
             {
                 usedLetters.push_back(letterToGuess);
@@ -283,6 +284,13 @@ bool letterAlreadyUsed(std::string letterToGuess, std::vector<std::string> usedL
     // has not been used
     return false;
 }
+
+/**
+ Main intake of guesses from our user. Not much validation...
+
+ @param letterToGuess string input via stdin which contains othe letter entered by the user
+ @return a string containing the user entered letter
+ */
 std::string getUserGuess(std::string letterToGuess){
     while(true)
     {
@@ -301,6 +309,13 @@ std::string getUserGuess(std::string letterToGuess){
     return letterToGuess;
 }
 
+/**
+ Checks to see if the user has guessed all the letters in the word or not
+
+ @param positions a vector of ints which corresponds to the length of our word
+ @param wordToGuess the word the user is trying to guess
+ @return bool
+ */
 bool hasUserGuessedAllLetters(std::vector<int> positions, std::string wordToGuess)
 {
     if(positions.size() == wordToGuess.length())
@@ -385,6 +400,11 @@ std::string getUserWholeWordGuess()
     return guess;
 }
 
+/**
+ Prints letters that have been guessed before.
+
+ @param usedLetters is a vector of strings which is built up over time as the user enters guesses.
+ */
 void printUsedLetters(std::vector<std::string> usedLetters)
 {
     for(std::string x : usedLetters)
@@ -394,6 +414,11 @@ void printUsedLetters(std::vector<std::string> usedLetters)
     std::cout << std::endl;
 }
 
+/**
+ This function prints the hangman ASCII art. Each is unique to a specific number of bad guesses.
+
+ @param badGuesses an int corresponding to the number of incorrect guesses by the user
+ */
 void printCurrentState(int badGuesses)
 {
     switch (badGuesses) {
@@ -420,6 +445,13 @@ void printCurrentState(int badGuesses)
     }
     
 }
+
+/**
+ This prints the newest version of a user's word to guess with all newly guessed letters included and the updated used letter table.
+
+ @param underscore the updated string containing our letters and underscores
+ @param usedLetters a vecctor of strings of used letters already guessed by the user
+ */
 static void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters) {
     std::cout << "The word now looks like: " << std::endl;
     std::cout << underscore << " || Already used letters: ";
