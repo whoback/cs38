@@ -302,6 +302,12 @@ void orderHotdog(struct newOrder x)
     printOrder(x);
     
 }
+
+/**
+ Checks to see if the current local time day of the week matches the DAY_OF_WEEK constant.
+
+ @return bool
+ */
 bool applyDayOfWeekDiscount()
 {
     // buy 3 get 1 free Monday implementation
@@ -314,6 +320,14 @@ bool applyDayOfWeekDiscount()
     }
     return false;
 }
+
+/**
+ Takes our items as floats and cast them to ints. If we have more than 3 divides the
+ number by 3 to give us the total amount of free items to be recieved.
+
+ @param item item from the order
+ @return our item qty divided by 3
+ */
 float addDiscountItems(float item)
 {
     
