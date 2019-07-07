@@ -165,10 +165,10 @@ int main(int argc, const char * argv[]) {
             usedLetters.push_back(letterToGuess);
             for(int i = 0; i < wordToGuess.length(); i++)
             {
-                if(wordToGuess[i] == letterToGuess[0])
+                if(wordToGuess[i] == letterToGuess.at(0))
                 {
                     positions.push_back(i);
-                    underscore[i] = letterToGuess[0];
+                    underscore.at(0) = letterToGuess.at(0);
                 }
             }
             
@@ -305,7 +305,7 @@ std::string getUserGuess(std::string letterToGuess){
         std::cerr << "Invalid input please try again." << std::endl;
     }
     // deal with upcased characters
-    letterToGuess = std::tolower(letterToGuess[0]);
+    letterToGuess = std::tolower(letterToGuess.at(0));
     return letterToGuess;
 }
 
@@ -376,7 +376,7 @@ bool doesUserWantToGuessWholeWord()
     std::cout << "Do you want to guess the whole word? Enter Y/N: ";
     std::string resp;
     std::getline(std::cin, resp);
-    resp = std::tolower(resp[0]);
+    resp = std::tolower(resp.at(0));
     if(resp == "y")
     {
         

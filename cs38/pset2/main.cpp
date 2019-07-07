@@ -140,7 +140,7 @@ void printFibonacciSequence(std::vector<int> sequence)
     std::cout << "Your sequence is: ";
     for(int i = 0; i < sequence.size(); i++)
     {
-        std::cout << sequence[i] << ", ";
+        std::cout << sequence.at(i) << ", ";
     }
 }
 
