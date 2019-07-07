@@ -231,10 +231,7 @@ void printOrder(struct newOrder a)
     std::cout << a.hotdogQuantity << " hotdogs" << std::endl;
     std::cout << a.friesQuantity << " fries" << std::endl;
     std::cout << a.sodaQuantity << " drinks" << std::endl;
-    if(applyDayOfWeekDiscount())
-    {
-        std::cout << "Applied the Discount!"<< std::endl;
-    }
+
     
     std::cout << "Subtotal: $" << a.subtotal << std::endl;
     std::cout << "Meals Tax (6.25%): "<< a.tax << std::endl;
