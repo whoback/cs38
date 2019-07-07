@@ -1,0 +1,6 @@
+1. A few:
+More experimenting with the colors... worked on it for a bit and due to needing to detect diff in system / terminals its pretty complicated.
+Hint system would be interesting at the cost of a guess the user would get a hint as to the answer perhaps a synonym
+easy multiplayer - allow someone to enter a word for another to guess and vice versa then users alternate guesses.. 1st one to guess entire word wins
+
+2.refactoring and getting logic to where I wanted it.
