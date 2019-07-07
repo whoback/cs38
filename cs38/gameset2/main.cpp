@@ -359,7 +359,7 @@ void printWinningMessage()
  
  @param underscore the word to guess replaced with underscores
  */
-void initWordToGuessMessage(std::string underscore)
+void initWordToGuessMessage(const std::string &underscore)
 {
     std::cout << "Your word to guess looks like: " << std::endl;
     
