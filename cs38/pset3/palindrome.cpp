@@ -28,24 +28,20 @@
 
 char* cleanText(char* str)
 {
-    size_t size = std::strlen(str)+1;
-    
-    char c[size];
+    auto size = std::strlen(str);
     int j = 0;
     for(int i = 0; i < size; i++)
     {
-        if(std::isalpha(str[i]) > 0 && std::ispunct(str[i]) == 0 && std::isspace(str[i]) == 0)
+        if(std::isalpha(str[i]))
         {
+            str[j] = std::tolower(str[i]);
             
-            str[i] = std::tolower(str[i]);
-            c[j] = str[i];
             j++;
-        
         }
-
+        
     }
-    
-    return c;
+    str[j] = '\0';
+    return str;
 }
 //Create a function called reverseText() that takes two character array strings as parameters.  The first array is the ordinal string, the second will be the same text in reverse order.
 //char* reverseText(char* str1, char* str2)

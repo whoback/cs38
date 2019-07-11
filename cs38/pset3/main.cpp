@@ -18,6 +18,6 @@ int main(int argc, const char * argv[]) {
 //    if(isPalindrome(y)) std::cout << y << std::endl;
     
     cleanText(x);
-    
+    std::cout << x;
     return 0;
 }
