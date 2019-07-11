@@ -13,6 +13,7 @@
 		D160701122CD11D100C74AD7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D160701022CD11D100C74AD7 /* main.cpp */; };
 		D181B4F322C1B8F700049A40 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D181B4F222C1B8F700049A40 /* main.cpp */; };
 		D1A6692A22D79E7700170565 /* cards.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1A6692822D79E7700170565 /* cards.cpp */; };
+		D1A6693222D7DD2800170565 /* hotdog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1A6693022D7DD2800170565 /* hotdog.cpp */; };
 		D1AF796222CC3C4100CCF9B3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1AF796122CC3C4100CCF9B3 /* main.cpp */; };
 		D1B82A7322D3A079003668FF /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B82A7222D3A079003668FF /* main.cpp */; };
 		D1B82A7822D3A46C003668FF /* palindrome.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B82A7722D3A46C003668FF /* palindrome.cpp */; };
@@ -99,6 +100,8 @@
 		D1A6692822D79E7700170565 /* cards.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cards.cpp; sourceTree = "<group>"; };
 		D1A6692E22D7B5B400170565 /* palindrome.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = palindrome.hpp; sourceTree = "<group>"; };
 		D1A6692F22D7B63F00170565 /* cards.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cards.hpp; sourceTree = "<group>"; };
+		D1A6693022D7DD2800170565 /* hotdog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = hotdog.cpp; sourceTree = "<group>"; };
+		D1A6693122D7DD2800170565 /* hotdog.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = hotdog.hpp; sourceTree = "<group>"; };
 		D1AF795F22CC3C4100CCF9B3 /* pset2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pset2; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1AF796122CC3C4100CCF9B3 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D1B82A7022D3A079003668FF /* pset3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pset3; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,6 +243,8 @@
 			isa = PBXGroup;
 			children = (
 				D1B82A7222D3A079003668FF /* main.cpp */,
+				D1A6693022D7DD2800170565 /* hotdog.cpp */,
+				D1A6693122D7DD2800170565 /* hotdog.hpp */,
 				D1A6692822D79E7700170565 /* cards.cpp */,
 				D1A6692F22D7B63F00170565 /* cards.hpp */,
 				D1B82A7722D3A46C003668FF /* palindrome.cpp */,
@@ -479,6 +484,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1A6693222D7DD2800170565 /* hotdog.cpp in Sources */,
 				D1B82A7822D3A46C003668FF /* palindrome.cpp in Sources */,
 				D1A6692A22D79E7700170565 /* cards.cpp in Sources */,
 				D1B82A7322D3A079003668FF /* main.cpp in Sources */,
