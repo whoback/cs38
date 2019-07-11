@@ -20,7 +20,7 @@ namespace PsetVariables {
 
 
 // tax rate for our food order program
-const float taxRate = 0.0625;
+const float TAX_RATE = 0.0625;
 
 
 // store person and address information
@@ -219,7 +219,7 @@ void orderHotdog(struct newOrder x)
     // calc subtotal = sum of all items price * quant
     x.subtotal = calcOrderSubtotal(x);
     // calc tax amount
-    x.tax = x.subtotal * taxRate;
+    x.tax = x.subtotal * TAX_RATE;
     x.tax = formatFloat(x.tax);
     // calc total order
     x.total = x.subtotal + x.tax;
