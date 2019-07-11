@@ -114,8 +114,8 @@ bool doesUserWantToGuessWholeWord();
 std::string getUserWholeWordGuess();
 void printUsedLetters(std::vector<std::string> usedLetters);
 void printCurrentState(int badGuesses);
-static void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters);
-static void printEndOfGameStats(int badGuesses, int goodGuesses, const std::vector<std::string> &usedLetters);
+void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters);
+void printEndOfGameStats(int badGuesses, int goodGuesses, const std::vector<std::string> &usedLetters);
 
 
 std::vector<std::string> lib = {
@@ -359,7 +359,7 @@ void printWinningMessage()
  
  @param underscore the word to guess replaced with underscores
  */
-void initWordToGuessMessage(const std::string &underscore)
+void initWordToGuessMessage(std::string underscore)
 {
     std::cout << "Your word to guess looks like: " << std::endl;
     
@@ -453,7 +453,7 @@ void printCurrentState(int badGuesses)
  @param underscore the updated string containing our letters and underscores
  @param usedLetters a vecctor of strings of used letters already guessed by the user
  */
-static void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters) {
+ void printRoundInfo(const std::string &underscore, const std::vector<std::string> &usedLetters) {
     std::cout << "The word now looks like: " << std::endl;
     std::cout << underscore << " || Already used letters: ";
     printUsedLetters(usedLetters);
@@ -466,7 +466,7 @@ static void printRoundInfo(const std::string &underscore, const std::vector<std:
  @param goodGuesses number of correct guesses
  @param usedLetters all the letters guessed
  */
-static void printEndOfGameStats(int badGuesses, int goodGuesses, const std::vector<std::string> &usedLetters) {
+ void printEndOfGameStats(int badGuesses, int goodGuesses, const std::vector<std::string> &usedLetters) {
     std::cout << "You guessed " << goodGuesses + badGuesses << " guesses this game." << std::endl;
     std::cout << goodGuesses << " of them were correct and " << badGuesses << " were incorrect." << std::endl;
     std::cout << "Look at all the letters you guessed!" << std::endl;

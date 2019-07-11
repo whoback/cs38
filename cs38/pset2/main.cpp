@@ -16,7 +16,7 @@
 // 0 - Sunday 1 - Monday 2 - Tuesday 3 - Wednesday 4 - Thursday 5 - Friday 6 - Saturday
 const int DAY_OF_WEEK = 0;
 
-const float taxRate = 0.0625;
+const float TAX_RATE = 0.0625;
 
 struct newOrder {
     
@@ -60,7 +60,7 @@ int main() {
     
 }
 
-int opAndIfPractice()
+void opAndIfPractice()
 {
     //    Create three variables: x, y, z, all integers and a double called d.
     int x, y, z;
@@ -107,7 +107,7 @@ int opAndIfPractice()
         std::cout << "y=" << y << std::endl;
         std::cout << "d=" << d << std::endl;
     }
-    return 0;
+    
 }
 
 int getNthFibonacciToGenerate()
@@ -261,7 +261,7 @@ void orderHotdog(struct newOrder x)
         std::cout << "No items in this order!";
         return;
     }
-    //TODO add in extra credit feature buy 3 get 1 free on Mondays
+    // extra credit feature buy 3 get 1 free on Mondays (any day can be choosen DAY_OF_WEEK)
     if(applyDayOfWeekDiscount())
     {
         // if they get the day of the week discount clac their subtotal as normal
@@ -287,7 +287,7 @@ void orderHotdog(struct newOrder x)
         x.subtotal = calcDiscount(x.subtotal);
     }
     // calc tax amount
-    x.tax = x.subtotal * taxRate;
+    x.tax = x.subtotal * TAX_RATE;
     x.tax = formatFloat(x.tax);
     // calc total order
     x.total = x.subtotal + x.tax;
