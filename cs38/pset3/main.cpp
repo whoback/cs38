@@ -12,15 +12,12 @@
 #include <cstddef>
 
 int main(int argc, const char * argv[]) {
-    char x[] = "Are we not drawn onward, we few, drawn onward to new era?";
-    char y[] = "Are we not drawn onward, we few, drawn onward to new era?";
-//    if(isPalindrome(x)) std::cout << x << std::endl;
-//    if(isPalindrome(y)) std::cout << y << std::endl;
-    
-    cleanText(x);
-    cleanText(y);
-    reverseText(x, y);
-    std::cout << x <<std::endl;
-    std::cout << y <<std::endl;
+//    char t3[] = "Are we not drawn onward, we few, drawn onward to new era?";
+//    char t1[] = "Doc, note, I Dissent. A fast never prevents a fatness. I diet on cod.";
+//    char t2[] = "God, Art! Name no pup “One Mantra Dog.”";
+//    char noP[] = "not A PAlindrome for sURE!";
+//    char noP2[] = "United States women's national soccer team won the world cup.";
+
+
     return 0;
 }

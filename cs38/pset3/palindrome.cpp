@@ -47,23 +47,32 @@ char* cleanText(char* str)
 char* reverseText(char* str1, char* str2)
 {
     auto size = std::strlen(str1);
-    int j = size-1;
+    char cpy[size];
+    std::strcpy(cpy, str1);
+    
+    auto j = size-1;
     for(int i = 0; i < size; i++)
     {
-        str2[j] = str1[i];
+        str2[j] = cpy[i];
         j--;
     }
+    str2[size] = '\0';
     return str2;
-
 }
 
-//bool isPalindrome(std::string &str)
-//{
-//    std::string cleaned = cleanText(str);
-//    std::string reversed = reverseText(str);
-//    if(cleaned == reversed)
-//    {
-//        return true;
-//    }
-//    return false;
-//}
+bool isPalindrome(char* str)
+{
+    
+    cleanText(str);
+    auto size = std::strlen(str);
+    char cpy[size];
+    
+    char * r;
+    r = reverseText(str, cpy);
+
+    if(std::strcmp(r, str) == 0)
+    {
+        return true;
+    }
+    return false;
+}
