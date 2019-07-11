@@ -7,10 +7,6 @@ punctuation to make it work!
 */
 #include "palindrome.hpp"
 
-
-
-
-
 char* cleanText(char* str)
 {
     auto size = std::strlen(str);

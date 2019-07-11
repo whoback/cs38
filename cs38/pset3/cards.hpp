@@ -11,6 +11,15 @@
 #include <string>
 #include <iterator>
 #include <cstddef>
+#include <random>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <ctime>
+#include <cstdlib>
 
-int dealACard(int &x, std::string &y);
+void Card();
+int dealACard(int &cardsuit, std::string &cardrank);
+
+
 #endif /* cards_h */
