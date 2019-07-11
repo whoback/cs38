@@ -13,13 +13,8 @@
 #include <iostream>
 #include <cstring>
 #include <cctype>
-/**
- takes a character array string as input and modifies it such that all
- punctuation and whitespace are removed.
- 
- @param str unmodified string
- 
- */
+
+void Pdrome();
 char* cleanText( char* str );
 char* reverseText( char* str1,  char* str2);
 bool isPalindrome( char* str);

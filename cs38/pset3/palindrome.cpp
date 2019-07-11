@@ -7,6 +7,21 @@ punctuation to make it work!
 */
 #include "palindrome.hpp"
 
+    
+void Pdrome()
+{
+    char test1[] = "Are we not drawn onward, we few, drawn onward to new era?";
+    char test2[] = "Doc, note, I Dissent. A fast never prevents a fatness. I diet on cod.";
+    char test3[] = "God, Art! Name no pup “One Mantra Dog.”";
+    char notP[] = "not A PAlindrome for sURE!";
+    char notP2[] = "United States women's national soccer team won the world cup.";
+    
+    isPalindrome(test1);
+    isPalindrome(test2);
+    isPalindrome(test3);
+    isPalindrome(notP);
+    isPalindrome(notP2);
+}
 char* cleanText(char* str)
 {
     auto size = std::strlen(str);
@@ -49,10 +64,10 @@ bool isPalindrome(char* str)
     
     char * r;
     r = reverseText(str, cpy);
-
+    
     if(std::strcmp(r, str) == 0)
     {
         return true;
     }
     return false;
-}
+    }
