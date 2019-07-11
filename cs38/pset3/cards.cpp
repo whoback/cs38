@@ -38,7 +38,7 @@ void Card()
     std::string &cardrank = cardactual;
     
     
-    int ans = dealACard(cardsuit, cardrank);
+    dealACard(cardsuit, cardrank);
     
 }
 int dealACard(int &cardsuit, std::string &cardrank)
