@@ -13,11 +13,14 @@
 
 int main(int argc, const char * argv[]) {
     char x[] = "Are we not drawn onward, we few, drawn onward to new era?";
-    char y[] = "civic";
+    char y[] = "Are we not drawn onward, we few, drawn onward to new era?";
 //    if(isPalindrome(x)) std::cout << x << std::endl;
 //    if(isPalindrome(y)) std::cout << y << std::endl;
     
     cleanText(x);
-    std::cout << x;
+    cleanText(y);
+    reverseText(x, y);
+    std::cout << x <<std::endl;
+    std::cout << y <<std::endl;
     return 0;
 }

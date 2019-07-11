@@ -44,13 +44,19 @@ char* cleanText(char* str)
     return str;
 }
 //Create a function called reverseText() that takes two character array strings as parameters.  The first array is the ordinal string, the second will be the same text in reverse order.
-//char* reverseText(char* str1, char* str2)
-//{
-//
-//    return str1;
-//
-//}
-//
+char* reverseText(char* str1, char* str2)
+{
+    auto size = std::strlen(str1);
+    int j = size-1;
+    for(int i = 0; i < size; i++)
+    {
+        str2[j] = str1[i];
+        j--;
+    }
+    return str2;
+
+}
+
 //bool isPalindrome(std::string &str)
 //{
 //    std::string cleaned = cleanText(str);
