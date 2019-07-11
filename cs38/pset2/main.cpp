@@ -35,7 +35,7 @@ struct newOrder {
     float total = 0;
 };
 
-int opAndIfPractice();
+void opAndIfPractice();
 float calcItemSubtoal(float cost, float quant);
 float formatFloat(float num);
 float calcOrderSubtotal(struct newOrder x);
