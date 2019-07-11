@@ -11,3 +11,7 @@
 
 
 #endif /* palindrome_h */
+#include <string>
+ char* cleanText( char* str);
+ char* reverseText( char* str1,  char* str2);
+bool isPalindrome( char* str);
