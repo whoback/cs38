@@ -7,6 +7,7 @@
 //
 #include "palindrome.hpp"
 #include "cards.hpp"
+#include "hotdog.hpp"
 #include <string>
 #include <iterator>
 #include <cstddef>
@@ -18,14 +19,9 @@
 
 int main(int argc, const char * argv[]) {
     
-//    char t3[] = "Are we not drawn onward, we few, drawn onward to new era?";
-//    char t1[] = "Doc, note, I Dissent. A fast never prevents a fatness. I diet on cod.";
-//    char t2[] = "God, Art! Name no pup “One Mantra Dog.”";
-//    char noP[] = "not A PAlindrome for sURE!";
-//    char noP2[] = "United States women's national soccer team won the world cup.";
-//    isPalindrome(t1);
-
-    Card();
+//    Pdrome();
+//    Card();
+    Hotdog();
 
     return 0;
 }
