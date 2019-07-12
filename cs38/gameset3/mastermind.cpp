@@ -23,7 +23,15 @@ std::mt19937 generator (seed);
 void Mastermind()
 {
     generateRandomAnswer(answer);
-    
+    if(DEBUG_MODE)
+    {
+        
+        for(int i = 0; i < answer.size(); i++)
+        {
+            std::cout << colorstrings.at(answer.at(i)) << " ";
+        }
+        std::cout << std::endl;
+    }
     populateGuess(userGuess);
     
     displayUserGuess(userGuess);

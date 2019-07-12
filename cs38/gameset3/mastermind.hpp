@@ -14,6 +14,7 @@
 #include <string>
 
 constexpr int MAX_GUESSES = 7;
+constexpr int DEBUG_MODE = 1;
 
 typedef enum color {
     blue,
