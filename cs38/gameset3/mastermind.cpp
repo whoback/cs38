@@ -14,7 +14,8 @@
 #include <string>
 #include <iostream>
 std::array<int, 4> answer;
-std::array<int, 4> g0;
+std::array<int, 4> userGuess;
+std::array<std::string, 4> clue;
 unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 std::mt19937 generator (seed);
 
@@ -22,12 +23,12 @@ std::mt19937 generator (seed);
 void Mastermind()
 {
     generateRandomAnswer(answer);
-    assert(!answer.empty());
     
-    populateGuess(g0);
-    assert(!g0.empty());
+    populateGuess(userGuess);
     
-    displayUserGuess(g0);
+    displayUserGuess(userGuess);
+    generateClue(userGuess, answer, clue);
+    displayClue(clue);
 }
 
 void generateRandomAnswer(std::array<int, 4> &ans)
@@ -35,7 +36,7 @@ void generateRandomAnswer(std::array<int, 4> &ans)
     for(int i = 0; i < ans.size(); i++)
     {
         auto g = generator();
-        ans.at(i) = g%6;
+        ans.at(i) = g % 6;
     }
 }
 
@@ -65,6 +66,34 @@ void displayUserGuess(std::array<int, 4> &guess)
     for(int i = 0; i < guess.size(); i++)
     {
         std::cout << colorstrings.at(guess.at(i)) << " ";
+    }
+    std::cout << std::endl;
+}
+
+void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue)
+{
+    int j = 0;
+    while(j < 4)
+    {
+        for(int i = 0; i < ans.size(); i++)
+        {
+            if(guess.at(j) == ans.at(i))
+            {
+                if(j == i)
+                    clue.at(i) = "black";
+                else clue.at(i) = "white";
+            }
+        }
+        j++;
+    }
+    
+}
+void displayClue(std::array<std::string, 4> &clue)
+{
+    std::cout << "Your clue: ";
+    for(int i = 0; i < clue.size(); i++)
+    {
+        std::cout << clue.at(i) << " ";
     }
     std::cout << std::endl;
 }
