@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <array>
+#include <string>
 
 constexpr int MAX_GUESSES = 7;
 
@@ -23,8 +24,10 @@ typedef enum color {
     green,
 } color;
 
-
+std::array<std::string, 6> const colorstrings{"blue", "red", "purple", "orange", "brown", "green",};
 
 void Mastermind();
 void generateRandomAnswer(std::array<int, 4> &ans);
+void populateGuess(std::array<int, 4> &guess);
+void displayUserGuess(std::array<int, 4> &guess);
 #endif /* mastermind_hpp */
