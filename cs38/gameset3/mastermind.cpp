@@ -33,10 +33,10 @@ void Mastermind()
         std::cout << std::endl;
     }
     populateGuess(userGuess);
-    
     displayUserGuess(userGuess);
     generateClue(userGuess, answer, clue);
     displayClue(clue);
+    displayAnswer(answer);
 }
 
 void generateRandomAnswer(std::array<int, 4> &ans)
@@ -80,7 +80,6 @@ void displayUserGuess(std::array<int, 4> &guess)
 
 void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue)
 {
-
     int j = 0;
     while(j < 4)
     {
@@ -89,13 +88,12 @@ void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array
             if(guess.at(j) == ans.at(i))
             {
                 if(j == i)
-                    clue.at(i) = "black";
-                else clue.at(i) = "white";
+                    clue.at(i) = "black peg";
+                else clue.at(i) = "white peg";
             }
         }
         j++;
     }
-    
 }
 void displayClue(std::array<std::string, 4> &clue)
 {
@@ -103,6 +101,15 @@ void displayClue(std::array<std::string, 4> &clue)
     for(int i = 0; i < clue.size(); i++)
     {
         std::cout << clue.at(i) << " ";
+    }
+    std::cout << std::endl;
+}
+void displayAnswer(std::array<int, 4> &answer)
+{
+    std::cout << "The answer is: ";
+    for(int i = 0; i < answer.size(); i++)
+    {
+        std::cout << answer.at(i) << " ";
     }
     std::cout << std::endl;
 }

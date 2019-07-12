@@ -33,4 +33,5 @@ void populateGuess(std::array<int, 4> &guess);
 void displayUserGuess(std::array<int, 4> &guess);
 void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue);
 void displayClue(std::array<std::string, 4> &clue);
+void displayAnswer(std::array<int, 4> &answer);
 #endif /* mastermind_hpp */
