@@ -16,7 +16,7 @@
 std::array<int, 4> answer;
 std::array<int, 4> userGuess;
 std::array<std::string, 4> clue;
-unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+unsigned seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
 std::mt19937 generator (seed);
 
 
@@ -72,6 +72,7 @@ void displayUserGuess(std::array<int, 4> &guess)
 
 void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue)
 {
+
     int j = 0;
     while(j < 4)
     {
