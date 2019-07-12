@@ -10,6 +10,7 @@
 #include <array>
 #include <random>
 #include <chrono>
+#include <set>
 #include <algorithm>
 #include <string>
 #include <iostream>
@@ -41,11 +42,14 @@ void Mastermind()
 
 void generateRandomAnswer(std::array<int, 4> &ans)
 {
+    std::set<int> temp;
     for(int i = 0; i < ans.size(); i++)
     {
-        auto g = generator();
-        ans.at(i) = g % 6;
-    }
+        auto g = generator() % 6;
+            ans.at(i) = g;
+        
+        }
+
 }
 
 void populateGuess(std::array<int, 4> &guess)
