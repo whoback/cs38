@@ -2,20 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../hw0-array.c">
-   </FileRef>
-   <Group
-      location = "container:"
-      name = "pset0">
-   </Group>
-   <FileRef
-      location = "group:../hw0-noarray.c">
-   </FileRef>
-   <Group
-      location = "container:"
-      name = "New Group">
-   </Group>
-   <FileRef
-      location = "self:">
+      location = "container:">
    </FileRef>
 </Workspace>
