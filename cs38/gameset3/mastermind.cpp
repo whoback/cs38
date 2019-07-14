@@ -123,7 +123,7 @@ void displayAnswer(std::array<int, 4> &answer)
     std::cout << "The answer is: ";
     for(int i = 0; i < answer.size(); i++)
     {
-        std::cout << answer.at(i) << " ";
+        std::cout << colorstrings.at(i) << " ";
     }
     std::cout << std::endl;
 }
