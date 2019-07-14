@@ -16,13 +16,13 @@
 #include <iostream>
 std::array<int, 4> answer;
 std::array<int, 4> userGuess;
-std::array<std::string, 4> clue;
 unsigned seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
 std::mt19937 generator (seed);
-
+int level;
 
 void Mastermind()
 {
+    setLevel(level);
     generateRandomAnswer(answer);
     if(DEBUG_MODE)
     {
@@ -33,10 +33,17 @@ void Mastermind()
         }
         std::cout << std::endl;
     }
-    populateGuess(userGuess);
-    displayUserGuess(userGuess);
-    generateClue(userGuess, answer, clue);
-    displayClue(clue);
+    int x = 0;
+    while(x < MAX_GUESSES)
+    {
+        populateGuess(userGuess);
+        displayUserGuess(userGuess);
+        std::array<std::string, 4> clue;
+
+        generateClue(userGuess, answer, clue);
+        displayClue(clue);
+        x++;
+    }
     displayAnswer(answer);
 }
 
@@ -47,7 +54,7 @@ void generateRandomAnswer(std::array<int, 4> &ans)
     {
         auto g = generator() % 6;
         auto res = temp.insert(g);
-        if(LEVEL == 1)
+        if(level == 1)
         {
             while(res.second == false)
             {
@@ -99,12 +106,19 @@ void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array
     {
         for(int i = 0; i < ans.size(); i++)
         {
+            // check guess[j] compares to every ans[i]
             if(guess.at(j) == ans.at(i))
             {
                 if(j == i)
+                {
                     clue.at(i) = "black peg";
-                else clue.at(i) = "white peg";
+                }
+                else
+                {
+                    clue.at(i) = "white peg";
+                }
             }
+
         }
         j++;
     }
@@ -126,4 +140,9 @@ void displayAnswer(std::array<int, 4> &answer)
         std::cout << colorstrings.at(i) << " ";
     }
     std::cout << std::endl;
+}
+void setLevel(int &level)
+{
+    std::cout << "What level do you want to play? Easy (1) / Hard (2):  ";
+    std::cin >> level;
 }

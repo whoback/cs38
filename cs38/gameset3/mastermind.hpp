@@ -15,7 +15,7 @@
 
 constexpr int MAX_GUESSES = 7;
 constexpr int DEBUG_MODE = 1;
-constexpr int LEVEL = 1;
+
 typedef enum color {
     blue,
     red,
@@ -34,4 +34,5 @@ void displayUserGuess(std::array<int, 4> &guess);
 void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue);
 void displayClue(std::array<std::string, 4> &clue);
 void displayAnswer(std::array<int, 4> &answer);
+void setLevel(int &level);
 #endif /* mastermind_hpp */
