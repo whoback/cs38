@@ -42,6 +42,7 @@ void Mastermind()
 
         generateClue(userGuess, answer, clue);
         displayClue(clue);
+        if(isWinner(userGuess, answer)) break;
         x++;
     }
     displayAnswer(answer);
@@ -101,26 +102,21 @@ void displayUserGuess(std::array<int, 4> &guess)
 
 void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue)
 {
-    int j = 0;
-    while(j < 4)
+    if(guess == ans)
     {
-        for(int i = 0; i < ans.size(); i++)
+        clue.fill("black peg");
+    }
+    
+    for(int i = 0; i < ans.size(); i++)
+    {
+        if(std::find(ans.begin(), ans.end(), guess.at(i)) != ans.end())
         {
-            // check guess[j] compares to every ans[i]
-            if(guess.at(j) == ans.at(i))
-            {
-                if(j == i)
-                {
-                    clue.at(i) = "black peg";
-                }
-                else
-                {
-                    clue.at(i) = "white peg";
-                }
-            }
-
+            clue.at(i) = "white peg";
         }
-        j++;
+        if(guess.at(i) == ans.at(i))
+        {
+            clue.at(i) = "black peg";
+        }
     }
 }
 void displayClue(std::array<std::string, 4> &clue)
@@ -132,12 +128,12 @@ void displayClue(std::array<std::string, 4> &clue)
     }
     std::cout << std::endl;
 }
-void displayAnswer(std::array<int, 4> &answer)
+void displayAnswer(const std::array<int, 4> &answer)
 {
     std::cout << "The answer is: ";
     for(int i = 0; i < answer.size(); i++)
     {
-        std::cout << colorstrings.at(i) << " ";
+        std::cout << colorstrings.at(answer.at(i)) << " ";
     }
     std::cout << std::endl;
 }
@@ -145,4 +141,11 @@ void setLevel(int &level)
 {
     std::cout << "What level do you want to play? Easy (1) / Hard (2):  ";
     std::cin >> level;
+}
+bool isWinner(const std::array<int, 4> &userGuess, const std::array<int, 4> &answer)
+{
+    if(userGuess == answer)
+        return true;
+    else
+        return false;
 }
