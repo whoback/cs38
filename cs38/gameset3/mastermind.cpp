@@ -46,10 +46,20 @@ void generateRandomAnswer(std::array<int, 4> &ans)
     for(int i = 0; i < ans.size(); i++)
     {
         auto g = generator() % 6;
+        auto res = temp.insert(g);
+        if(LEVEL == 1)
+        {
+            while(res.second == false)
+            {
+                g = generator() % 6;
+                
+                res = temp.insert(g);
+                
+            }
             ans.at(i) = g;
-        
         }
-
+        ans.at(i) = g;
+    }
 }
 
 void populateGuess(std::array<int, 4> &guess)
