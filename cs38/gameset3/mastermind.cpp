@@ -55,6 +55,12 @@ void Mastermind()
     
 }
 
+/**
+ Generates random answers which correspond to our colors.
+ checks the level set by the user and if 1 doesn't allow repeated colors
+ if 2 allows repeats
+ @param ans an array of ints to store our answer in
+ */
 void generateRandomAnswer(std::array<int, 4> &ans)
 {
     std::set<int> temp;
@@ -77,6 +83,12 @@ void generateRandomAnswer(std::array<int, 4> &ans)
     }
 }
 
+/**
+ Prompts the user to guess what color is in each slot
+ Prints out helpful text such as the current round.
+ @param guess array of ints containing user's guess
+ @param round integer representing the current round
+ */
 void populateGuess(std::array<int, 4> &guess, int round)
 {
     int userGuess;
@@ -98,6 +110,11 @@ void populateGuess(std::array<int, 4> &guess, int round)
     
 }
 
+/**
+ Prints out the user's last guess as actual strings converted from ints
+
+ @param guess array of ints containing the user's guess
+ */
 void displayUserGuess(const std::array<int, 4> &guess)
 {
     std::cout << "You guessed: ";
@@ -108,6 +125,16 @@ void displayUserGuess(const std::array<int, 4> &guess)
     std::cout << std::endl;
 }
 
+
+/**
+ compares guess and ans arrays and fills the clue array with black peg or white peg clues
+ if the color guess is in the answer -> white peg
+ if the color guess is in the answer and the correct slot -> black peg
+
+ @param guess array of ints containing user's guess
+ @param ans array of ints containing answer values
+ @param clue array of strings that will be printed for the user
+ */
 void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue)
 {
     if(guess == ans)
@@ -127,6 +154,12 @@ void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array
         }
     }
 }
+
+/**
+ Displays the clues to the user after every round
+
+ @param clue an array of strings only ever empty, black peg, or white peg
+ */
 void displayClue(const std::array<std::string, 4> &clue)
 {
     std::cout << "Your clue: ";
@@ -136,6 +169,12 @@ void displayClue(const std::array<std::string, 4> &clue)
     }
     std::cout << std::endl;
 }
+
+/**
+ Displays the values in our answer array as strings of actual color names
+
+ @param answer array of ints containing the answer
+ */
 void displayAnswer(const std::array<int, 4> &answer)
 {
     std::cout << "The answer is: ";
@@ -145,11 +184,26 @@ void displayAnswer(const std::array<int, 4> &answer)
     }
     std::cout << std::endl;
 }
+
+/**
+ Ask the user what level to play. Easy has no repeated colors where Hard allows repeats.
+
+ @param level int representing the level choice
+ */
 void setLevel(int &level)
 {
     std::cout << "What level do you want to play? Easy (1) / Hard (2):  ";
     std::cin >> level;
 }
+
+/**
+ Checks to see if the user has won the game. If our guess array == our answer array
+ then winner winner chicken dinner.
+
+ @param userGuess an array of ints that has the user's guess
+ @param answer an array of ints that is our answer
+ @return bool
+ */
 bool isWinner(const std::array<int, 4> &userGuess, const std::array<int, 4> &answer)
 {
     if(userGuess == answer)
