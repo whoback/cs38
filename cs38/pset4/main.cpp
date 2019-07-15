@@ -5,6 +5,12 @@
 
 #include <iostream>
 
+class Money{
+public:
+    int dollars;
+    int cents;
+};
+
 int* makeFibSeries(int n)
 {
     
@@ -50,6 +56,13 @@ char* allocName(char* first, char* last)
     strcat(full, " ");
     strcat(full, last);
     return full;
+}
+
+//Create a structure or a class called Money that contains int members for dollars and cents. Create a function called addMoney() that takes three parameters:   a Money instance and an amount of dollars and cents to add (dollars and cents are separate  int’s) Create a function called showMoney() that displays a Money object as $d.cc In main() create some money, add $3.75 to it using addMoney, display the resulting amount using showMoney()
+void addMoney(Money &m, const int dollars, const int cents)
+{
+    m.dollars = dollars;
+    m.cents = cents;
 }
 int main(int argc, const char * argv[]) {
 
