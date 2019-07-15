@@ -64,15 +64,19 @@ void Mastermind()
  */
 void generateRandomAnswer(std::array<int, 4> &ans)
 {
+    // use a set to store our rand answers in because it prevents dupes by design
     std::set<int> temp;
     for(int i = 0; i < ans.size(); i++)
     {
         auto g = generator() % 6;
         auto res = temp.insert(g);
+        // easy mode doesn't allow dupes for answers
         if(level == 1)
         {
+            // if we can't insert into the set then the number already exists
             while(res.second == false)
             {
+                // generate a new number and attempt to insert
                 g = generator() % 6;
                 
                 res = temp.insert(g);
