@@ -5,12 +5,22 @@
 
 #include <iostream>
 
-int* makeFibSeries()
+int* makeFibSeries(int n)
 {
-    int numToDisplay;
-    std::cout << "How many numbers should I display: ";
-    std::cin >> numToDisplay;
-    int *ptr_ret = &numToDisplay;
+    
+    int *ptr_ret;
+    // the c way
+    //ptr_ret = (int *)malloc(sizeof(int) * n);
+    // the c++ way
+    ptr_ret = new int[n];
+    // use pointer indexing not array indexing
+    *(ptr_ret + 0) = 0;
+    *(ptr_ret + 1) = 1;
+    for(int i = 2; i < n; ++i)
+    {
+        *(ptr_ret + i) = *(ptr_ret + i-1) + *(ptr_ret + i-2);
+    }
+    
     return ptr_ret;
 }
 void fibPartOne()
@@ -31,11 +41,41 @@ void fibPartOne()
     
 }
 
+//Create a function called allocName. This function should take as input a first name and a last name.  It should then dynamically allocate a memory block to store the full name and return a pointer to the name.   In main(), call allocName, display the full name and then deallocate the memory block.
+char* allocName(char* first, char* last)
+{
+    char* full;
+    full = new char[strlen(first) + strlen(last) + 1];
+    strcat(full, first);
+    strcat(full, " ");
+    strcat(full, last);
+    return full;
+}
 int main(int argc, const char * argv[]) {
 
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    fibPartOne();
+    //fibPartOne();
+    // part 2
+//    int *make;
+//    int numToDisplay;
+//    std::cout << "How many numbers should I display: ";
+//    std::cin >> numToDisplay;
+//    make = makeFibSeries(numToDisplay);
+//    for(int x = 0; x < numToDisplay; ++x)
+//    {
+//        std::cout << *(make + x) << std::endl;
+//    }
+    // allocName
+    char first[5]  = "Will";
+    char last[7] = "Hoback";
+    char* full = allocName(first, last);
+    std::cout << full << std::endl;
+    delete full;
+    
+    // deallocation
+    // c way
+    // free(make);
+    // c++ way
+   // delete make;
     return 0;
 }
 
