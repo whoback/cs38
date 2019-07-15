@@ -69,6 +69,37 @@ void showMoney(const Money &m)
 {
     std::cout << "$" << m.dollars << "." << m.cents << std::endl;
 }
+
+//Write a function called subString that returns a char *. It will take three input parameters: a char * and two int's: an index and howmany.   The function should return a substring that is formed from the index position of the input string for howmany characters or until the termination character (‘\0’) is encountered.   howmany should default to creating a substring that continues to the termination character.
+
+char* subString(char* s, int index, int howmany = 0)
+{
+    // if user didn't provide us with a number of chars
+    // default to finding the distance from index -> termination character
+    if(howmany == 0)
+    {
+        howmany = 0;
+        
+        while (s[howmany] != '\0') {
+            howmany++;
+        }
+        
+        howmany = howmany - index;
+        
+    }
+    
+    //allocate space for new string based on howmany + 1 for null term
+    char* ret = new char[howmany+1];
+    
+    
+    for(int i = 0; i < howmany; i++)
+    {
+        ret[i] = s[index + i];
+        
+    }
+    ret[howmany] = '\0';
+    return ret;
+}
 int main(int argc, const char * argv[]) {
 
     //fibPartOne();
@@ -95,34 +126,18 @@ int main(int argc, const char * argv[]) {
     // c++ way
    // delete make;
     
-    Money money;
-    int d = 42;
-    int c = 99;
-    addMoney(money, d, c);
-    showMoney(money);
+//    Money money;
+//    int d = 42;
+//    int c = 99;
+//    addMoney(money, d, c);
+//    showMoney(money);
+    
+    char s1[80] = "Hello There";
+    char * s2 = subString(s1, 3);     // returns "lo There"
+    
+    std::cout << s2;
+//
+//
+//
     return 0;
 }
-
-
-
-//std::vector<int> generateFibonacciSequence(int N)
-//{
-//    std::vector<int> vec;
-//    std::pair<int, int> x = { 0, 1 };
-//    for (int i = 0; i < N; ++i)
-//    {
-//        x = { x.second, x.first + x.second };
-//        int single = x.first;
-//        vec.push_back(single);
-//    }
-//    return vec;
-//}
-//
-//void printFibonacciSequence(std::vector<int> sequence)
-//{
-//    std::cout << "Your sequence is: ";
-//    for(int i = 0; i < sequence.size(); i++)
-//    {
-//        std::cout << sequence.at(i) << ", ";
-//    }
-//}
