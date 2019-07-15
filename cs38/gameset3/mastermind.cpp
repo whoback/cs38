@@ -33,11 +33,11 @@ void Mastermind()
         }
         std::cout << std::endl;
     }
-    int x = 0;
-    while(x < MAX_GUESSES)
+    int round = 1;
+    while(round <= MAX_GUESSES)
     {
         std::array<int, 4> userGuess;
-        populateGuess(userGuess);
+        populateGuess(userGuess, round);
         displayUserGuess(userGuess);
         std::array<std::string, 4> clue;
 
@@ -48,7 +48,7 @@ void Mastermind()
             std::cout << "You won!" << std::endl;
             break;
         }
-        x++;
+        round++;
     }
     std::cout << "Game over!" << std::endl;
     displayAnswer(answer);
@@ -77,9 +77,10 @@ void generateRandomAnswer(std::array<int, 4> &ans)
     }
 }
 
-void populateGuess(std::array<int, 4> &guess)
+void populateGuess(std::array<int, 4> &guess, int round)
 {
     int userGuess;
+    std::cout << "Round: #" << round << " ";
     std::cout << "Time to guess!" << std::endl;
     std::cout << "Enter ";
     for(int a = 0; a < colorstrings.size(); a++)
