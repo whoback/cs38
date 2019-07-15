@@ -50,7 +50,7 @@ char* cleanText(char* str)
  @param str2 string to return in reverse order
  @return a copy of str1 in reverse order
  */
-char* reverseText(char* str1, char* str2)
+char* reverseText(const char* str1, char* str2)
 {
     auto size = std::strlen(str1);
     char cpy[size];
@@ -72,7 +72,7 @@ char* reverseText(char* str1, char* str2)
  @param str the string to check
  @return bool
  */
-bool isPalindrome(char* str)
+bool isPalindrome( char* str)
 {
     cleanText(str);
     auto size = std::strlen(str);

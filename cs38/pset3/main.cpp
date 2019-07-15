@@ -17,9 +17,9 @@
 
 int main(int argc, const char * argv[]) {
     
-//    Pdrome();
+Pdrome();
  Card();
-   // Hotdog();
+Hotdog();
 
     return 0;
 }

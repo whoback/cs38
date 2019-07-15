@@ -12,6 +12,6 @@
 
 void Pdrome();
 char* cleanText( char* str );
-char* reverseText( char* str1,  char* str2);
+char* reverseText(const char* str1,  char* str2);
 bool isPalindrome( char* str);
 #endif /* palindrome_h */

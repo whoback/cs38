@@ -46,7 +46,7 @@ void Card()
  @param cardrank string of the value of our card
  @return an int representing the value of our card
  */
-int dealACard(int &cardsuit, std::string &cardrank)
+int dealACard(const int &cardsuit, const std::string &cardrank)
 {
     int value = 0;
     if (cardrank == "Ace") value = 1;

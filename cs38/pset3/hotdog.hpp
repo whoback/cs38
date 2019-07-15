@@ -15,8 +15,8 @@
 void Hotdog();
 void displayMenu();
 void getOrderItem(std::array<int, 3> &quants);
-void displayOrderAmounts(std::array<int, 3> &quants);
-float calculateSubtotal(std::array<int, 3> &quants, std::array<const float, 3> &price);
+void displayOrderAmounts(const std::array<int, 3> &quants);
+float calculateSubtotal(const std::array<int, 3> &quants, const std::array<const float, 3> &price);
 float calculateDiscount(float subtotal);
 float calculateTax(float subtotal);
 std::string formatDollarOutput(double amt);

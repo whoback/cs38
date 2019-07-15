@@ -97,7 +97,7 @@ void displayMenu()
 
  @param quants an array of quantities of each of our items
  */
-void displayOrderAmounts(std::array<int, 3> &quants)
+void displayOrderAmounts(const std::array<int, 3> &quants)
 {
     std::cout<< "Your order\n";
     std::cout<< "hotdog: " << quants.at(0) << "\n";
@@ -112,7 +112,7 @@ void displayOrderAmounts(std::array<int, 3> &quants)
  @param price price of our items as an array of const floats
  @return a float of the sum of all items * their price
  */
-float calculateSubtotal(std::array<int, 3> &quants, std::array<const float, 3> &price)
+float calculateSubtotal(const std::array<int, 3> &quants, const std::array<const float, 3> &price)
 {
     float hotdogs = quants.at(0) * price.at(0);
     float fries = quants.at(1) * price.at(1);

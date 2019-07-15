@@ -14,7 +14,7 @@
 #include <cstdlib>
 
 void Card();
-int dealACard(int &cardsuit, std::string &cardrank);
+int dealACard(const int &cardsuit, const std::string &cardrank);
 
 
 #endif /* cards_h */
