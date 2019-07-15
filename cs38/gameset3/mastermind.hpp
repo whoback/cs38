@@ -14,8 +14,16 @@
 #include <string>
 
 constexpr int MAX_GUESSES = 7;
-constexpr int DEBUG_MODE = 1;
-
+// set to 1 to show the answer
+constexpr int DEBUG_MODE = 0;
+constexpr auto MASTERMIND_TITLE =
+R"(
+ _      ____  ____  _____  _____ ____  _      _  _      ____  _
+/ \__/|/  _ \/ ___\/__ __\/  __//  __\/ \__/|/ \/ \  /|/  _ \/ \
+| |\/||| / \||    \  / \  |  \  |  \/|| |\/||| || |\ ||| | \|| |
+| |  ||| |-||\___ |  | |  |  /_ |    /| |  ||| || | \||| |_/|\_/
+\_/  \|\_/ \|\____/  \_/  \____\\_/\_\\_/  \|\_/\_/  \|\____/(_)
+)";
 typedef enum color {
     blue,
     red,

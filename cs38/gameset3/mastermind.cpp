@@ -22,6 +22,7 @@ int level;
 
 void Mastermind()
 {
+    std::cout << MASTERMIND_TITLE;
     setLevel(level);
     generateRandomAnswer(answer);
     if(DEBUG_MODE)
