@@ -46,7 +46,6 @@ void Mastermind()
         if(isWinner(userGuess, answer))
         {
             std::cout << "You won!" << std::endl;
-            displayAnswer(answer);
             break;
         }
         x++;
