@@ -44,7 +44,7 @@ void Card()
 
  @param cardsuit int from 0 - 3 representing card suits
  @param cardrank string of the value of our card
- @return an int representing the representation of our card in a deck of 52 cards
+ @return an int representing the value of our card
  */
 int dealACard(int &cardsuit, std::string &cardrank)
 {

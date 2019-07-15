@@ -18,8 +18,8 @@
 int main(int argc, const char * argv[]) {
     
 //    Pdrome();
-//    Card();
-    Hotdog();
+ Card();
+   // Hotdog();
 
     return 0;
 }

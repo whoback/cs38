@@ -18,6 +18,13 @@ void Pdrome()
     isPalindrome(notP);
     isPalindrome(notP2);
 }
+
+/**
+ takes a string and removes all non alpha chars
+
+ @param str a string to clean
+ @return the cleaned string
+ */
 char* cleanText(char* str)
 {
     auto size = std::strlen(str);
@@ -35,7 +42,14 @@ char* cleanText(char* str)
     str[j] = '\0';
     return str;
 }
-//Create a function called reverseText() that takes two character array strings as parameters.  The first array is the ordinal string, the second will be the same text in reverse order.
+
+/**
+ takes two strings uses the first as the model to reverse
+
+ @param str1 string to reverse
+ @param str2 string to return in reverse order
+ @return a copy of str1 in reverse order
+ */
 char* reverseText(char* str1, char* str2)
 {
     auto size = std::strlen(str1);
@@ -52,6 +66,12 @@ char* reverseText(char* str1, char* str2)
     return str2;
 }
 
+/**
+ Checks to see if a given string is a palindrome
+
+ @param str the string to check
+ @return bool
+ */
 bool isPalindrome(char* str)
 {
     cleanText(str);
