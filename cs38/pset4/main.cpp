@@ -133,11 +133,15 @@ int main(int argc, const char * argv[]) {
     //    showMoney(money);
     
     char s1[80] = "Hello There";
-    char * s2 = subString(s1, 3);     // returns "lo There"
+    char * s2 = subString(s1, 3);
+    char test[] = "lo There";    
+    assert(strcmp(s2, test) == 0);
+//    subString(s1, 3, 4);
+//    // returns "lo T"
+//    subString(s1, 3, 99);
+//    // returns "lo There"
+//    subString(s1, 3);
+//    // returns "lo There"
     
-    std::cout << s2;
-    //
-    //
-    //
     return 0;
 }
