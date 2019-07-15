@@ -163,6 +163,11 @@ void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array
  */
 void displayClue(const std::array<std::string, 4> &clue)
 {
+    // if we're playing on hard shuffle the clues otherwise they conform to the slots
+    if(level == 2)
+    {
+        std::shuffle(clue.begin(), clue.end(), generator);
+    }
     std::cout << "Your clue: ";
     for(int i = 0; i < clue.size(); i++)
     {
