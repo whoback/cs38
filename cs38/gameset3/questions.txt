@@ -1,0 +1,5 @@
+I like that c++ offers a greater amount of control than other languages. Being able to choose to pass by ref, pass by value, or 
+pass by pointer just gives you the ability to select the right tool for the job. That is also what makes it more difficult to 
+understand both conceptually and from a syntax point of view. 
+
+I didn't really understand why we were instructed to use an array of enums... we're storing data in arrays which makes sense but the values are all just 0 - n and we don't ever really need to reference a named value where an enum makes sense. 
