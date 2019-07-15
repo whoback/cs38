@@ -138,6 +138,7 @@ void displayUserGuess(const std::array<int, 4> &guess)
  */
 void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue)
 {
+    // all guesses == all answers winner!
     if(guess == ans)
     {
         clue.fill("black peg");
@@ -145,14 +146,25 @@ void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array
     
     for(int i = 0; i < ans.size(); i++)
     {
+        // is guess[i] in our answer array?
         if(std::find(ans.begin(), ans.end(), guess.at(i)) != ans.end())
         {
-            clue.at(i) = "white peg";
+       
+            // count the number of times the answer[i] is in our answer array
+            auto countAnswers = std::count(ans.begin(), ans.end(), answer.at(i));
+            // count the number of times guess[i] is in our guess array
+            auto countGuesses = std::count(guess.begin(), guess.end(), guess.at(i));
+            // prevent duplicate white peg clues
+            if(countAnswers >= countGuesses)
+            {
+                clue.at(i) = "white peg";
+            }
+            if(guess.at(i) == ans.at(i))
+            {
+                clue.at(i) = "black peg";
+            }
         }
-        if(guess.at(i) == ans.at(i))
-        {
-            clue.at(i) = "black peg";
-        }
+        
     }
 }
 
