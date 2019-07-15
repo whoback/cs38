@@ -64,6 +64,11 @@ void addMoney(Money &m, const int dollars, const int cents)
     m.dollars = dollars;
     m.cents = cents;
 }
+
+void showMoney(const Money &m)
+{
+    std::cout << "$" << m.dollars << "." << m.cents << std::endl;
+}
 int main(int argc, const char * argv[]) {
 
     //fibPartOne();
@@ -78,17 +83,23 @@ int main(int argc, const char * argv[]) {
 //        std::cout << *(make + x) << std::endl;
 //    }
     // allocName
-    char first[5]  = "Will";
-    char last[7] = "Hoback";
-    char* full = allocName(first, last);
-    std::cout << full << std::endl;
-    delete full;
+//    char first[5]  = "Will";
+//    char last[7] = "Hoback";
+//    char* full = allocName(first, last);
+//    std::cout << full << std::endl;
+//    delete full;
     
     // deallocation
     // c way
     // free(make);
     // c++ way
    // delete make;
+    
+    Money money;
+    int d = 42;
+    int c = 99;
+    addMoney(money, d, c);
+    showMoney(money);
     return 0;
 }
 
