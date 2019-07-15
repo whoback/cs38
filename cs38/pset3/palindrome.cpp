@@ -1,9 +1,5 @@
 /*
 Problem 2:  Palindrome
-A palindrome is a sentence that reads the same forward and backward.
-For example, “Madam I’m Adam”.  Note that you have to remove whitespace and
-punctuation to make it work!
-
 */
 #include "palindrome.hpp"
 

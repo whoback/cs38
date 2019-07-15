@@ -1,10 +1,6 @@
 //
 //  palindrome.hpp
 //  pset3
-//
-//  Created by Will Hoback on 7/11/19.
-//  Copyright © 2019 Will Hoback. All rights reserved.
-//
 
 #ifndef palindrome_h
 #define palindrome_h

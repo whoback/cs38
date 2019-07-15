@@ -1,10 +1,8 @@
-//
-//  main.cpp
-//  pset3
-//
-//  Created by Will Hoback on 7/8/19.
-//  Copyright © 2019 Will Hoback. All rights reserved.
-//
+/*
+ Problem Set Week 3
+ main.cpp
+ Will Hoback
+ */
 #include "palindrome.hpp"
 #include "cards.hpp"
 #include "hotdog.hpp"

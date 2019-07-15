@@ -1,10 +1,6 @@
 //
 //  cards.cpp
 //  pset3
-//
-//  Created by Will Hoback on 7/11/19.
-//  Copyright © 2019 Will Hoback. All rights reserved.
-//
 #include "cards.hpp"
 #include <string>
 #include <iterator>
@@ -41,6 +37,15 @@ void Card()
     dealACard(cardsuit, cardrank);
     
 }
+
+
+/**
+ Deals a rand card when called
+
+ @param cardsuit int from 0 - 3 representing card suits
+ @param cardrank string of the value of our card
+ @return an int representing the representation of our card in a deck of 52 cards
+ */
 int dealACard(int &cardsuit, std::string &cardrank)
 {
     int value = 0;

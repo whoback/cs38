@@ -49,6 +49,11 @@ void Hotdog()
 }
 
 
+/**
+ displays the menu to the user and then takes in a quantity for each item selected
+
+ @param quants array of quantities of each item
+ */
 void getOrderItem(std::array<int, 3> &quants)
 {
     displayMenu();
@@ -78,12 +83,20 @@ void getOrderItem(std::array<int, 3> &quants)
     
 }
 
+/**
+ Displays the menu to the user
+ */
 void displayMenu()
 {
     std::cout << "Choose next item (order by item number)\n";
     std::cout<< "1: hotdog\n2: fries\n3: soda\n";
 }
 
+/**
+ Displays the current item amounts in the order
+
+ @param quants an array of quantities of each of our items
+ */
 void displayOrderAmounts(std::array<int, 3> &quants)
 {
     std::cout<< "Your order\n";
@@ -92,6 +105,13 @@ void displayOrderAmounts(std::array<int, 3> &quants)
     std::cout<< "soda: " << quants.at(2) << "\n";
 }
 
+/**
+ Calculate the subtotal of the order
+
+ @param quants quantities of our orders as an array of ints
+ @param price price of our items as an array of const floats
+ @return a float of the sum of all items * their price
+ */
 float calculateSubtotal(std::array<int, 3> &quants, std::array<const float, 3> &price)
 {
     float hotdogs = quants.at(0) * price.at(0);
@@ -100,6 +120,13 @@ float calculateSubtotal(std::array<int, 3> &quants, std::array<const float, 3> &
     float sub = hotdogs + fries + soda;
     return sub;
 }
+
+/**
+ calculates a 10% discount if the subtotal is >= 20.00
+
+ @param subtotal current subtotal as a float
+ @return the amount of the discount either 10% of the subtotal or zero
+ */
 float calculateDiscount(float subtotal)
 {
     if(subtotal >= 20)
@@ -112,6 +139,13 @@ float calculateTax(float subtotal)
 {
     return subtotal * 0.0625;
 }
+
+/**
+ Takes a float amount and formats it to be xx.xx for currency use.
+
+ @param amt amount of money as a float
+ @return a string formatted as xx.xx
+ */
 std::string formatDollarOutput(double amt)
 {
     std::string orig = std::to_string(amt);
