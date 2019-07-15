@@ -134,8 +134,9 @@ int main(int argc, const char * argv[]) {
     
     char s1[80] = "Hello There";
     char * s2 = subString(s1, 3);
-    char test[] = "lo There";    
+    char test[] = "lo There";
     assert(strcmp(s2, test) == 0);
+    std::cout<<s2;
 //    subString(s1, 3, 4);
 //    // returns "lo T"
 //    subString(s1, 3, 99);
