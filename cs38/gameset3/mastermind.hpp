@@ -11,11 +11,12 @@
 
 #include <stdio.h>
 #include <array>
+#include <algorithm>
 #include <string>
 
 constexpr int MAX_GUESSES = 7;
 // set to 1 to show the answer
-constexpr int DEBUG_MODE = 0;
+constexpr int DEBUG_MODE = 1;
 constexpr auto MASTERMIND_TITLE =
 R"(
  _      ____  ____  _____  _____ ____  _      _  _      ____  _
@@ -40,7 +41,7 @@ void generateRandomAnswer(std::array<int, 4> &ans);
 void populateGuess(std::array<int, 4> &guess, int round);
 void displayUserGuess(const std::array<int, 4> &guess);
 void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue);
-void displayClue(const std::array<std::string, 4> &clue);
+void displayClue(std::array<std::string, 4> &clue);
 void displayAnswer(const std::array<int, 4> &answer);
 void setLevel(int &level);
 bool isWinner(const std::array<int, 4> &userGuess, const std::array<int, 4> &answer);

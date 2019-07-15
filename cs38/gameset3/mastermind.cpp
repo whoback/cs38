@@ -161,7 +161,7 @@ void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array
 
  @param clue an array of strings only ever empty, black peg, or white peg
  */
-void displayClue(const std::array<std::string, 4> &clue)
+void displayClue(std::array<std::string, 4> &clue)
 {
     // if we're playing on hard shuffle the clues otherwise they conform to the slots
     if(level == 2)
