@@ -15,7 +15,7 @@
 #include <string>
 #include <iostream>
 std::array<int, 4> answer;
-std::array<int, 4> userGuess;
+
 unsigned seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
 std::mt19937 generator (seed);
 int level;
@@ -36,16 +36,24 @@ void Mastermind()
     int x = 0;
     while(x < MAX_GUESSES)
     {
+        std::array<int, 4> userGuess;
         populateGuess(userGuess);
         displayUserGuess(userGuess);
         std::array<std::string, 4> clue;
 
         generateClue(userGuess, answer, clue);
         displayClue(clue);
-        if(isWinner(userGuess, answer)) break;
+        if(isWinner(userGuess, answer))
+        {
+            std::cout << "You won!" << std::endl;
+            displayAnswer(answer);
+            break;
+        }
         x++;
     }
+    std::cout << "Game over!" << std::endl;
     displayAnswer(answer);
+    
 }
 
 void generateRandomAnswer(std::array<int, 4> &ans)
@@ -90,7 +98,7 @@ void populateGuess(std::array<int, 4> &guess)
     
 }
 
-void displayUserGuess(std::array<int, 4> &guess)
+void displayUserGuess(const std::array<int, 4> &guess)
 {
     std::cout << "You guessed: ";
     for(int i = 0; i < guess.size(); i++)
@@ -119,7 +127,7 @@ void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array
         }
     }
 }
-void displayClue(std::array<std::string, 4> &clue)
+void displayClue(const std::array<std::string, 4> &clue)
 {
     std::cout << "Your clue: ";
     for(int i = 0; i < clue.size(); i++)
