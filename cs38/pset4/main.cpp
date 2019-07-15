@@ -101,43 +101,43 @@ char* subString(char* s, int index, int howmany = 0)
     return ret;
 }
 int main(int argc, const char * argv[]) {
-
+    
     //fibPartOne();
     // part 2
-//    int *make;
-//    int numToDisplay;
-//    std::cout << "How many numbers should I display: ";
-//    std::cin >> numToDisplay;
-//    make = makeFibSeries(numToDisplay);
-//    for(int x = 0; x < numToDisplay; ++x)
-//    {
-//        std::cout << *(make + x) << std::endl;
-//    }
+    //    int *make;
+    //    int numToDisplay;
+    //    std::cout << "How many numbers should I display: ";
+    //    std::cin >> numToDisplay;
+    //    make = makeFibSeries(numToDisplay);
+    //    for(int x = 0; x < numToDisplay; ++x)
+    //    {
+    //        std::cout << *(make + x) << std::endl;
+    //    }
     // allocName
-//    char first[5]  = "Will";
-//    char last[7] = "Hoback";
-//    char* full = allocName(first, last);
-//    std::cout << full << std::endl;
-//    delete full;
+    //    char first[5]  = "Will";
+    //    char last[7] = "Hoback";
+    //    char* full = allocName(first, last);
+    //    std::cout << full << std::endl;
+    //    delete full;
     
     // deallocation
     // c way
     // free(make);
     // c++ way
-   // delete make;
+    // delete make;
     
-//    Money money;
-//    int d = 42;
-//    int c = 99;
-//    addMoney(money, d, c);
-//    showMoney(money);
+    //    Money money;
+    //    int d = 42;
+    //    int c = 99;
+    //    addMoney(money, d, c);
+    //    showMoney(money);
     
     char s1[80] = "Hello There";
     char * s2 = subString(s1, 3);     // returns "lo There"
     
     std::cout << s2;
-//
-//
-//
+    //
+    //
+    //
     return 0;
 }
