@@ -94,7 +94,7 @@ void generateRandomAnswer(std::array<int, 4> &ans)
  @param guess array of ints containing user's guess
  @param round integer representing the current round
  */
-void populateGuess(std::array<int, 4> &guess, int round)
+void populateGuess(std::array<int, 4> &guess, const int round)
 {
     int userGuess;
     std::cout << "Round: #" << round << " ";
@@ -140,7 +140,7 @@ void displayUserGuess(const std::array<int, 4> &guess)
  @param ans array of ints containing answer values
  @param clue array of strings that will be printed for the user
  */
-void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue)
+void generateClue(const std::array<int, 4> &guess, const std::array<int, 4> &ans, std::array<std::string, 4> &clue)
 {
     // all guesses == all answers winner!
     if(guess == ans)

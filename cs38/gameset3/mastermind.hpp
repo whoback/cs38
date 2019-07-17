@@ -38,9 +38,9 @@ std::array<std::string, 6> const colorstrings{"blue", "red", "purple", "orange",
 
 void Mastermind();
 void generateRandomAnswer(std::array<int, 4> &ans);
-void populateGuess(std::array<int, 4> &guess, int round);
+void populateGuess(std::array<int, 4> &guess, const int round);
 void displayUserGuess(const std::array<int, 4> &guess);
-void generateClue(std::array<int, 4> &guess, std::array<int, 4> &ans, std::array<std::string, 4> &clue);
+void generateClue(const std::array<int, 4> &guess, const std::array<int, 4> &ans, std::array<std::string, 4> &clue);
 void displayClue(std::array<std::string, 4> &clue);
 void displayAnswer(const std::array<int, 4> &answer);
 void setLevel(int &level);
