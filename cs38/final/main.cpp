@@ -8,24 +8,6 @@
 #include <iostream>
 #include <ncurses.h>
 
-void move(char dir, int &xloc, int &yloc){
-    switch (dir) {
-        case KEY_RIGHT:
-            yloc++;
-            break;
-        case KEY_LEFT:
-            yloc--;
-            break;
-        case KEY_UP:
-            xloc--;
-            break;
-        case KEY_DOWN:
-            xloc++;
-            break;
-        default:
-            break;
-    }
-}
 
 int main(int argc, const char * argv[])
 {
