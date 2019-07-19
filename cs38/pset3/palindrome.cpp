@@ -50,19 +50,17 @@ char* cleanText(char* str)
  @param str2 string to return in reverse order
  @return a copy of str1 in reverse order
  */
-char* reverseText(const char* str1, char* str2)
+char* reverseText(char *str1, char *str2)
 {
-    auto size = std::strlen(str1);
-    char cpy[size];
-    std::strcpy(cpy, str1);
-    
-    auto j = size-1;
-    for(int i = 0; i < size; i++)
+    auto i = strlen(str1)-1;
+    i = static_cast<int>(i);
+    int j = 0;
+    while(j<i)
     {
-        str2[j] = cpy[i];
-        j--;
+        std::swap(str2[j], str2[i]);
+        j++;
+        i--;
     }
-    str2[size] = '\0';
     return str2;
 }
 
@@ -75,8 +73,9 @@ char* reverseText(const char* str1, char* str2)
 bool isPalindrome( char* str)
 {
     cleanText(str);
-    auto size = std::strlen(str);
-    char cpy[size];
+    
+    char * cpy = new char[strlen(str) + 1];
+    strcpy(cpy, str);
     
     char * r;
     r = reverseText(str, cpy);
@@ -86,4 +85,4 @@ bool isPalindrome( char* str)
         return true;
     }
     return false;
-    }
+}
