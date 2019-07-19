@@ -2,33 +2,44 @@
 //  main.cpp
 //  final
 //
-//  Created by Will Hoback on 7/18/19.
-//  Copyright © 2019 Will Hoback. All rights reserved.
-//
+// 0,0 is top left corner of screen
+// most functions in ncurses are y,x not x,y
 
 #include <iostream>
 #include <ncurses.h>
 
-typedef enum {
-    right,
-    left,
-    up,
-    down,
-} direction;
-
-constexpr int MAP_WIDTH = 20;
-constexpr int MAP_HEIGHT = 20;
-
-void move(direction dir){
-    
+void move(char dir, int &xloc, int &yloc){
+    switch (dir) {
+        case KEY_RIGHT:
+            yloc++;
+            break;
+        case KEY_LEFT:
+            yloc--;
+            break;
+        case KEY_UP:
+            xloc--;
+            break;
+        case KEY_DOWN:
+            xloc++;
+            break;
+        default:
+            break;
+    }
 }
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char * argv[])
+{
     initscr(); // ncurses
+    curs_set(0); // remove default cursor and only show @ icon
+    // give player an icon
     char player = '@';
-    char s = ' ';
-    int xloc = MAP_WIDTH / 2;
-    int yloc = MAP_HEIGHT / 2;
+    // keep track of borders
+    int max_y = 0;
+    int max_x = 0;
+    getmaxyx(stdscr, max_y, max_x);
+    //char s = ' ';
+    int xloc = max_x/2;
+    int yloc = max_y/2;
     //draw border of our room
     char wall = '#';
     cbreak(); // don't buffer lines just use input
@@ -41,26 +52,35 @@ int main(int argc, const char * argv[]) {
     // use enter to quit for testing
     while((ch = getch()) != 10)
     {
-        if(ch == KEY_RIGHT) yloc++;
-        if(ch == KEY_LEFT) yloc--;
+        if(ch == KEY_RIGHT)
+        {
+            xloc++;
+            if(xloc > max_x - 2) // -2 for the wall
+                xloc = max_x - 2;
+            mvwaddch(stdscr,yloc,xloc,player);
+            
+        }
+        if(ch == KEY_LEFT)
+        {
+            xloc--;
+            if(xloc < 1)
+                xloc = 1;
+            mvwaddch(stdscr,yloc,xloc,player);
+        }
         if(ch == KEY_DOWN)
         {
-            
-             if(xloc == getmaxy(stdscr) - 1)
-                 printw("max x");
-            else
-                xloc++;
-            mvwaddch(stdscr,xloc,yloc,player);
-            mvwaddch(stdscr, xloc-1, yloc-1, s);
+            yloc++;
+            if(yloc > max_y-2)
+                yloc = max_y-2;
+            mvwaddch(stdscr,yloc,xloc,player);
         }
         if(ch == KEY_UP)
         {
-            if(xloc == getbegy(stdscr) + 1)
-                printw("beg y");
-            else
-            xloc--;
-            mvwaddch(stdscr,xloc,yloc,player);
-            mvwaddch(stdscr, xloc-1, yloc-1, s);
+            yloc--;
+            if(yloc < 1)
+                yloc = 1;
+            mvwaddch(stdscr,yloc,xloc,player);
+            
             refresh();
         }
     }
