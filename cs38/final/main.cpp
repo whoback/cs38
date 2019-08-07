@@ -19,6 +19,7 @@ void end();
 void loop();
 void displayhud();
 void introtext();
+void inspect();
 
 
 const int MAP_HEIGHT = 20;
@@ -141,6 +142,7 @@ void loop()
         displayhud();
         wnoutrefresh(map);
         wnoutrefresh(hud);
+        wnoutrefresh(logger);
         doupdate();
         
         int ch = getch();
@@ -175,6 +177,10 @@ void loop()
         if(ch == '.' || ch == ' ')
         {
             // don't do anything this is just like nethack's commands
+        }
+        if(ch == 'i')
+        {
+            inspect();
         }
     }
 }
@@ -223,7 +229,7 @@ void initchars()
 void introtext()
 {
     
-    printw("Welcome! \n Some quick information: \n 1. To move use the arrow keys\n 2. Quit at anytime by pressing q\n 3. Have fun!");
+    printw("Welcome! \n Some quick information: \n 1. To move use the arrow keys\n 2. Quit at anytime by pressing q\n 3. Have fun!\n");
     printw("Do you want to play? y or n...");
     // this should be printed in the stdscrn before we create our map and hud
     while(1)
@@ -268,5 +274,7 @@ void initmapandhud()
 
 void inspect()
 {
+    wmove(logger, 0, 0);
+    waddstr(logger, "You're looking!");
     
 }
