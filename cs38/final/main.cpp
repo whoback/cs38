@@ -120,6 +120,9 @@ void drawmap()
     //move to shopkeeper pos and draw shopkeeper
     wmove(map, shop.y, shop.x);
     waddch(map, shop.sign);
+    
+    wmove(map, shop.y + 5, shop.x +2);
+    waddch(map, 'b');
     wrefresh(map);
 }
 
@@ -274,7 +277,16 @@ void initmapandhud()
 
 void inspect()
 {
+    //move cursor of logger to 0,0
     wmove(logger, 0, 0);
-    waddstr(logger, "You're looking!");
+    
+    //correctly reading ASCII vals now
+    
+    int inspectedint = inch();
+    //mvwinch(logger, p.y, p.x)  & A_CHARTEXT;
+    std::string inspectoutput = "You see a ";
+    inspectoutput.append(std::to_string(inspectedint));
+
+    waddstr(logger, inspectoutput.c_str());
     
 }
