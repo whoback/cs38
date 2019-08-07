@@ -22,10 +22,14 @@ void introtext();
 
 
 const int MAP_HEIGHT = 20;
-const int MAP_WIDTH = 40;
+const int MAP_WIDTH = 50;
 
+// the basic map
 WINDOW * map;
+// where stats are
 WINDOW * hud;
+// for text output from chars
+WINDOW * logger;
 
 struct player {
     std::string name;
@@ -34,6 +38,20 @@ struct player {
     char sign;
     int turn = 0;
     int gold = 100;
+};
+
+/* generic struct for items.
+    items have names
+    items have prices
+    keep track of if this is in your inventory
+ 
+ */
+struct item {
+    std::string itemname;
+    int price;
+    int inyourinventory;
+    
+    
 };
 
 player p;
@@ -65,6 +83,7 @@ int main(int argc, const char * argv[])
     
     introtext();
     initmapandhud();
+    getmaxyx(map, max_y, max_x);
     initchars();
     
     wmove(map, max_x/2, 0);
@@ -189,6 +208,8 @@ void initchars()
 {
     p.sign = '@';
     p.gold = 100;
+    p.x = 5;
+    p.y = 1;
     shop.sign = '&';
     shop.x = max_x / 2;
     shop.y = max_y / 2;
@@ -199,6 +220,7 @@ void initchars()
 
 void introtext()
 {
+    
     printw("Welcome! \n Some quick information: \n 1. To move use the arrow keys\n 2. Quit at anytime by pressing q\n 3. Have fun!");
     printw("Do you want to play? y or n...");
     // this should be printed in the stdscrn before we create our map and hud
@@ -207,7 +229,16 @@ void introtext()
         int ch = getch();
         if(ch == 'y')
         {
+            clear();
+            printw("What is your character name?");
+            //turn echo on to help user enter name
+            echo();
+            char n[120];
+            getstr(n);
             
+            p.name = n;
+            refresh();
+         
             break;
         }
         if(ch == 'n' || ch == 'q')
@@ -221,10 +252,18 @@ void introtext()
 
 void initmapandhud()
 {
-    map = newwin(MAP_HEIGHT, MAP_WIDTH, 0, 0);
+    //           lines, cols, beginy, beginx
+    map = newwin(MAP_HEIGHT, MAP_WIDTH, 2, 0);
     hud  = newwin(5, MAP_WIDTH, MAP_HEIGHT+5, 0);
-    getmaxyx(map, max_y, max_x);
+    logger = newwin(2, MAP_WIDTH, 0, 0);
+    wrefresh(logger);
+    wrefresh(hud);
     // give player an icon
     
     wrefresh(map);
+}
+
+void inspect()
+{
+    
 }
