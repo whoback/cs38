@@ -545,10 +545,16 @@ void checkinventory()
     std::string s;
     w = newwin(MAP_HEIGHT, MAP_WIDTH, 2, 0);
     box(w, 0, 0);
+    //print title of inventory
     mvwprintw(w, 0, (MAP_WIDTH - sz)/2, title.c_str());
+    
+    
     for(int i=0; i<p.inventory.size(); i++)
     {
-        mvwprintw(w, 3 + i*2, 8, p.inventory.at(i).name.c_str());
+        std::string s;
+        std::string str = makeitemstring(i, s);
+        wmove(w, i+1, 1);
+        waddstr(w, str.c_str());
     }
     wrefresh(w);
     while ((ch = getch()) != '\n');
@@ -561,7 +567,7 @@ void buyitem()
 {
     int ch;
     WINDOW *w;
-    w=newwin(MAP_HEIGHT/2, MAP_WIDTH, 0, 0);
+    w=newwin(MAP_HEIGHT+2, MAP_WIDTH, 0, 0);
     box(w, 0, 0);
     //get item info to buy
     int index = finditembylocation(arrofitems);
@@ -570,53 +576,64 @@ void buyitem()
         wclear(w);
         wmove(w, 0, 0);
         waddstr(w, "Nothing here to buy!");
-        delwin(w);
-        return;
+        wrefresh(w);
     }
     else
     {
+        //build strings
         
+        std::string price = std::to_string(arrofitems.at(index).price);
+        std::string item;
+        
+        item = makeitemstring(index, item);
+        std::string doublecheck = "Are you sure you want to buy this " + item + "?";
+        std::string finalize = "You just purchased a " + item + " for " + price + " gold.";
+        std::string thanks = shop.name + " thanks you for your purchase!";
         
         //ask player to confirm
         wclear(w);
-        wmove(w, 0, 0);
-        waddstr(w, "Are you sure you want to buy it?");
+        waddstr(w, doublecheck.c_str());
+        wrefresh(w);
+        echo();
+
         while(1)
         {
             ch = getch();
             if(ch == 'y' || ch == '\n')
             {
-                wclear(w);
                 //subtract gold from user
                 
-                p.gold -= arrofitems.at(index).price;
+                p.gold = p.gold - arrofitems.at(index).price;
                 
                 //add gold to shopkeeper
-                shop.gold += arrofitems.at(index).price;
+                shop.gold = shop.gold + arrofitems.at(index).price;
                 
-                //build strings
+                //add to player inventory
+                p.inventory.push_back(arrofitems.at(index));
                 
-                std::string price = std::to_string(arrofitems.at(index).price);
-                
-                std::string item;
-                item = makeitemstring(index, item);
-                std::string finalize = "You just purchased a " + item + " for " + price + "gold.";
-                std::string thanks = shop.name + " thanks you for your purchase!";
-                
+                wclear(w);
+                wmove(w, 5, 0);
                 waddstr(w, finalize.c_str());
+                waddch(w, '\n');
                 waddstr(w, thanks.c_str());
-                
+                wrefresh(w);
                 //change hasbeenpaidfor flag in item
-                
-                delwin(w);
-                break;
+                noecho();
+                ch = getch();
+                if(ch == '\n' || ch == ' ' || ch == 'y')
+                {
+                    break;
+                }
             }
             if(ch == 'n')
             {
-                delwin(w);
                 break;
             }
         }
+        
+        wclear(w);
+        wrefresh(w);
+        delwin(w);
         
     }
     
