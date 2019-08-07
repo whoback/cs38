@@ -264,8 +264,8 @@ void displayhud()
 
 void initchars()
 {
-//    std::uniform_int_distribution<int> name(0, names.size());
-//    random_integer = name(rng);
+    //    std::uniform_int_distribution<int> name(0, names.size());
+    //    random_integer = name(rng);
     p.sign = '@';
     p.gold = 100;
     p.x = 5;
@@ -300,14 +300,14 @@ void introtext()
             p.name = playername;
             refresh();
             noecho();
-         
+            
             break;
         }
         if(ch == 'n' || ch == 'q')
         {
             end();
         }
-
+        
     }
 }
 
@@ -356,14 +356,14 @@ void inspect()
         
         waddstr(logger, info.c_str());
     }
- 
+    
 }
 
 void genitems()
 {
     int itemx = 1;
     int itemy = 11;
-
+    
     //generate names first
     for(int i = 0; i < arrofitems.size(); i++)
     {
@@ -396,17 +396,17 @@ void genitems()
             arrofitems.at(i).color = itemcolors.at(uni(rng));
             
         }
-
+        
     }
 }
 void placeitems()
 {
- for(int i = 0; i < arrofitems.size(); i++)
- {
-     wmove(map, arrofitems.at(i).y, arrofitems.at(i).x);
-     waddch(map, arrofitems.at(i).sign);
-     
- }
+    for(int i = 0; i < arrofitems.size(); i++)
+    {
+        wmove(map, arrofitems.at(i).y, arrofitems.at(i).x);
+        waddch(map, arrofitems.at(i).sign);
+        
+    }
 }
 
 int finditembylocation(std::array<item, MAX_ITEMS> arr)
@@ -519,13 +519,13 @@ void checkmovepos()
             p.x -= uni(rng);
             
             p.y -= uni(rng);
-        
+            
             
         }else{
             p.x += uni(rng);
-        
+            
             p.y += uni(rng);
-        
+            
             
         }
         angershopkeeper();
@@ -537,7 +537,7 @@ void checkinventory()
 {
     //new window to show our inventory
     int ch;
-
+    
     std::string empty = " ";
     WINDOW *w;
     std::string title = p.name + "'s "+"Inventory";
@@ -590,7 +590,7 @@ void buyitem()
                 //subtract gold from user
                 
                 p.gold -= arrofitems.at(index).price;
-            
+                
                 //add gold to shopkeeper
                 shop.gold += arrofitems.at(index).price;
                 
@@ -617,10 +617,10 @@ void buyitem()
                 break;
             }
         }
-
+        
     }
-
-
-
+    
+    
+    
 }
 
