@@ -185,8 +185,10 @@ void displayhud()
     werase(hud);
     //move to (x,y) of hud window
     wmove(hud, 0, 0);
+    waddstr(hud, "You are: ");
+    waddstr(hud, p.name.c_str());
     //print player location
-    waddstr(hud, "Location: ");
+    waddstr(hud, "\nLocation: ");
     waddstr(hud, std::to_string(p.x).c_str());
     waddstr(hud, ", ");
     waddstr(hud, std::to_string(p.y).c_str());
@@ -230,7 +232,7 @@ void introtext()
         if(ch == 'y')
         {
             clear();
-            printw("What is your character name?");
+            printw("What is your character name? ");
             //turn echo on to help user enter name
             echo();
             char n[120];
@@ -238,6 +240,7 @@ void introtext()
             
             p.name = n;
             refresh();
+            noecho();
          
             break;
         }
