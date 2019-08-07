@@ -20,6 +20,8 @@ void loop();
 void displayhud();
 void introtext();
 void inspect();
+void genitems();
+void placeitems();
 
 
 const int MAP_HEIGHT = 20;
@@ -99,8 +101,11 @@ int main(int argc, const char * argv[])
     getmaxyx(map, max_y, max_x);
     initchars();
     
+    
     wmove(map, max_x/2, 0);
     waddch(map, p.sign);
+    genitems();
+    
     wrefresh(map);
     loop();
     return 0;
@@ -155,6 +160,7 @@ void loop()
         ++p.turn;
         drawmap();
         displayhud();
+        placeitems();
         wnoutrefresh(map);
         wnoutrefresh(hud);
         wnoutrefresh(logger);
@@ -310,6 +316,8 @@ void inspect()
 
 void genitems()
 {
+    int itemx = 1;
+    int itemy = 11;
     
     for(int i = 0; i < arrofitems.size(); i++)
     {
@@ -338,6 +346,21 @@ void genitems()
         
         //0 for not paid 1 for paid
         arrofitems.at(i).hasbeenpaidfor = 0;
+        arrofitems.at(i).x = itemx;
+        arrofitems.at(i).y = itemy;
+        //itemy++;
+        itemx++;
+        ranval = ran();
         
     }
+}
+void placeitems()
+{
+ for(int i = 0; i < arrofitems.size(); i++)
+ {
+     wmove(map, arrofitems.at(i).y, arrofitems.at(i).x);
+     waddch(map, arrofitems.at(i).sign);
+     
+     
+ }
 }
