@@ -14,7 +14,7 @@
 
 const int MAP_HEIGHT = 20;
 const int MAP_WIDTH = 50;
-const int MAX_ITEMS = 10;
+const int MAX_ITEMS = 25;
 
 /* generic struct for items.
  items have names
@@ -31,6 +31,7 @@ typedef struct item {
     std::string modifier; // used for things like old or dusty or blessed
     int price;
     int hasbeenpaidfor; //used to check if player is trying to steal item
+    int indexpos;
 }item;
 
 struct player {
@@ -62,7 +63,7 @@ void angershopkeeper();
 std::string makeitemstring(int index, std::string s);
 void checkinventory();
 void buyitem();
-
+void additemtoinventory(int index);
 
 // the basic map
 WINDOW * map;
@@ -76,6 +77,7 @@ WINDOW * logger;
 player p;
 player shop;
 
+//this holds our in game items
 std::array<item, MAX_ITEMS> arrofitems;
 
 
@@ -372,6 +374,7 @@ void genitems()
         arrofitems.at(i).modifier = itemmods.at(uni(rng));
         arrofitems.at(i).x = itemx;
         arrofitems.at(i).y = itemy;
+        arrofitems.at(i).indexpos = i; //keep track of orig index
         itemx++;
         
     }
@@ -382,18 +385,20 @@ void genitems()
         {
             arrofitems.at(i).sign = itemsigns.at(0);
             arrofitems.at(i).color = itemcolors.at(uni(rng));
-            
+            arrofitems.at(i).price = itemprices.at(0);
         }
         else if( arrofitems.at(i).name == "coffee")
         {
             arrofitems.at(i).sign = itemsigns.at(2);
             arrofitems.at(i).color = itemcolors.at(2);
+            arrofitems.at(i).price = itemprices.at(2);
             
         }
         else
         {
             arrofitems.at(i).sign = itemsigns.at(1);
             arrofitems.at(i).color = itemcolors.at(uni(rng));
+            arrofitems.at(i).price = itemprices.at(1);
             
         }
         
@@ -542,7 +547,6 @@ void checkinventory()
     WINDOW *w;
     std::string title = p.name + "'s "+"Inventory";
     int sz = static_cast<int>(title.size());
-    std::string s;
     w = newwin(MAP_HEIGHT, MAP_WIDTH, 2, 0);
     box(w, 0, 0);
     //print title of inventory
@@ -552,7 +556,9 @@ void checkinventory()
     for(int i=0; i<p.inventory.size(); i++)
     {
         std::string s;
-        std::string str = makeitemstring(i, s);
+        //use original index to help make inventory strings
+        int ogindex = p.inventory.at(i).indexpos;
+        std::string str = makeitemstring(ogindex, s);
         wmove(w, i+1, 1);
         waddstr(w, str.c_str());
     }
@@ -609,7 +615,7 @@ void buyitem()
                 shop.gold = shop.gold + arrofitems.at(index).price;
                 
                 //add to player inventory
-                p.inventory.push_back(arrofitems.at(index));
+                additemtoinventory(index);
                 
                 wclear(w);
                 wmove(w, 5, 0);
@@ -641,3 +647,7 @@ void buyitem()
     
 }
 
+void additemtoinventory(int index)
+{
+    p.inventory.push_back(arrofitems.at(index));
+}
