@@ -57,7 +57,10 @@ void genitems();
 void placeitems();
 int finditembylocation(std::array<item, MAX_ITEMS> arr);
 void pickupitem();
+void checkmovepos();
+void angershopkeeper();
 std::string makeitemstring(int index, std::string s);
+void checkinventory();
 
 
 // the basic map
@@ -81,7 +84,8 @@ std::array<item, MAX_ITEMS> arrofitems;
 std::random_device rd;
 auto rdval = rd();
 std::mt19937 ran(rdval);
-auto ranval = ran();
+unsigned int ranval;
+
 
 //books items coffee
 std::array<char, 3> itemsigns = {'b', 'I', 'c'};
@@ -169,6 +173,7 @@ void loop()
     {
         //advance our turn
         ++p.turn;
+        ranval = ran();
         drawmap();
         displayhud();
         placeitems();
@@ -181,26 +186,22 @@ void loop()
         if(ch == KEY_RIGHT)
         {
             p.x++;
-            if(p.x > max_x - 2) // -2 for the wall
-                p.x = max_x - 2;
+            checkmovepos();
         }
         if(ch == KEY_LEFT)
         {
             p.x--;
-            if(p.x < 1)
-                p.x = 1;
+            checkmovepos();
         }
         if(ch == KEY_DOWN)
         {
             p.y++;
-            if(p.y > max_y-2)
-                p.y = max_y-2;
+            checkmovepos();
         }
         if(ch == KEY_UP)
         {
             p.y--;
-            if(p.y < 1)
-                p.y = 1;
+            checkmovepos();
         }
         if (ch == 'Q' || ch == 'q')
         {
@@ -219,6 +220,10 @@ void loop()
         {
             pickupitem();
             
+        }
+        if(ch == 'v')
+        {
+            checkinventory();
         }
     }
 }
@@ -456,4 +461,69 @@ std::string makeitemstring(int index, std::string s)
     s.append(" ");
     
     return s;
+}
+
+void angershopkeeper()
+{
+    wclear(logger);
+    //move cursor of logger to 0,0
+    wmove(logger, 0, 0);
+    waddstr(logger, "Hey watch it buddy!");
+}
+
+void checkmovepos()
+{
+    if(p.x > max_x - 2) // -2 for the wall
+    {
+        p.x = max_x - 2;
+    }
+    if(p.x < 1)
+    {
+        p.x = 1;
+    }
+    if(p.y > max_y-2)
+    {
+        p.y = max_y-2;
+    }
+    if(p.y < 1)
+    {
+        p.y = 1;
+    }
+    if(p.x == shop.x && p.y == shop.y)
+    {
+        int op = ranval % 2;
+        if(op > 0)
+        {
+            p.x -= ranval % 5;
+            p.y -= ranval % 5;
+        }else{
+            p.x += ranval % 5;
+            p.y += ranval % 5;
+        }
+        angershopkeeper();
+    }
+}
+
+void checkinventory()
+{
+    //new window to show our inventory
+    int ch;
+
+    std::string empty = " ";
+    WINDOW *w;
+    std::string title = "Inventory";
+    int sz = static_cast<int>(title.size());
+    std::string s;
+    w = newwin(MAP_HEIGHT/2, MAP_WIDTH, 2, 0);
+    box(w, 0, 0);
+    mvwprintw(w, 0, (MAP_WIDTH - sz)/2, title.c_str());
+    for(int i=0; i<p.inventory.size(); i++)
+    {
+        mvwprintw(w, 3 + i*2, 8, p.inventory.at(i).name.c_str());
+    }
+    wrefresh(w);
+    while ((ch = getch()) != '\n');
+    
+    //Cleanup
+    delwin(w);
 }
