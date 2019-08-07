@@ -48,9 +48,14 @@ struct player {
  
  */
 struct item {
-    std::string itemname;
+    int x = 0;
+    int y = 0;
+    char sign;
+    std::string color;
+    std::string name;
+    std::string modifier; // used for things like old or dusty or blessed
     int price;
-    int inyourinventory;
+    int hasbeenpaidfor; //used to check if player is trying to steal item
     
     
 };
@@ -280,7 +285,6 @@ void inspect()
     wclear(logger);
     //move cursor of logger to 0,0
     wmove(logger, 0, 0);
-    
     
     //make sure we're moving within our map window
     int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
