@@ -230,7 +230,7 @@ void loop()
         }
         if(ch == 'b')
         {
-            //buyitem();
+            buyitem();
         }
     }
 }
@@ -337,20 +337,7 @@ void inspect()
     char c = inspectedint;
     //get the actual item index as there could be multiples
     int index = 0;
-    for(int i = 0; i < arrofitems.size(); i++)
-    {
-        if(arrofitems.at(i).x == p.x)
-        {
-            if(arrofitems.at(i).y == p.y)
-            {
-                index = i;
-            }
-            else
-            {
-                index = -1;
-            }
-        }
-    }
+    index = finditembylocation(arrofitems);
     if(index == -1)
     {
         inspectoutput = "negative 1 ";
@@ -427,16 +414,18 @@ int finditembylocation(std::array<item, MAX_ITEMS> arr)
     
     int arrindex = 0;
     //loop through array of items on the map
-    for(int i = 0; i < arrofitems.size(); i++)
+    for(int i = 0; i < arr.size(); i++)
     {
-        //if we have a (x,y) coord match that is our item
-        if(arrofitems.at(i).x == p.x && arrofitems.at(i).y == p.y)
+        if(arr.at(i).x == p.x)
         {
-            //that is our index
-            arrindex = i;
-        }else
-        {
-            arrindex = -1;
+            if(arr.at(i).y == p.y)
+            {
+                arrindex = i;
+            }
+            else
+            {
+                arrindex = -1;
+            }
         }
     }
     
@@ -458,7 +447,7 @@ void pickupitem()
     else
     {
         //index is where our item lives in the items array
-        auto index = finditembylocation(arrofitems);
+        int index = finditembylocation(arrofitems);
         if(index == -1)
         {
             waddstr(logger, "Out of bounds!");
@@ -551,10 +540,10 @@ void checkinventory()
 
     std::string empty = " ";
     WINDOW *w;
-    std::string title = "Inventory";
+    std::string title = p.name + "'s "+"Inventory";
     int sz = static_cast<int>(title.size());
     std::string s;
-    w = newwin(MAP_HEIGHT/2, MAP_WIDTH, 2, 0);
+    w = newwin(MAP_HEIGHT, MAP_WIDTH, 2, 0);
     box(w, 0, 0);
     mvwprintw(w, 0, (MAP_WIDTH - sz)/2, title.c_str());
     for(int i=0; i<p.inventory.size(); i++)
@@ -571,39 +560,60 @@ void checkinventory()
 void buyitem()
 {
     int ch;
+    WINDOW *w;
+    w=newwin(MAP_HEIGHT/2, MAP_WIDTH, 0, 0);
+    box(w, 0, 0);
     //get item info to buy
     int index = finditembylocation(arrofitems);
     if(index == -1)
     {
-        wclear(logger);
-        wmove(logger, 0, 0);
-        waddstr(logger, "Nothing here to buy!");
+        wclear(w);
+        wmove(w, 0, 0);
+        waddstr(w, "Nothing here to buy!");
+        delwin(w);
         return;
     }
     else
     {
+        
+        
+        //ask player to confirm
+        wclear(w);
+        wmove(w, 0, 0);
+        waddstr(w, "Are you sure you want to buy it?");
         while(1)
         {
-            //ask player to confirm
-            wclear(logger);
-            wmove(logger, 0, 0);
-            waddstr(logger, "Are you sure you want to buy it?");
-
             ch = getch();
             if(ch == 'y' || ch == '\n')
             {
+                wclear(w);
                 //subtract gold from user
-                //add gold to shopkeeper
+                
                 p.gold -= arrofitems.at(index).price;
+            
+                //add gold to shopkeeper
                 shop.gold += arrofitems.at(index).price;
+                
+                //build strings
+                
+                std::string price = std::to_string(arrofitems.at(index).price);
+                
+                std::string item;
+                item = makeitemstring(index, item);
+                std::string finalize = "You just purchased a " + item + " for " + price + "gold.";
+                std::string thanks = shop.name + " thanks you for your purchase!";
+                
+                waddstr(w, finalize.c_str());
+                waddstr(w, thanks.c_str());
+                
                 //change hasbeenpaidfor flag in item
-                wclear(logger);
-                wmove(logger, 0, 0);
-                waddstr(logger, "Are you sure you want to buy it?");
+                
+                delwin(w);
                 break;
             }
             if(ch == 'n')
             {
+                delwin(w);
                 break;
             }
         }
