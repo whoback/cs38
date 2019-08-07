@@ -319,6 +319,7 @@ void inspect()
     //make sure we're moving within our map window
     int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
     std::string inspectoutput;
+    //this is the char returned from mvwinch
     char c = inspectedint;
     //do we have an actual item?
     if(c == 'b' || c == 'I' || c == 'c')
@@ -421,17 +422,27 @@ void pickupitem()
     wclear(logger);
     //move cursor of logger to 0,0
     wmove(logger, 0, 0);
-    //index is where our item lives in the items array
-    auto index = finditembylocation(arrofitems);
-    // get the struct for our item from items array
-    auto pickedupitem = arrofitems.at(index);
-    //add struct to the vector
-    p.inventory.push_back(pickedupitem);
-    //use back cause we always want last added item for this
-    std::string s = "You picked up a ";
-    std::string output = makeitemstring(index, s);
-    
-    waddstr(logger, output.c_str());
+    int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
+    char test = inspectedint;
+    //make sure we're not trying to pickup on an empty space
+    if(test == p.sign)
+    {
+        waddstr(logger, "You can't pick that up!");
+    }
+    else
+    {
+        //index is where our item lives in the items array
+        auto index = finditembylocation(arrofitems);
+        // get the struct for our item from items array
+        auto pickedupitem = arrofitems.at(index);
+        //add struct to the vector
+        p.inventory.push_back(pickedupitem);
+        //use back cause we always want last added item for this
+        std::string s = "You picked up a ";
+        std::string output = makeitemstring(index, s);
+        
+        waddstr(logger, output.c_str());
+    }
     
 }
 std::string makeitemstring(int index, std::string s)
