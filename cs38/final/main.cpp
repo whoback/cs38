@@ -61,6 +61,7 @@ void checkmovepos();
 void angershopkeeper();
 std::string makeitemstring(int index, std::string s);
 void checkinventory();
+void buyitem();
 
 
 // the basic map
@@ -82,9 +83,10 @@ std::array<item, MAX_ITEMS> arrofitems;
 
 //use for all our random number needs
 std::random_device rd;
-auto rdval = rd();
-std::mt19937 ran(rdval);
-unsigned int ranval;
+std::mt19937 rng(rd());    // random-number engine used
+std::uniform_int_distribution<int> uni(0,5); // guaranteed unbiased
+int random_integer = uni(rng);
+
 
 
 //books items coffee
@@ -92,8 +94,8 @@ std::array<char, 3> itemsigns = {'b', 'I', 'c'};
 //spellbook, gen items, coffee
 std::array<int, 3> itemprices = {200, 25, 3};
 std::array<std::string, 6> itemnames = {"spellbook", "coffee", "candle", "rope", "parchment", "bag"};
-std::array<std::string, 7> itemcolors = {"magenta", "yellow", "black", "red", "white", "green", "blue"};
-std::array<std::string, 5> itemmods = {"blessed", "cursed", "worn", "brilliant", "fragile"};
+std::array<std::string, 6> itemcolors = {"magenta", "yellow", "black", "white", "green", "blue"};
+std::array<std::string, 6> itemmods = {"blessed", "cursed", "worn", "brilliant", "fragile", "totally radical"};
 
 //possible shopekeeper names some created by me and some taken from nethack
 std::array<std::string, 25> names = {"Uze Bandi", "Bebe Pitolito", "Habibi Habeeb", "Njezjin", "Tsjernigof", "Ossipewsk", "Gorlowka", "Gomel", "Konosja", "Weliki Oestjoeg", "Syktywkar", "Sablja", "Narodnaja", "Kyzyl", "Walbrzych", "Swidnica", "Klodzko", "Raciborz", "Gliwice", "Brzeg", "Krnov", "Hradec Kralove", "Leuk", "Brig", "Sarnen"};
@@ -169,11 +171,12 @@ void end()
 
 void loop()
 {
+    
     while(1)
     {
         //advance our turn
         ++p.turn;
-        ranval = ran();
+        
         drawmap();
         displayhud();
         placeitems();
@@ -225,6 +228,10 @@ void loop()
         {
             checkinventory();
         }
+        if(ch == 'b')
+        {
+            //buyitem();
+        }
     }
 }
 
@@ -257,6 +264,8 @@ void displayhud()
 
 void initchars()
 {
+//    std::uniform_int_distribution<int> name(0, names.size());
+//    random_integer = name(rng);
     p.sign = '@';
     p.gold = 100;
     p.x = 5;
@@ -264,15 +273,15 @@ void initchars()
     shop.sign = '&';
     shop.x = max_x / 2;
     shop.y = max_y / 2;
-    shop.name = names.at(ranval%25);
+    std::uniform_int_distribution<int> n(0,24);
+    shop.name = names.at(n(rng));
     shop.gold = 5000;
     
 }
 
 void introtext()
 {
-    
-    printw("Welcome! \n Some quick information: \n 1. To move use the arrow keys\n 2. Quit at anytime by pressing q\n 3. Have fun!\n");
+    printw("Welcome! \n Some quick information: \n 1. To move use the arrow keys. \n'i' is inspect. \n'v' to see your inventory. \n'b' to buy. \n 2. Quit at anytime by pressing q\n 3. Have fun!\n");
     printw("Do you want to play? y or n...");
     // this should be printed in the stdscrn before we create our map and hud
     while(1)
@@ -284,10 +293,11 @@ void introtext()
             printw("What is your character name? ");
             //turn echo on to help user enter name
             echo();
-            char n[120];
-            getstr(n);
-            
-            p.name = n;
+            std::string playername;
+            char s[100];
+            getnstr(s, 99);
+            playername = s;
+            p.name = playername;
             refresh();
             noecho();
          
@@ -299,7 +309,6 @@ void introtext()
         }
 
     }
-    
 }
 
 void initmapandhud()
@@ -326,24 +335,40 @@ void inspect()
     std::string inspectoutput;
     //this is the char returned from mvwinch
     char c = inspectedint;
-    //do we have an actual item?
-    if(c == 'b' || c == 'I' || c == 'c')
+    //get the actual item index as there could be multiples
+    int index = 0;
+    for(int i = 0; i < arrofitems.size(); i++)
     {
-        //get the actual item index as there could be multiples
-        int index = finditembylocation(arrofitems);
-        std::string s = "You see a ";
-        std::string info = makeitemstring(index, s);
-        
-        
-        waddstr(logger, info.c_str());
+        if(arrofitems.at(i).x == p.x)
+        {
+            if(arrofitems.at(i).y == p.y)
+            {
+                index = i;
+            }
+            else
+            {
+                index = -1;
+            }
+        }
     }
-     else inspectoutput = "You see a ";
-    
+    if(index == -1)
+    {
+        inspectoutput = "negative 1 ";
+    }
     if(c == p.sign)
     {
         inspectoutput = "Theres nothing here!";
+        waddstr(logger, inspectoutput.c_str());
     }
-    waddstr(logger, inspectoutput.c_str());
+    else
+    {
+        //we have an actual item
+        
+        std::string s = "You see a ";
+        std::string info = makeitemstring(index, s);
+        
+        waddstr(logger, info.c_str());
+    }
  
 }
 
@@ -351,45 +376,40 @@ void genitems()
 {
     int itemx = 1;
     int itemy = 11;
-    
+
+    //generate names first
     for(int i = 0; i < arrofitems.size(); i++)
     {
-        
-        arrofitems.at(i).name = itemnames.at(ranval%6);
-        
-        //if we're a spellbook
-        if(arrofitems.at(i).name == itemnames.at(0))
-        {
-            arrofitems.at(i).sign = itemsigns.at(0);
-            
-        }
-        //if we're a coffee
-        if(arrofitems.at(i).name == itemnames.at(1))
-        {
-            arrofitems.at(i).sign = itemsigns.at(2);
-        }
-        //then we're just an item
-        if(arrofitems.at(i).name == itemnames.at(2) ||
-           arrofitems.at(i).name == itemnames.at(3) ||
-           arrofitems.at(i).name == itemnames.at(4) ||
-           arrofitems.at(i).name == itemnames.at(5))
-        {
-            arrofitems.at(i).sign = itemsigns.at(1);
-        }
-        arrofitems.at(i).color = itemcolors.at(ranval%7);
-        arrofitems.at(i).modifier = itemmods.at(ranval%5);
-        
-        // temp for now
-        arrofitems.at(i).price = 25;
-        
-        //0 for not paid 1 for paid
+        arrofitems.at(i).name = itemnames.at(uni(rng));
         arrofitems.at(i).hasbeenpaidfor = 0;
+        arrofitems.at(i).modifier = itemmods.at(uni(rng));
         arrofitems.at(i).x = itemx;
         arrofitems.at(i).y = itemy;
-        //itemy++;
         itemx++;
-        ranval = ran();
         
+    }
+    //based on names generate attributes
+    for(int i = 0; i < arrofitems.size(); i++)
+    {
+        if( arrofitems.at(i).name == "spellbook")
+        {
+            arrofitems.at(i).sign = itemsigns.at(0);
+            arrofitems.at(i).color = itemcolors.at(uni(rng));
+            
+        }
+        else if( arrofitems.at(i).name == "coffee")
+        {
+            arrofitems.at(i).sign = itemsigns.at(2);
+            arrofitems.at(i).color = itemcolors.at(2);
+            
+        }
+        else
+        {
+            arrofitems.at(i).sign = itemsigns.at(1);
+            arrofitems.at(i).color = itemcolors.at(uni(rng));
+            
+        }
+
     }
 }
 void placeitems()
@@ -399,24 +419,25 @@ void placeitems()
      wmove(map, arrofitems.at(i).y, arrofitems.at(i).x);
      waddch(map, arrofitems.at(i).sign);
      
-     
  }
 }
 
 int finditembylocation(std::array<item, MAX_ITEMS> arr)
 {
-    //this is where player currently is
-    std::pair<int, int> xy;
-    xy.first = p.x;
-    xy.second = p.y;
+    
     int arrindex = 0;
+    //loop through array of items on the map
     for(int i = 0; i < arrofitems.size(); i++)
     {
-        if(arrofitems.at(i).x == xy.first && arrofitems.at(i).y == xy.second)
+        //if we have a (x,y) coord match that is our item
+        if(arrofitems.at(i).x == p.x && arrofitems.at(i).y == p.y)
         {
+            //that is our index
             arrindex = i;
+        }else
+        {
+            arrindex = -1;
         }
-        
     }
     
     return arrindex;
@@ -438,6 +459,11 @@ void pickupitem()
     {
         //index is where our item lives in the items array
         auto index = finditembylocation(arrofitems);
+        if(index == -1)
+        {
+            waddstr(logger, "Out of bounds!");
+            return;
+        }
         // get the struct for our item from items array
         auto pickedupitem = arrofitems.at(index);
         //add struct to the vector
@@ -452,14 +478,20 @@ void pickupitem()
 }
 std::string makeitemstring(int index, std::string s)
 {
-    
-    s.append(arrofitems.at(index).modifier);
-    s.append(" ");
-    s.append(arrofitems.at(index).color);
-    s.append(" ");
-    s.append(arrofitems.at(index).name);
-    s.append(" ");
-    
+    if(index == -1)
+    {
+        s.append("An error!");
+    }
+    else
+    {
+        
+        s.append(arrofitems.at(index).modifier);
+        s.append(" ");
+        s.append(arrofitems.at(index).color);
+        s.append(" ");
+        s.append(arrofitems.at(index).name);
+        s.append(" ");
+    }
     return s;
 }
 
@@ -491,17 +523,25 @@ void checkmovepos()
     }
     if(p.x == shop.x && p.y == shop.y)
     {
-        int op = ranval % 2;
-        if(op > 0)
+        
+        
+        if(random_integer > 0)
         {
-            p.x -= ranval % 5;
-            p.y -= ranval % 5;
+            p.x -= uni(rng);
+            
+            p.y -= uni(rng);
+        
+            
         }else{
-            p.x += ranval % 5;
-            p.y += ranval % 5;
+            p.x += uni(rng);
+        
+            p.y += uni(rng);
+        
+            
         }
         angershopkeeper();
     }
+    
 }
 
 void checkinventory()
@@ -527,3 +567,50 @@ void checkinventory()
     //Cleanup
     delwin(w);
 }
+
+void buyitem()
+{
+    int ch;
+    //get item info to buy
+    int index = finditembylocation(arrofitems);
+    if(index == -1)
+    {
+        wclear(logger);
+        wmove(logger, 0, 0);
+        waddstr(logger, "Nothing here to buy!");
+        return;
+    }
+    else
+    {
+        while(1)
+        {
+            //ask player to confirm
+            wclear(logger);
+            wmove(logger, 0, 0);
+            waddstr(logger, "Are you sure you want to buy it?");
+
+            ch = getch();
+            if(ch == 'y' || ch == '\n')
+            {
+                //subtract gold from user
+                //add gold to shopkeeper
+                p.gold -= arrofitems.at(index).price;
+                shop.gold += arrofitems.at(index).price;
+                //change hasbeenpaidfor flag in item
+                wclear(logger);
+                wmove(logger, 0, 0);
+                waddstr(logger, "Are you sure you want to buy it?");
+                break;
+            }
+            if(ch == 'n')
+            {
+                break;
+            }
+        }
+
+    }
+
+
+
+}
+
