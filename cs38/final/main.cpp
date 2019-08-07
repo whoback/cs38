@@ -47,7 +47,7 @@ struct player {
     keep track of if this is in your inventory
  
  */
-struct item {
+typedef struct item {
     int x = 0;
     int y = 0;
     char sign;
@@ -56,12 +56,15 @@ struct item {
     std::string modifier; // used for things like old or dusty or blessed
     int price;
     int hasbeenpaidfor; //used to check if player is trying to steal item
-    
-    
-};
+}item;
 
 player p;
 player shop;
+const int MAX_ITEMS = 10;
+std::array<item, MAX_ITEMS> arrofitems;
+
+
+
 
 //use for all our random number needs
 std::random_device rd;
@@ -69,7 +72,11 @@ auto rdval = rd();
 std::mt19937 ran(rdval);
 auto ranval = ran();
 
-std::array<std::string, 3> items = {"Spellbooks", "Magic Items", "Coffee"};
+//books items coffee
+std::array<char, 3> itemsigns = {'b', 'I', 'c'};
+std::array<std::string, 6> itemnames = {"spellbook", "candle", "coffee", "rope", "parchment", "bag"};
+std::array<std::string, 7> itemcolors = {"magenta", "yellow", "black", "red", "white", "green", "blue"};
+std::array<std::string, 5> itemmods = {"blessed", "cursed", "worn", "brilliant", "fragile"};
 
 //possible shopekeeper names some created by me and some taken from nethack
 std::array<std::string, 25> names = {"Uze Bandi", "Bebe Pitolito", "Habibi Habeeb", "Njezjin", "Tsjernigof", "Ossipewsk", "Gorlowka", "Gomel", "Konosja", "Weliki Oestjoeg", "Syktywkar", "Sablja", "Narodnaja", "Kyzyl", "Walbrzych", "Swidnica", "Klodzko", "Raciborz", "Gliwice", "Brzeg", "Krnov", "Hradec Kralove", "Leuk", "Brig", "Sarnen"};
@@ -299,4 +306,38 @@ void inspect()
     }
     waddstr(logger, inspectoutput.c_str());
     
+}
+
+void genitems()
+{
+    
+    for(int i = 0; i < arrofitems.size(); i++)
+    {
+        
+        arrofitems.at(i).name = itemnames.at(ranval%6);
+        //if we're a spellbook
+        if(arrofitems.at(i).name == itemnames.at(0))
+        {
+            arrofitems.at(i).sign = itemsigns.at(0);
+        }
+        //if we're a coffee
+        else if(arrofitems.at(i).name == itemnames.at(1))
+        {
+            arrofitems.at(i).sign = itemsigns.at(2);
+        }
+        //then we're just an item
+        else
+        {
+            arrofitems.at(i).sign = itemsigns.at(1);
+        }
+        arrofitems.at(i).color = itemcolors.at(ranval%7);
+        arrofitems.at(i).modifier = itemmods.at(ranval%5);
+        
+        // temp for now
+        arrofitems.at(i).price = 25;
+        
+        //0 for not paid 1 for paid
+        arrofitems.at(i).hasbeenpaidfor = 0;
+        
+    }
 }
