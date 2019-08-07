@@ -277,16 +277,22 @@ void initmapandhud()
 
 void inspect()
 {
+    wclear(logger);
     //move cursor of logger to 0,0
     wmove(logger, 0, 0);
     
-    //correctly reading ASCII vals now
     
-    int inspectedint = inch();
-    //mvwinch(logger, p.y, p.x)  & A_CHARTEXT;
+    //make sure we're moving within our map window
+    int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
+    char c = inspectedint;
     std::string inspectoutput = "You see a ";
-    inspectoutput.append(std::to_string(inspectedint));
-
+    if(c == p.sign)
+    {
+        inspectoutput = "Theres nothing here!";
+    }else
+    {
+        inspectoutput.push_back(c);
+    }
     waddstr(logger, inspectoutput.c_str());
     
 }
