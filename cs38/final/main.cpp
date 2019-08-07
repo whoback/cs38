@@ -10,43 +10,16 @@
 #include <string>
 #include <array>
 #include <random>
-
-void init();
-void initchars();
-void initmapandhud();
-void drawmap();
-void end();
-void loop();
-void displayhud();
-void introtext();
-void inspect();
-void genitems();
-void placeitems();
-
+#include <vector>
 
 const int MAP_HEIGHT = 20;
 const int MAP_WIDTH = 50;
-
-// the basic map
-WINDOW * map;
-// where stats are
-WINDOW * hud;
-// for text output from chars
-WINDOW * logger;
-
-struct player {
-    std::string name;
-    int y = 0;
-    int x = 0;
-    char sign;
-    int turn = 0;
-    int gold = 100;
-};
+const int MAX_ITEMS = 10;
 
 /* generic struct for items.
-    items have names
-    items have prices
-    keep track of if this is in your inventory
+ items have names
+ items have prices
+ keep track of if this is in your inventory
  
  */
 typedef struct item {
@@ -60,9 +33,45 @@ typedef struct item {
     int hasbeenpaidfor; //used to check if player is trying to steal item
 }item;
 
+struct player {
+    std::string name;
+    int y = 0;
+    int x = 0;
+    char sign;
+    int turn = 0;
+    int gold = 100;
+    std::vector<item> inventory;
+};
+
+
+void init();
+void initchars();
+void initmapandhud();
+void drawmap();
+void end();
+void loop();
+void displayhud();
+void introtext();
+void inspect();
+void genitems();
+void placeitems();
+int finditembylocation(std::array<item, MAX_ITEMS> arr);
+void pickupitem();
+std::string makeitemstring(int index, std::string s);
+
+
+// the basic map
+WINDOW * map;
+// where stats are
+WINDOW * hud;
+// for text output from chars
+WINDOW * logger;
+
+
+
 player p;
 player shop;
-const int MAX_ITEMS = 10;
+
 std::array<item, MAX_ITEMS> arrofitems;
 
 
@@ -76,7 +85,9 @@ auto ranval = ran();
 
 //books items coffee
 std::array<char, 3> itemsigns = {'b', 'I', 'c'};
-std::array<std::string, 6> itemnames = {"spellbook", "candle", "coffee", "rope", "parchment", "bag"};
+//spellbook, gen items, coffee
+std::array<int, 3> itemprices = {200, 25, 3};
+std::array<std::string, 6> itemnames = {"spellbook", "coffee", "candle", "rope", "parchment", "bag"};
 std::array<std::string, 7> itemcolors = {"magenta", "yellow", "black", "red", "white", "green", "blue"};
 std::array<std::string, 5> itemmods = {"blessed", "cursed", "worn", "brilliant", "fragile"};
 
@@ -197,11 +208,17 @@ void loop()
         }
         if(ch == '.' || ch == ' ')
         {
-            // don't do anything this is just like nethack's commands
+            // don't do anything this is just like nethack's commands ie wait
         }
         if(ch == 'i')
         {
+            // looks at what the player is currently over on the map
             inspect();
+        }
+        if(ch == 'p')
+        {
+            pickupitem();
+            
         }
     }
 }
@@ -301,17 +318,27 @@ void inspect()
     
     //make sure we're moving within our map window
     int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
+    std::string inspectoutput;
     char c = inspectedint;
-    std::string inspectoutput = "You see a ";
+    //do we have an actual item?
+    if(c == 'b' || c == 'I' || c == 'c')
+    {
+        //get the actual item index as there could be multiples
+        int index = finditembylocation(arrofitems);
+        std::string s = "You see a ";
+        std::string info = makeitemstring(index, s);
+        
+        
+        waddstr(logger, info.c_str());
+    }
+     else inspectoutput = "You see a ";
+    
     if(c == p.sign)
     {
         inspectoutput = "Theres nothing here!";
-    }else
-    {
-        inspectoutput.push_back(c);
     }
     waddstr(logger, inspectoutput.c_str());
-    
+ 
 }
 
 void genitems()
@@ -323,18 +350,23 @@ void genitems()
     {
         
         arrofitems.at(i).name = itemnames.at(ranval%6);
+        
         //if we're a spellbook
         if(arrofitems.at(i).name == itemnames.at(0))
         {
             arrofitems.at(i).sign = itemsigns.at(0);
+            
         }
         //if we're a coffee
-        else if(arrofitems.at(i).name == itemnames.at(1))
+        if(arrofitems.at(i).name == itemnames.at(1))
         {
             arrofitems.at(i).sign = itemsigns.at(2);
         }
         //then we're just an item
-        else
+        if(arrofitems.at(i).name == itemnames.at(2) ||
+           arrofitems.at(i).name == itemnames.at(3) ||
+           arrofitems.at(i).name == itemnames.at(4) ||
+           arrofitems.at(i).name == itemnames.at(5))
         {
             arrofitems.at(i).sign = itemsigns.at(1);
         }
@@ -363,4 +395,54 @@ void placeitems()
      
      
  }
+}
+
+int finditembylocation(std::array<item, MAX_ITEMS> arr)
+{
+    //this is where player currently is
+    std::pair<int, int> xy;
+    xy.first = p.x;
+    xy.second = p.y;
+    int arrindex = 0;
+    for(int i = 0; i < arrofitems.size(); i++)
+    {
+        if(arrofitems.at(i).x == xy.first && arrofitems.at(i).y == xy.second)
+        {
+            arrindex = i;
+        }
+        
+    }
+    
+    return arrindex;
+    
+}
+void pickupitem()
+{
+    wclear(logger);
+    //move cursor of logger to 0,0
+    wmove(logger, 0, 0);
+    //index is where our item lives in the items array
+    auto index = finditembylocation(arrofitems);
+    // get the struct for our item from items array
+    auto pickedupitem = arrofitems.at(index);
+    //add struct to the vector
+    p.inventory.push_back(pickedupitem);
+    //use back cause we always want last added item for this
+    std::string s = "You picked up a ";
+    std::string output = makeitemstring(index, s);
+    
+    waddstr(logger, output.c_str());
+    
+}
+std::string makeitemstring(int index, std::string s)
+{
+    
+    s.append(arrofitems.at(index).modifier);
+    s.append(" ");
+    s.append(arrofitems.at(index).color);
+    s.append(" ");
+    s.append(arrofitems.at(index).name);
+    s.append(" ");
+    
+    return s;
 }
