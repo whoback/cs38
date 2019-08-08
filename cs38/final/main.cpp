@@ -63,6 +63,7 @@ void checkmovepos();
 void angershopkeeper();
 std::string makeitemstring(int index, std::string s);
 void checkinventory();
+void shopkeeperwelcome();
 void buyitem();
 void additemtoinventory(int index);
 char getcurchar();
@@ -126,7 +127,7 @@ int main(int argc, const char * argv[])
     wmove(map, max_x/2, 0);
     waddch(map, p.sign);
     genitems();
-    
+    shopkeeperwelcome();
     wrefresh(map);
     loop();
     return 0;
@@ -268,10 +269,11 @@ void displayhud()
     //gold amount
     waddstr(hud, "Gold: ");
     waddstr(hud, std::to_string(p.gold).c_str());
-    
+    waddch(hud, '\n');
     //inventory stat
     waddstr(hud, std::to_string(p.inventory.size()).c_str());
     waddstr(hud, " items in your inventory");
+    waddch(hud, '\n');
 }
 
 void initchars()
@@ -294,9 +296,11 @@ void initchars()
 
 void introtext()
 {
-    printw("Welcome! \n Some quick information: \n 1. To move use the arrow keys. \n'i' is inspect. \n'v' to see your inventory. \n'b' to buy. \n 2. Quit at anytime by pressing q\n 3. Have fun!\n");
-    printw("Do you want to play? y or n...");
-    // this should be printed in the stdscrn before we create our map and hud
+    move(0, MAP_WIDTH/2);
+    printw("Welcome!\n");
+    
+    printw("Some quick information: \n 1. Movement is accomplished via the arrow keys. \npress 'i' to inspect an item. \npress 'v' to see your inventory. \npress 'p' to pick something up off the gournd and into your inventory \npress 'b' to buy an item while standing over it. \n 2. You can quit at anytime by pressing 'q'\n 3. Have fun!\n");
+    printw("\n\n\nDo you want to play? y or n...");
     while(1)
     {
         int ch = getch();
@@ -328,8 +332,9 @@ void initmapandhud()
 {
     //           lines, cols, beginy, beginx
     map = newwin(MAP_HEIGHT, MAP_WIDTH, 2, 0);
-    hud  = newwin(5, MAP_WIDTH, MAP_HEIGHT+5, 0);
-    logger = newwin(2, MAP_WIDTH, 0, 0);
+    hud  = newwin(8, MAP_WIDTH, MAP_HEIGHT+3, 0);
+    logger = newwin(2, MAP_WIDTH+10, 0, 0);
+    scrollok(logger, TRUE);
     wrefresh(logger);
     wrefresh(hud);
     // give player an icon
@@ -429,6 +434,7 @@ void placeitems()
 
     for(int i = 0; i < arrofitems.size(); i++)
     {
+        
         wmove(map, arrofitems.at(i).y, arrofitems.at(i).x);
         waddch(map, arrofitems.at(i).sign);
         
@@ -510,6 +516,25 @@ std::string makeitemstring(int index, std::string s)
     return s;
 }
 
+void shopkeeperwelcome()
+{
+    std::string welcome = "Greetings, " + p.name + ", Welcome to " + shop.name + "'s store!";
+    
+    std::string coffee = "We have many wonderful items for sale but have you tried our coffee?";
+    
+    wclear(logger);
+    //move cursor of logger to 0,0
+    wmove(logger, 0, 0);
+    if(uni(rng) % 25 < 1 )
+    {
+        waddstr(logger, welcome.c_str());
+    }else
+    {
+        waddstr(logger, coffee.c_str());
+    }
+    
+}
+
 void angershopkeeper()
 {
     wclear(logger);
@@ -565,7 +590,7 @@ void checkmovepos()
         //reset holder
         holder = {-1, ' '};
     }
-    if(p.current == 'b')
+    if(p.current == 'b' || p.current == 'I' || p.current == 'c')
     {
         
         //if so find the index of the item
@@ -615,7 +640,7 @@ void buyitem()
 {
     int ch;
     WINDOW *w;
-    w=newwin(MAP_HEIGHT+2, MAP_WIDTH, 0, 0);
+    w=newwin(MAP_HEIGHT, MAP_WIDTH, 2, 0);
     box(w, 0, 0);
     //get item info to buy
     int index = finditembylocation(arrofitems);
@@ -638,42 +663,53 @@ void buyitem()
         std::string finalize = "You just purchased a " + item + " for " + price + " gold.";
         std::string thanks = shop.name + " thanks you for your purchase!";
         
-        //ask player to confirm
-        wclear(w);
         waddstr(w, doublecheck.c_str());
         wrefresh(w);
-        echo();
 
         while(1)
         {
             ch = getch();
             if(ch == 'y' || ch == '\n')
             {
-                //subtract gold from user
-                
-                p.gold = p.gold - arrofitems.at(index).price;
-                
-                //add gold to shopkeeper
-                shop.gold = shop.gold + arrofitems.at(index).price;
-                
-                //add to player inventory
-                additemtoinventory(index);
-                
-                wclear(w);
-                wmove(w, 5, 0);
-                waddstr(w, finalize.c_str());
-                waddch(w, '\n');
-                waddstr(w, thanks.c_str());
-                wrefresh(w);
-                //change hasbeenpaidfor flag in item
-                noecho();
-                ch = getch();
-                if(ch == '\n' || ch == ' ' || ch == 'y')
+                if(p.gold < arrofitems.at(index).price)
                 {
-                    break;
+                    wclear(w);
+                    box(w, 0,0);
+                    waddstr(w, "Sorry you don't have enough gold!");
+                    wrefresh(w);
+                    ch = getch();
+                    if(ch == '\n' || ch == ' ' || ch == 'y')
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    //subtract gold from user
+                    
+                    p.gold = p.gold - arrofitems.at(index).price;
+                    
+                    //add gold to shopkeeper
+                    shop.gold = shop.gold + arrofitems.at(index).price;
+                    
+                    //add to player inventory
+                    additemtoinventory(index);
+                    
+                    wclear(w);
+                    box(w, 0,0);
+                    wmove(w, 5, 0);
+                    waddstr(w, finalize.c_str());
+                    waddch(w, '\n');
+                    waddstr(w, thanks.c_str());
+                    wrefresh(w);
+                    ch = getch();
+                    if(ch == '\n' || ch == ' ' || ch == 'y')
+                    {
+                        break;
+                    }
                 }
             }
-            if(ch == 'n')
+            else
             {
                 break;
             }
@@ -701,13 +737,3 @@ char getcurchar()
     c = inspectedint;
     return c;
 }
-//char switchtotempchar()
-//{
-//    int i = finditembylocation(arrofitems);
-//    char cur = arrofitems.at(i).sign;
-//    char temp = p.sign;
-//    arrofitems.at(i).sign = temp;
-////    refresh();
-////    arrofitems.at(i).sign = cur;
-//    return cur;
-//}
