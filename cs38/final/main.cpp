@@ -38,6 +38,7 @@ struct player {
     std::string name;
     int y = 0;
     int x = 0;
+    char current;
     char sign;
     int turn = 0;
     int gold = 100;
@@ -64,6 +65,7 @@ std::string makeitemstring(int index, std::string s);
 void checkinventory();
 void buyitem();
 void additemtoinventory(int index);
+char getcurchar();
 
 // the basic map
 WINDOW * map;
@@ -250,6 +252,9 @@ void displayhud()
     waddstr(hud, std::to_string(p.x).c_str());
     waddstr(hud, ", ");
     waddstr(hud, std::to_string(p.y).c_str());
+    waddch(hud, '\t');
+    waddstr(hud, "Char: ");
+    waddch(hud, p.current);
     waddch(hud, '\n');
     
     //print who our shopkeeper is
@@ -260,8 +265,14 @@ void displayhud()
     //print turn number
     waddstr(hud, "Turn: ");
     waddstr(hud, std::to_string(p.turn).c_str());
+    waddch(hud, '\n');
+    //gold amount
+    waddstr(hud, "Gold: ");
+    waddstr(hud, std::to_string(p.gold).c_str());
     
-    
+    //inventory stat
+    waddstr(hud, std::to_string(p.inventory.size()).c_str());
+    waddstr(hud, " items in your inventory");
 }
 
 void initchars()
@@ -272,6 +283,7 @@ void initchars()
     p.gold = 100;
     p.x = 5;
     p.y = 1;
+    p.current = getcurchar();
     shop.sign = '&';
     shop.x = max_x / 2;
     shop.y = max_y / 2;
@@ -375,7 +387,8 @@ void genitems()
         arrofitems.at(i).x = itemx;
         arrofitems.at(i).y = itemy;
         arrofitems.at(i).indexpos = i; //keep track of orig index
-        itemx++;
+        itemx+=2;
+        
         
     }
     //based on names generate attributes
@@ -535,7 +548,7 @@ void checkmovepos()
         }
         angershopkeeper();
     }
-    
+   
 }
 
 void checkinventory()
@@ -650,4 +663,13 @@ void buyitem()
 void additemtoinventory(int index)
 {
     p.inventory.push_back(arrofitems.at(index));
+}
+
+char getcurchar()
+{
+    //see if we're on an item
+    int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
+    char c;
+    c = inspectedint;
+    return c;
 }
