@@ -66,7 +66,7 @@ void checkinventory();
 void buyitem();
 void additemtoinventory(int index);
 char getcurchar();
-void switchtotempchar();
+char switchtotempchar();
 // the basic map
 WINDOW * map;
 // where stats are
@@ -111,7 +111,7 @@ int max_x = 0;
 
 //draw border of our room
 char wall = '#';
-
+std::pair<int, char> holder = {-1, ' '};
 int main(int argc, const char * argv[])
 {
     //start ncurses and show intro text to user
@@ -419,6 +419,11 @@ void genitems()
 }
 void placeitems()
 {
+    if(holder.first != -1)
+    {
+        //we know we have to change a item sign back
+        arrofitems.at(holder.first).sign = holder.second;
+    }
     for(int i = 0; i < arrofitems.size(); i++)
     {
         wmove(map, arrofitems.at(i).y, arrofitems.at(i).x);
@@ -548,18 +553,22 @@ void checkmovepos()
         }
         angershopkeeper();
     }
+    //see if we're on an item
     p.current = getcurchar();
     if(p.current == 'b')
     {
-//        //see if we're on an item
-//        int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
-//        char c;
-//        c = inspectedint;
-//        if(c == 'c' || c == 'I' || c == 'b')
-//        {
-        switchtotempchar();
         
+        //if so find the index of the item
+        int i = finditembylocation(arrofitems);
+        holder.first = i;
+        holder.second = p.current;
+        
+        //change its sign to the player @ symbol
+        arrofitems.at(i).sign = p.sign;
+//        refresh();
+
     }
+    
 }
 
 void checkinventory()
@@ -684,10 +693,13 @@ char getcurchar()
     c = inspectedint;
     return c;
 }
-void switchtotempchar()
-{
-    int i = finditembylocation(arrofitems);
-    char temp = p.sign;
-    arrofitems.at(i).sign = temp;
-    refresh();
-}
+//char switchtotempchar()
+//{
+//    int i = finditembylocation(arrofitems);
+//    char cur = arrofitems.at(i).sign;
+//    char temp = p.sign;
+//    arrofitems.at(i).sign = temp;
+////    refresh();
+////    arrofitems.at(i).sign = cur;
+//    return cur;
+//}
