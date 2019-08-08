@@ -354,16 +354,16 @@ void inspect()
     //get the actual item index as there could be multiples
     int index = 0;
     index = finditembylocation(arrofitems);
-
+    
     //we've stored a value in holder so lets compare with that
     if(holder.first != -1)
     {
-            //we have an actual item but need to pull it from holder
+        //we have an actual item but need to pull it from holder
         
-            std::string s = "You see a ";
-            std::string info = makeitemstring(holder.first, s);
+        std::string s = "You see a ";
+        std::string info = makeitemstring(holder.first, s);
         
-            waddstr(logger, info.c_str());
+        waddstr(logger, info.c_str());
     }
     else
         //no value stored so proceed as normal
@@ -431,7 +431,7 @@ void genitems()
 }
 void placeitems()
 {
-
+    
     for(int i = 0; i < arrofitems.size(); i++)
     {
         
@@ -601,7 +601,7 @@ void checkmovepos()
         char playerchar = p.sign;
         //change its sign to the player @ symbol
         arrofitems.at(i).sign = playerchar;
-
+        
     }
 }
 
@@ -665,7 +665,7 @@ void buyitem()
         
         waddstr(w, doublecheck.c_str());
         wrefresh(w);
-
+        
         while(1)
         {
             ch = getch();
