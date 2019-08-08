@@ -66,7 +66,7 @@ void checkinventory();
 void buyitem();
 void additemtoinventory(int index);
 char getcurchar();
-
+void switchtotempchar();
 // the basic map
 WINDOW * map;
 // where stats are
@@ -283,7 +283,7 @@ void initchars()
     p.gold = 100;
     p.x = 5;
     p.y = 1;
-    p.current = getcurchar();
+    
     shop.sign = '&';
     shop.x = max_x / 2;
     shop.y = max_y / 2;
@@ -548,7 +548,18 @@ void checkmovepos()
         }
         angershopkeeper();
     }
-   
+    p.current = getcurchar();
+    if(p.current == 'b')
+    {
+//        //see if we're on an item
+//        int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
+//        char c;
+//        c = inspectedint;
+//        if(c == 'c' || c == 'I' || c == 'b')
+//        {
+        switchtotempchar();
+        
+    }
 }
 
 void checkinventory()
@@ -672,4 +683,11 @@ char getcurchar()
     char c;
     c = inspectedint;
     return c;
+}
+void switchtotempchar()
+{
+    int i = finditembylocation(arrofitems);
+    char temp = p.sign;
+    arrofitems.at(i).sign = temp;
+    refresh();
 }
