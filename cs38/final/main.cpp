@@ -609,8 +609,6 @@ void checkinventory()
 {
     //new window to show our inventory
     int ch;
-    
-    std::string empty = " ";
     WINDOW *w;
     std::string title = p.name + "'s "+"Inventory";
     int sz = static_cast<int>(title.size());
@@ -638,7 +636,7 @@ void checkinventory()
 
 void buyitem()
 {
-    int ch;
+    
     WINDOW *w;
     w=newwin(MAP_HEIGHT, MAP_WIDTH, 2, 0);
     box(w, 0, 0);
@@ -668,6 +666,7 @@ void buyitem()
         
         while(1)
         {
+            int ch;
             ch = getch();
             if(ch == 'y' || ch == '\n')
             {
