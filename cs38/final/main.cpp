@@ -343,33 +343,41 @@ void inspect()
     //move cursor of logger to 0,0
     wmove(logger, 0, 0);
     
-    //make sure we're moving within our map window
-    int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
     std::string inspectoutput;
     //this is the char returned from mvwinch
-    char c = inspectedint;
+    char c = getcurchar();
     //get the actual item index as there could be multiples
     int index = 0;
     index = finditembylocation(arrofitems);
-    if(index == -1)
+
+    //we've stored a value in holder so lets compare with that
+    if(holder.first != -1)
     {
-        inspectoutput = "negative 1 ";
-    }
-    if(c == p.sign)
-    {
-        inspectoutput = "Theres nothing here!";
-        waddstr(logger, inspectoutput.c_str());
+            //we have an actual item but need to pull it from holder
+        
+            std::string s = "You see a ";
+            std::string info = makeitemstring(holder.first, s);
+        
+            waddstr(logger, info.c_str());
     }
     else
+        //no value stored so proceed as normal
     {
-        //we have an actual item
-        
-        std::string s = "You see a ";
-        std::string info = makeitemstring(index, s);
-        
-        waddstr(logger, info.c_str());
+        //not inspecting ourselves
+        if(c == p.sign)
+        {
+            inspectoutput = "Theres nothing here!";
+            waddstr(logger, inspectoutput.c_str());
+        }
+        else
+        {
+            //regular inspection
+            std::string s = "You see a ";
+            std::string info = makeitemstring(index, s);
+            
+            waddstr(logger, info.c_str());
+        }
     }
-    
 }
 
 void genitems()
@@ -554,6 +562,8 @@ void checkmovepos()
     {
         //we know we have to change a item sign back
         arrofitems.at(holder.first).sign = holder.second;
+        //reset holder
+        holder = {-1, ' '};
     }
     if(p.current == 'b')
     {
@@ -668,7 +678,6 @@ void buyitem()
                 break;
             }
         }
-        
         wclear(w);
         wrefresh(w);
         delwin(w);
