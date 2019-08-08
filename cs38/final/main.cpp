@@ -159,8 +159,6 @@ void drawmap()
     wmove(map, shop.y, shop.x);
     waddch(map, shop.sign);
     
-    wmove(map, shop.y + 5, shop.x +2);
-    waddch(map, 'b');
     wrefresh(map);
 }
 
