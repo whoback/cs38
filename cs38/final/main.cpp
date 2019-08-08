@@ -181,6 +181,7 @@ void loop()
         
         drawmap();
         displayhud();
+        
         placeitems();
         wnoutrefresh(map);
         wnoutrefresh(hud);
@@ -417,11 +418,7 @@ void genitems()
 }
 void placeitems()
 {
-    if(holder.first != -1)
-    {
-        //we know we have to change a item sign back
-        arrofitems.at(holder.first).sign = holder.second;
-    }
+
     for(int i = 0; i < arrofitems.size(); i++)
     {
         wmove(map, arrofitems.at(i).y, arrofitems.at(i).x);
@@ -553,6 +550,11 @@ void checkmovepos()
     }
     //see if we're on an item
     p.current = getcurchar();
+    if(holder.first != -1)
+    {
+        //we know we have to change a item sign back
+        arrofitems.at(holder.first).sign = holder.second;
+    }
     if(p.current == 'b')
     {
         
@@ -561,12 +563,11 @@ void checkmovepos()
         holder.first = i;
         holder.second = p.current;
         
+        char playerchar = p.sign;
         //change its sign to the player @ symbol
-        arrofitems.at(i).sign = p.sign;
-//        refresh();
+        arrofitems.at(i).sign = playerchar;
 
     }
-    
 }
 
 void checkinventory()
