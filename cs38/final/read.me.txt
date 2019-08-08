@@ -1,0 +1,12 @@
+this should just compile and run.
+follow the onscreen prompts.
+You can walk around the shop and inspect - 'i' the items,
+you can pick up items - 'p' and theyll be added to your inventory.
+You can buy items as long as you have enough gold. I didn't get a chance
+to implement selling or randomized room / shop generation. This was alot
+more difficult than I anticipated. But lots of fun!
+
+The "game" as it is just attempts to mimic Nethack (http://nethack.org/)
+and other turn based text adventures. I picked the store element because it
+seemed like a good constraint to work in for my first attempt at 
+something like this. 
