@@ -469,10 +469,11 @@ void pickupitem()
     wclear(logger);
     //move cursor of logger to 0,0
     wmove(logger, 0, 0);
-    int inspectedint = mvwinch(map, p.y, p.x) & A_CHARTEXT;
-    char test = inspectedint;
+    
+    //will have already moved which will call getcurchar() so lets check holder char for change
+    
     //make sure we're not trying to pickup on an empty space
-    if(test == p.sign)
+    if(holder.first == -1)
     {
         waddstr(logger, "You can't pick that up!");
     }
