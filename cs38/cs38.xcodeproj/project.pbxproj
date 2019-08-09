@@ -13,6 +13,7 @@
 		D13970EF22C31959004D7F79 /* hw0-noarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D13970EB22C30AEE004D7F79 /* hw0-noarray.c */; };
 		D160701122CD11D100C74AD7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D160701022CD11D100C74AD7 /* main.cpp */; };
 		D181B4F322C1B8F700049A40 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D181B4F222C1B8F700049A40 /* main.cpp */; };
+		D19942A222FCB57A00B5D22A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19942A122FCB57A00B5D22A /* main.cpp */; };
 		D1A6692A22D79E7700170565 /* cards.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1A6692822D79E7700170565 /* cards.cpp */; };
 		D1A6693222D7DD2800170565 /* hotdog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1A6693022D7DD2800170565 /* hotdog.cpp */; };
 		D1A6693A22D7FF0200170565 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1A6693922D7FF0200170565 /* main.cpp */; };
@@ -71,6 +72,15 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		D181B4EE22C1B8F700049A40 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D199429D22FCB57A00B5D22A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -140,6 +150,8 @@
 		D160701022CD11D100C74AD7 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D181B4F022C1B8F700049A40 /* gameset1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gameset1; sourceTree = BUILT_PRODUCTS_DIR; };
 		D181B4F222C1B8F700049A40 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D199429F22FCB57A00B5D22A /* finalexam */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = finalexam; sourceTree = BUILT_PRODUCTS_DIR; };
+		D19942A122FCB57A00B5D22A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D1A6692822D79E7700170565 /* cards.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cards.cpp; sourceTree = "<group>"; };
 		D1A6692E22D7B5B400170565 /* palindrome.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = palindrome.hpp; sourceTree = "<group>"; };
 		D1A6692F22D7B63F00170565 /* cards.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cards.hpp; sourceTree = "<group>"; };
@@ -197,6 +209,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D181B4ED22C1B8F700049A40 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D199429C22FCB57A00B5D22A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -263,6 +282,7 @@
 				D1BFF97F22DD0837003046D4 /* pset4 */,
 				D11BE29322E1637600811540 /* final */,
 				D1AD8E9C22FA943C00BA4CAC /* ecredit */,
+				D19942A022FCB57A00B5D22A /* finalexam */,
 				D125B28422C1521A0074EEF3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -281,6 +301,7 @@
 				D1BFF97E22DD0837003046D4 /* pset4 */,
 				D11BE29222E1637600811540 /* final */,
 				D1AD8E9B22FA943C00BA4CAC /* ecredit */,
+				D199429F22FCB57A00B5D22A /* finalexam */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -324,6 +345,14 @@
 				D181B4F222C1B8F700049A40 /* main.cpp */,
 			);
 			path = gameset1;
+			sourceTree = "<group>";
+		};
+		D19942A022FCB57A00B5D22A /* finalexam */ = {
+			isa = PBXGroup;
+			children = (
+				D19942A122FCB57A00B5D22A /* main.cpp */,
+			);
+			path = finalexam;
 			sourceTree = "<group>";
 		};
 		D1A6693822D7FF0200170565 /* gameset3 */ = {
@@ -479,6 +508,23 @@
 			productReference = D181B4F022C1B8F700049A40 /* gameset1 */;
 			productType = "com.apple.product-type.tool";
 		};
+		D199429E22FCB57A00B5D22A /* finalexam */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D19942A522FCB57A00B5D22A /* Build configuration list for PBXNativeTarget "finalexam" */;
+			buildPhases = (
+				D199429B22FCB57A00B5D22A /* Sources */,
+				D199429C22FCB57A00B5D22A /* Frameworks */,
+				D199429D22FCB57A00B5D22A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = finalexam;
+			productName = finalexam;
+			productReference = D199429F22FCB57A00B5D22A /* finalexam */;
+			productType = "com.apple.product-type.tool";
+		};
 		D1A6693622D7FF0200170565 /* gameset3 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D1A6693B22D7FF0200170565 /* Build configuration list for PBXNativeTarget "gameset3" */;
@@ -591,6 +637,9 @@
 					D181B4EF22C1B8F700049A40 = {
 						CreatedOnToolsVersion = 10.1;
 					};
+					D199429E22FCB57A00B5D22A = {
+						CreatedOnToolsVersion = 10.3;
+					};
 					D1A6693622D7FF0200170565 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -632,6 +681,7 @@
 				D1BFF97D22DD0837003046D4 /* pset4 */,
 				D11BE29122E1637600811540 /* final */,
 				D1AD8E9A22FA943C00BA4CAC /* ecredit */,
+				D199429E22FCB57A00B5D22A /* finalexam */,
 			);
 		};
 /* End PBXProject section */
@@ -682,6 +732,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D181B4F322C1B8F700049A40 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D199429B22FCB57A00B5D22A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D19942A222FCB57A00B5D22A /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -955,6 +1013,24 @@
 			};
 			name = Release;
 		};
+		D19942A322FCB57A00B5D22A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D19942A422FCB57A00B5D22A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		D1A6693C22D7FF0200170565 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1105,6 +1181,15 @@
 			buildConfigurations = (
 				D181B4F422C1B8F700049A40 /* Debug */,
 				D181B4F522C1B8F700049A40 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D19942A522FCB57A00B5D22A /* Build configuration list for PBXNativeTarget "finalexam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D19942A322FCB57A00B5D22A /* Debug */,
+				D19942A422FCB57A00B5D22A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
