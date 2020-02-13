@@ -110,8 +110,6 @@ int startx, starty, width, height;
 int max_y = 0;
 int max_x = 0;
 
-//draw border of our room
-char wall = '#';
 std::pair<int, char> holder = {-1, ' '};
 int main(int argc, const char * argv[])
 {
@@ -436,9 +434,12 @@ void placeitems()
     {
         
         wmove(map, arrofitems.at(i).y, arrofitems.at(i).x);
+        
         waddch(map, arrofitems.at(i).sign);
         
     }
+    //handle overflow items
+    wborder(map, '|', '|', '-', '-', '+', '+', '+', '+');
 }
 
 int finditembylocation(std::array<item, MAX_ITEMS> arr)
@@ -658,8 +659,8 @@ void buyitem()
         std::string item;
         
         item = makeitemstring(index, item);
-        std::string doublecheck = "Are you sure you want to buy this " + item + "?";
-        std::string finalize = "You just purchased a " + item + " for " + price + " gold.";
+        std::string doublecheck = "Are you sure you want to buy this " + item + " for " + price + " gold?";
+        std::string finalize = "You just purchased a " + item;
         std::string thanks = shop.name + " thanks you for your purchase!";
         
         waddstr(w, doublecheck.c_str());

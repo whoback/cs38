@@ -1,0 +1,65 @@
+[48146][environment] CWD = /Users/willhoback/Desktop/cs38/cs38/pset4
+[48146][environment] No .inferconfig file found
+[48146][environment] Project root = /Users/willhoback/Desktop/cs38/cs38/pset4
+[48146][environment] INFER_ARGS =   command line arguments:   inferAnalyzer: checkers
+[48146][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), ownership (C/C++/ObjC), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC), uninitialized variables (C/C++/ObjC)
+[48146][environment] Infer log identifier is 
+Infer version v0.15.0
+[48146][environment] Copyright 2009 - present Facebook. All Rights Reserved.
+[48146][environment] 
+[48146][  user warn] Nothing to compile. Have you run `infer capture`? Try cleaning the build first.
+[48146][   progress] There was nothing to analyze.
+
+[48336][      phase] ============================================================
+[48336][      phase] = New infer execution begins
+[48336][      phase] ============================================================
+[48336][environment] CWD = /Users/willhoback/Desktop/cs38/cs38/pset4
+[48336][environment] No .inferconfig file found
+[48336][environment] Project root = /Users/willhoback/Desktop/cs38/cs38/pset4
+[48336][environment] INFER_ARGS =   @/var/folders/9t/bgp_2y_n0hb278vl46rhkly00000gn/T/args.tmp.0f32e0
+[48336][environment]   ++Contents of '/var/folders/9t/bgp_2y_n0hb278vl46rhkly00000gn/T/args.tmp.0f32e0':
+[48336][environment]     analyze
+[48336][environment]   
+[48336][environment] command line arguments:   infer analyzeAnalyzer: checkers
+[48336][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), ownership (C/C++/ObjC), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC), uninitialized variables (C/C++/ObjC)
+[48336][environment] Infer log identifier is 
+Infer version v0.15.0
+[48336][environment] Copyright 2009 - present Facebook. All Rights Reserved.
+[48336][environment] 
+[48336][  user warn] Nothing to compile. Have you run `infer capture`? Try cleaning the build first.
+[48336][   progress] There was nothing to analyze.
+
+[48367][      phase] ============================================================
+[48367][      phase] = New infer execution begins
+[48367][      phase] ============================================================
+[48367][environment] CWD = /Users/willhoback/Desktop/cs38/cs38/pset4
+[48367][environment] No .inferconfig file found
+[48367][environment] Project root = /Users/willhoback/Desktop/cs38/cs38/pset4
+[48367][environment] INFER_ARGS =   @/var/folders/9t/bgp_2y_n0hb278vl46rhkly00000gn/T/args.tmp.1b4e48
+[48367][environment]   ++Contents of '/var/folders/9t/bgp_2y_n0hb278vl46rhkly00000gn/T/args.tmp.1b4e48':
+[48367][environment]     capture
+[48367][environment]   
+[48367][environment] command line arguments:   infer captureAnalyzer: capture
+[48367][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), ownership (C/C++/ObjC), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC), uninitialized variables (C/C++/ObjC)
+[48367][environment] Infer log identifier is 
+Infer version v0.15.0
+[48367][environment] Copyright 2009 - present Facebook. All Rights Reserved.
+[48367][environment] 
+[48397][      phase] ============================================================
+[48397][      phase] = New infer execution begins
+[48397][      phase] ============================================================
+[48397][environment] CWD = /Users/willhoback/Desktop/cs38/cs38/pset4
+[48397][environment] No .inferconfig file found
+[48397][environment] Project root = /Users/willhoback/Desktop/cs38/cs38/pset4
+[48397][environment] INFER_ARGS =   @/var/folders/9t/bgp_2y_n0hb278vl46rhkly00000gn/T/args.tmp.178dca
+[48397][environment]   ++Contents of '/var/folders/9t/bgp_2y_n0hb278vl46rhkly00000gn/T/args.tmp.178dca':
+[48397][environment]     analyze
+[48397][environment]   
+[48397][environment] command line arguments:   infer analyzeAnalyzer: checkers
+[48397][environment] Active checkers: annotation reachability (Java), biabduction (C/C++/ObjC, Java), fragment retains view (Java), immutable cast (Java), liveness (C/C++/ObjC), printf args (Java), ownership (C/C++/ObjC), RacerD (C/C++/ObjC, Java), SIOF (C/C++/ObjC), uninitialized variables (C/C++/ObjC)
+[48397][environment] Infer log identifier is 
+Infer version v0.15.0
+[48397][environment] Copyright 2009 - present Facebook. All Rights Reserved.
+[48397][environment] 
+[48397][  user warn] Nothing to compile. Have you run `infer capture`? Try cleaning the build first.
+[48397][   progress] There was nothing to analyze.
